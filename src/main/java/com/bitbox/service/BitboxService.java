@@ -1,0 +1,128 @@
+package com.bitbox.service;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bitbox.dao.IBitboxDAO;
+import com.bitbox.dto.CalendarFormat;
+import com.bitbox.dto.GinDTO;
+import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.PBoardDTO;
+import com.bitbox.dto.StudentDTO;
+
+@Service
+public class BitboxService implements IBitboxService {
+
+	@Autowired
+	private IBitboxDAO dao;
+
+	@Override
+	public List<PBoardDTO> listAll(String id) {
+		List<PBoardDTO> list = dao.listAll(id);
+		return list;
+	}
+
+	@Override
+	public boolean regist(PBoardDTO board) {
+		boolean flag = dao.regist(board);
+		return flag;
+	}
+
+	@Override
+	public boolean studentRegist(StudentDTO student) {
+		boolean flag = dao.studentRegist(student);
+		return flag;
+	}
+
+	@Override
+	public StudentDTO loginCheck(StudentDTO student) {
+		StudentDTO sdto = dao.loginCheck(student);
+		return sdto;
+	}
+
+	@Override
+	public List<CalendarFormat> getCalendar(String id) {
+		List<PBoardDTO> calendar = dao.getCalendar(id);
+		List<CalendarFormat> calendars = new ArrayList<CalendarFormat>();
+		CalendarFormat format = null;
+		for (int i = 0; i < calendar.size(); i++) {
+			format = new CalendarFormat();
+			format.setTitle(calendar.get(i).getP_title());
+			format.setStart(new SimpleDateFormat("yyyy-MM-dd").format(calendar.get(i).getP_date()));
+			calendars.add(format);
+		}
+		return calendars;
+	}
+
+	@Override
+	public StudentDTO searchInfo(StudentDTO dto, int type) {
+		StudentDTO student = dao.search(dto, type);
+		return student;
+	}
+	
+	@Override
+	public List<PBoardDTO> listAll() {
+		// TODO Auto-generated method stub
+		List<PBoardDTO> list=dao.listAll();
+		return list;
+	}
+	
+	@Override
+	public boolean projectUpdate(PBoardDTO board) {
+		// TODO Auto-generated method stub
+		boolean flag=dao.projectUpdate(board);
+		return flag;
+	}
+	
+	@Override
+	public List<GroupDTO> getGroupList() {
+		// TODO Auto-generated method stub
+		List<GroupDTO> list = dao.groupList();
+		return list;
+	}
+
+	@Override
+	public GroupDTO getGroupModal(String gNo) {
+		// TODO Auto-generated method stub
+		GroupDTO modal = dao.groupModal(gNo);
+		return modal;
+	}
+
+	@Override
+	public int groupJoin(GroupDTO group, GinDTO gIn) {
+		// TODO Auto-generated method stub
+		// return 0: 媛��엯�셿猷�, return 1: �깮�꽦�옄媛� 媛��엯�븯�젮�븷�븣/以묐났媛��엯�씪�븣,
+		// return 2: 鍮꾨�踰덊샇 遺덉씪移�
+		int state = 3;
+		GroupDTO dto = dao.getGroup(group.getGroup_seq());// 媛��엯�븯�젮�뒗 group dto
+		GinDTO sGin = dao.selectGin(gIn);
+
+		if (!(dto.getPw().equals(group.getPw()))) {
+			state = 2;
+		} else if (sGin != null) {
+			state = 1;
+		} else {
+			GinDTO gin = new GinDTO(dto.getGroup_seq(), group.getS_id());
+			boolean flag = dao.groupIn(gin);
+			if (flag) {
+				state = 0;
+			}
+		}
+		return state;
+	}
+
+	@Override
+	public boolean groupRegist(GroupDTO dto) {
+		boolean flag = dao.groupRegist(dto);
+		if(flag){
+			GinDTO group = new GinDTO(dto.getGroup_seq(), dto.getS_id());
+			flag = dao.groupIn(group);
+		}
+		return flag;
+	}
+
+}

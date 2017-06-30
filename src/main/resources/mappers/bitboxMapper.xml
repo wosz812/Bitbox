@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitbox.bitboxMapper">
+	<select id="listAll" resultType="com.bitbox.dto.PBoardDTO">
+		select * from pboard where
+		s_id=#{id}
+	</select>
+
+	<insert id="regist" parameterType="com.bitbox.dto.PBoardDTO">
+		<selectKey keyProperty="p_boardseq" order="BEFORE"
+			resultType="Integer">
+			select p_boardseq.nextval from dual
+		</selectKey>
+		insert into
+		pboard(p_boardseq,p_title,p_content,p_upload,p_category,s_id)
+		values(#{p_boardseq},#{p_title},#{p_content},#{p_upload},#{p_category},#{s_id})
+
+	</insert>
+
+	<select id="getCalendar" resultType="com.bitbox.dto.PBoardDTO" parameterType="String">
+		select * from pboard where s_id=#{s_id}
+	</select>
+
+	<update id="projectUpdate" parameterType="com.bitbox.dto.PBoardDTO">
+		update pboard set
+		p_title = #{p_title}, p_content= #{p_content} where
+		p_boardseq=#{p_boardseq}
+	</update>
+
+	<select id="getGroupList" resultType="com.bitbox.dto.GroupDTO">
+		select * from cgroup
+	</select>
+	<!-- 확인해야됨 -->
+	<select id="getGroupModal" parameterType="String" resultType="com.bitbox.dto.GroupDTO">
+		select * from cgroup where group_seq=#{gNo}
+	</select>
+	<select id="getGroup" parameterType="Integer" resultType="com.bitbox.dto.GroupDTO">
+		select
+		* from cgroup where group_seq=#{seq}
+	</select>
+	<!-- 확인해야됨 -->
+	<select id="selectGin" parameterType="com.bitbox.dto.GinDTO" resultType="com.bitbox.dto.GinDTO">
+		select
+		* from groupin where group_seq=#{group_seq} and s_id=#{s_id}
+	</select>
+	<!-- 확인해야됨 -->
+	<insert id="groupIn" parameterType="com.bitbox.dto.GinDTO">
+		<selectKey keyProperty="gin_seq" order="BEFORE" resultType="Integer">
+			select gin_seq.nextval from dual
+		</selectKey>
+		insert into groupin(gin_seq,group_seq,s_id)
+		values(#{gin_seq},#{group_seq},#{s_id})
+	</insert>
+
+	<insert id="groupRegist" parameterType="com.bitbox.dto.GroupDTO">
+		<selectKey keyProperty="group_seq" order="BEFORE" resultType="Integer">
+			select group_seq.nextval from dual
+		</selectKey>
+		insert into cgroup(group_seq, pw, title, s_id,info)
+		values(#{group_seq}, #{pw}, #{title}, #{s_id}, #{info})
+	</insert>
+</mapper>
