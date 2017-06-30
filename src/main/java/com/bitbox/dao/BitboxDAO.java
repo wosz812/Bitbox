@@ -29,6 +29,7 @@ public class BitboxDAO implements IBitboxDAO {
 		return list;
 	}
 
+	
 	@Override
 	public boolean regist(PBoardDTO board) {
 		boolean flag = false;
@@ -138,7 +139,7 @@ public class BitboxDAO implements IBitboxDAO {
 	public boolean groupRegist(GroupDTO dto) {
 		boolean flag = false;
 		int aCnt = session.insert(namespace + ".groupRegist", dto);
-		// 개설자를 가입시키는 쿼리문 추가
+		// 媛쒖꽕�옄瑜� 媛��엯�떆�궎�뒗 荑쇰━臾� 異붽�
 		if (aCnt > 0) {
 			flag = true;
 		}
