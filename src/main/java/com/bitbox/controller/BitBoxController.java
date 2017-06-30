@@ -215,7 +215,7 @@ public class BitBoxController {
 	      String url = "";
 	      String id = (String) session.getAttribute("id");
 	      group.setS_id(id);// 가입하려는 사람의 groupDTO
-
+ 
 	      GinDTO gIn = new GinDTO(group.getGroup_seq(), id);
 	      //System.out.println(gIn);
 
