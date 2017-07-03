@@ -159,4 +159,11 @@ public class BitboxService implements IBitboxService {
 		return pageList;
 	}
 
+	@Override
+	public boolean projectDelete(PBoardDTO board) {
+		// TODO Auto-generated method stub
+		boolean flag=dao.projectDelete(board);
+		return flag;
+	}
+
 }

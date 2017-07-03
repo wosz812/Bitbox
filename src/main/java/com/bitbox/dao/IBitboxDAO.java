@@ -26,4 +26,5 @@ public interface IBitboxDAO {
 	public boolean registMemo(PMemoDTO dto);
 	public List<PMemoDTO> getMemoList(String id,int start);
 	public int PMemoCnt(String id);
+	public boolean projectDelete(PBoardDTO board);
 }

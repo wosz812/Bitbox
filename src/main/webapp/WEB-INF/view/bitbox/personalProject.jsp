@@ -77,8 +77,8 @@
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-default"
-									data-dismiss="modal">닫기</button>
-								<button type="submit" class="btn btn-primary" onclick="test(2)"
+									onclick="gourl(1)">삭제</button>
+								<button type="submit" class="btn btn-primary" onclick="gourl(2)"
 									id="saving">수정</button>
 							</div>
 						</form>

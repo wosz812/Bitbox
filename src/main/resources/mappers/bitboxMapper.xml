@@ -28,6 +28,10 @@
 		p_title = #{p_title}, p_content= #{p_content} where
 		p_boardseq=#{p_boardseq}
 	</update>
+	
+	<delete id="projectDelete" parameterType="com.bitbox.dto.PBoardDTO">
+		delete from pboard where p_boardseq=#{p_boardseq} and s_id=#{s_id}
+	</delete>
 
 	<select id="getGroupList" resultType="com.bitbox.dto.GroupDTO">
 		select * from cgroup

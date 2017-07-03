@@ -78,7 +78,7 @@ public class BitBoxController {
 		PBoardDTO board = new PBoardDTO();
 		String path = this.path;
 		boolean flag = false;
-		String fileName = p_upload.getOriginalFilename();
+		String fileName = p_upload.getOriginalFilename();		
 		try {
 			p_upload.transferTo(new File(path + fileName));
 			board.setP_title(p_title);
@@ -118,6 +118,22 @@ public class BitBoxController {
 		board.setS_id(session.getAttribute("id").toString());
 		logger.info(p_title + "," + p_content);
 		flag = service.projectUpdate(board);
+		if (flag) {
+			url = "redirect:/bitbox/listAll";
+		}
+		return url;
+	}
+	
+	@RequestMapping(value = "/projectDelete", method = { RequestMethod.POST, RequestMethod.GET })
+	public String projectDelete(HttpSession session, @RequestParam("p_title") String p_title,
+			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq) {
+		String url = "";
+		boolean flag = false;
+		PBoardDTO board = new PBoardDTO();
+		board.setP_boardseq(p_boardseq);		
+		board.setS_id(session.getAttribute("id").toString());
+		logger.info(p_boardseq + "," + session.getAttribute("id").toString());
+		flag = service.projectDelete(board);
 		if (flag) {
 			url = "redirect:/bitbox/listAll";
 		}

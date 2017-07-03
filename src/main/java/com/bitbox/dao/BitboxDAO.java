@@ -169,4 +169,15 @@ public class BitboxDAO implements IBitboxDAO {
 		return cnt;
 	}
 
+	@Override
+	public boolean projectDelete(PBoardDTO board) {
+		// TODO Auto-generated method stub
+		boolean flag=false;
+		int aCnt=session.delete(namespace+".projectDelete",board);
+		if(aCnt>0){
+			flag=true;
+		}
+		return flag;
+	}
+
 }

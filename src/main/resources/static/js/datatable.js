@@ -9,7 +9,8 @@ $(document)
 													"searching" : true,
 													"ordering" : true,
 													"info" : true,
-													"autoWidth" : true,
+													"autoWidth" : true,			
+													
 													"ajax" : {
 														url : "/bitbox/getData",
 														contentType : "application/x-www-form-urlencoded; charset=UTF-8"
@@ -34,6 +35,7 @@ $(document)
 																		type,
 																		row,
 																		meta) {
+																	if(data!=null){
 																	if (type === 'display') {
 																		data = '<a href=/bitbox/download?filename='
 																				+ data
@@ -41,7 +43,7 @@ $(document)
 																				+ data
 																				+ '</a>';
 																	}
-
+																	}
 																	return data;
 																}
 															},
@@ -104,11 +106,11 @@ $(document)
 												});
 
 							});
-			function test(type) {
+			function gourl(type) {
 				var ds = document.getElementById("dataset");
 				var url = "/bitbox/";
 				if (type == 1) {
-					url = "/modify";
+					url = "/bitbox/projectDelete";
 				} else if (type == 2) {
 					url = "/bitbox/projectUpdate";
 				}

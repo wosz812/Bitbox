@@ -41,4 +41,6 @@ public interface IBitboxService {
 	public List<PMemoDTO> getMemoList(String id,int page);
 
 	public ArrayList<String> getPageList(int page, String id);
+
+	public boolean projectDelete(PBoardDTO board);
 }
