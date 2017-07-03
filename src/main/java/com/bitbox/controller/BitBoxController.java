@@ -59,7 +59,6 @@ public class BitBoxController {
 	public String listAll(HttpSession session, Model model) {
 		String url = "";
 		List<PBoardDTO> list = service.listAll(session.getAttribute("id").toString());
-		System.out.println(list);
 		model.addAttribute("list", list);
 		url = "bitbox/personalProject";
 		return url;
