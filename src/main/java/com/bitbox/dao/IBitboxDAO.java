@@ -5,6 +5,7 @@ import java.util.List;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
+import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.StudentDTO;
 
 public interface IBitboxDAO {
@@ -22,4 +23,6 @@ public interface IBitboxDAO {
 	boolean groupIn(GinDTO gin);
 	GinDTO selectGin(GinDTO gIn);
 	public boolean groupRegist(GroupDTO dto);
+	public boolean registMemo(PMemoDTO dto);
+	public List<PMemoDTO> getMemoList();
 }

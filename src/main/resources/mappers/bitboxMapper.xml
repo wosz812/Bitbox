@@ -61,4 +61,16 @@
 		insert into cgroup(group_seq, pw, title, s_id,info)
 		values(#{group_seq}, #{pw}, #{title}, #{s_id}, #{info})
 	</insert>
+	
+	<insert id="registMemo" parameterType="com.bitbox.dto.PMemoDTO">
+		<selectKey keyProperty="m_seq" order="BEFORE" resultType="Integer">
+			select m_seq.nextval from dual
+		</selectKey>
+		insert into pmemo(m_seq, m_title, m_content, s_id)
+		values(#{m_seq}, #{m_title}, #{m_content}, #{s_id})
+	</insert>
+	
+	<select id="getMemoList" parameterType="com.bitbox.dto.PMemoDTO" resultType="com.bitbox.dto.PMemoDTO">
+		select * from pmemo
+	</select>
 </mapper>

@@ -6,6 +6,7 @@ import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
+import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.StudentDTO;
 
 public interface IBitboxService {
@@ -33,4 +34,8 @@ public interface IBitboxService {
 	List<GroupDTO> getGroupList();
 
 	public boolean groupRegist(GroupDTO dto);
+
+	public boolean registMemo(PMemoDTO dto);
+
+	public List<PMemoDTO> getMemoList();
 }

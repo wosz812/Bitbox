@@ -12,6 +12,7 @@ import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
+import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.StudentDTO;
 
 @Service
@@ -63,42 +64,36 @@ public class BitboxService implements IBitboxService {
 		StudentDTO student = dao.search(dto, type);
 		return student;
 	}
-	
+
 	@Override
 	public List<PBoardDTO> listAll() {
-		// TODO Auto-generated method stub
-		List<PBoardDTO> list=dao.listAll();
+		List<PBoardDTO> list = dao.listAll();
 		return list;
 	}
-	
+
 	@Override
 	public boolean projectUpdate(PBoardDTO board) {
-		// TODO Auto-generated method stub
-		boolean flag=dao.projectUpdate(board);
+		boolean flag = dao.projectUpdate(board);
 		return flag;
 	}
-	
+
 	@Override
 	public List<GroupDTO> getGroupList() {
-		// TODO Auto-generated method stub
 		List<GroupDTO> list = dao.groupList();
 		return list;
 	}
 
 	@Override
 	public GroupDTO getGroupModal(String gNo) {
-		// TODO Auto-generated method stub
 		GroupDTO modal = dao.groupModal(gNo);
 		return modal;
 	}
 
 	@Override
 	public int groupJoin(GroupDTO group, GinDTO gIn) {
-		// TODO Auto-generated method stub
-		// return 0: 媛��엯�셿猷�, return 1: �깮�꽦�옄媛� 媛��엯�븯�젮�븷�븣/以묐났媛��엯�씪�븣,
-		// return 2: 鍮꾨�踰덊샇 遺덉씪移�
 		int state = 3;
-		GroupDTO dto = dao.getGroup(group.getGroup_seq());// 媛��엯�븯�젮�뒗 group dto
+		GroupDTO dto = dao.getGroup(group.getGroup_seq());// 媛��엯�븯�젮�뒗 group
+															// dto
 		GinDTO sGin = dao.selectGin(gIn);
 
 		if (!(dto.getPw().equals(group.getPw()))) {
@@ -118,11 +113,24 @@ public class BitboxService implements IBitboxService {
 	@Override
 	public boolean groupRegist(GroupDTO dto) {
 		boolean flag = dao.groupRegist(dto);
-		if(flag){
+		if (flag) {
 			GinDTO group = new GinDTO(dto.getGroup_seq(), dto.getS_id());
 			flag = dao.groupIn(group);
 		}
 		return flag;
+	}
+
+	@Override
+	public boolean registMemo(PMemoDTO dto) {
+		boolean flag = false;
+		flag = dao.registMemo(dto);
+		return flag;
+	}
+
+	@Override
+	public List<PMemoDTO> getMemoList() {
+		List<PMemoDTO> memoList  = dao.getMemoList();
+		return memoList;
 	}
 
 }
