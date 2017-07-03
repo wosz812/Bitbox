@@ -115,8 +115,24 @@
 											BITBOX</a></li>
 								</ul></li>
 						</ul></li>
-
-					<li><a href="/memo/memoView"><i class="fa fa-link"></i> <span>MEMO</span></a></li>
+					<li><a href="#"><i class="fa fa-pencil"></i> MEMO <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="/memo/memoView"><i class="fa fa-user"></i>
+									Personal MEMO</a></li>
+							<li><a href="#"><i class="fa fa-users"></i> Group
+									MEMO <span class="pull-right-container"> <i
+										class="fa fa-angle-left pull-right"></i>
+								</span> </a>
+								<ul class="treeview-menu">
+									<li><a href="/memo/memoView"><i class="fa fa-cube"></i>
+											CRUD</a></li>
+									<li><a href="/memo/memoView"><i class="fa fa-dropbox"></i>
+											BITBOX</a></li>
+								</ul></li>
+						</ul></li>
 					<li><a href="/bitbox/calendar"> <i class="fa fa-calendar"></i>
 							<span>Calendar</span> <span class="pull-right-container">
 						</span>
@@ -152,11 +168,11 @@
 										</button>
 										<h4 class="modal-title" id="myModalLabel">메모 작성</h4>
 									</div>
+									<form action="/memo/registMemo" method="post">
 									<div class="modal-body">
-										<form action="/memo/registMemo" method="post">
 											<input type="text" class="form-control" placeholder="title.."
-												name="title">
-											<textarea class="form-control" rows="3" name="context"
+												name="m_title">
+											<textarea class="form-control" rows="3" name="m_content"
 												placeholder="text.."></textarea>
 									</div>
 									<div class="modal-footer">
@@ -164,8 +180,8 @@
 											data-dismiss="modal">닫기</button>
 
 										<input type="submit" class="btn btn-primary" value="작성"></input>
-										</form>
 									</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -173,20 +189,16 @@
 						<br>
 						<br>
 						<br>
-						<div class="example-modal">
+						<c:forEach items="${memoList}" var="memo">
+							<div class="example-modal">
 							<div class="modal">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h4 class="modal-title">
-												Default Memo <i class="fa  fa-book"></i>
+											<h4 class="modal-title">${memo.m_title}<i class="fa  fa-book"></i>
 											</h4>
-
 										</div>
-										<div class="modal-body">
-											<p>One fine body&hellip;</p>
-										</div>
-
+										<div class="modal-body"><p>${memo.m_content}</p></div>
 									</div>
 									<!-- /.modal-content -->
 								</div>
@@ -194,8 +206,7 @@
 							</div>
 							<!-- /.modal -->
 						</div>
-						<!-- /.example-modal -->
-
+						</c:forEach>
 						<div class="example-modal">
 							<div class="modal">
 								<div class="modal-dialog">
@@ -218,27 +229,6 @@
 							<!-- /.modal -->
 						</div>
 						<!-- /.example-modal -->
-						<div class="example-modal">
-							<div class="modal">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-
-											<h4 class="modal-title">
-												Default Memo <i class="fa  fa-book"></i>
-											</h4>
-										</div>
-										<div class="modal-body">
-											<p>One fine body&hellip;</p>
-										</div>
-
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
-							<!-- /.modal -->
-						</div>
 					</div>
 				</div>
 			</section>

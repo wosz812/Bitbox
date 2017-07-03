@@ -27,13 +27,16 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+<!-- font -->
+<link rel="stylesheet"
+   href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css">
+<style type="text/css">
+     .font{
+           
+      font-family: 'Nanum Pen Script', serif;
+     }
+  
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -93,8 +96,24 @@
 											BITBOX</a></li>
 								</ul></li>
 						</ul></li>
-
-					<li><a href="/memo/memoView"><i class="fa fa-link"></i> <span>MEMO</span></a></li>
+					<li><a href="#"><i class="fa fa-pencil"></i> MEMO <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="/memo/memoView"><i class="fa fa-user"></i>
+									Personal MEMO</a></li>
+							<li><a href="#"><i class="fa fa-users"></i> Group
+									MEMO <span class="pull-right-container"> <i
+										class="fa fa-angle-left pull-right"></i>
+								</span> </a>
+								<ul class="treeview-menu">
+									<li><a href="/memo/memoView"><i class="fa fa-cube"></i>
+											CRUD</a></li>
+									<li><a href="/memo/memoView"><i class="fa fa-dropbox"></i>
+											BITBOX</a></li>
+								</ul></li>
+						</ul></li>
 					<li><a href="/bitbox/calendar"> <i class="fa fa-calendar"></i>
 							<span>Calendar</span> <span class="pull-right-container">
 						</span>

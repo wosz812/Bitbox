@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
+import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.StudentDTO;
 
 @Repository
@@ -29,7 +30,6 @@ public class BitboxDAO implements IBitboxDAO {
 		return list;
 	}
 
-	
 	@Override
 	public boolean regist(PBoardDTO board) {
 		boolean flag = false;
@@ -139,10 +139,25 @@ public class BitboxDAO implements IBitboxDAO {
 	public boolean groupRegist(GroupDTO dto) {
 		boolean flag = false;
 		int aCnt = session.insert(namespace + ".groupRegist", dto);
-		// 媛쒖꽕�옄瑜� 媛��엯�떆�궎�뒗 荑쇰━臾� 異붽�
 		if (aCnt > 0) {
 			flag = true;
 		}
 		return flag;
+	}
+
+	@Override
+	public boolean registMemo(PMemoDTO dto) {
+		boolean flag = false;
+		int aCnt = session.insert(namespace + ".registMemo", dto);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return false;
+	}
+
+	@Override
+	public List<PMemoDTO> getMemoList() {
+		List<PMemoDTO> memoList = session.selectList(namespace + ".getMemoList");
+		return memoList;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 public class PMemoDTO {
 	private int m_seq;
 	private String m_title;
-	private String m_context;
+	private String m_content;
 	private String s_id;
 
 	public int getM_seq() {
@@ -24,12 +24,12 @@ public class PMemoDTO {
 		this.m_title = m_title;
 	}
 
-	public String getM_context() {
-		return m_context;
+	public String getM_content() {
+		return m_content;
 	}
 
-	public void setM_context(String m_context) {
-		this.m_context = m_context;
+	public void setM_content(String m_content) {
+		this.m_content = m_content;
 	}
 
 	public String getS_id() {
@@ -42,7 +42,7 @@ public class PMemoDTO {
 
 	@Override
 	public String toString() {
-		return "PMemoDTO [m_seq=" + m_seq + ", m_title=" + m_title + ", m_context=" + m_context + ", s_id=" + s_id
+		return "PMemoDTO [m_seq=" + m_seq + ", m_title=" + m_title + ", m_content=" + m_content + ", s_id=" + s_id
 				+ "]";
 	}
 
