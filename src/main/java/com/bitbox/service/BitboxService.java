@@ -128,8 +128,9 @@ public class BitboxService implements IBitboxService {
 	}
 
 	@Override
-	public List<PMemoDTO> getMemoList(String id) {
-		List<PMemoDTO> memoList = dao.getMemoList(id);
+	public List<PMemoDTO> getMemoList(String id,int page) {
+		int start = (page*5) +1;
+		List<PMemoDTO> memoList = dao.getMemoList(id,start);
 		return memoList;
 	}
 

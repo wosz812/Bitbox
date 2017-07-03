@@ -38,7 +38,7 @@ public class MemoController {
 	public String memolist(HttpSession session, Model model,
 			@RequestParam(value = "page", defaultValue = "0") int page) {
 		String url = "/bitbox/memo";
-		List<PMemoDTO> memoList = service.getMemoList((String) session.getAttribute("id"));// id가
+		List<PMemoDTO> memoList = service.getMemoList((String) session.getAttribute("id"),page);// id가
 																							// 들어가야함
 		// 페이지 추가
 		ArrayList<String> pageList = service.getPageList(page, (String) session.getAttribute("id"));

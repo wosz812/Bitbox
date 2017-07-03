@@ -24,6 +24,6 @@ public interface IBitboxDAO {
 	GinDTO selectGin(GinDTO gIn);
 	public boolean groupRegist(GroupDTO dto);
 	public boolean registMemo(PMemoDTO dto);
-	public List<PMemoDTO> getMemoList(String id);
+	public List<PMemoDTO> getMemoList(String id,int start);
 	public int PMemoCnt(String id);
 }

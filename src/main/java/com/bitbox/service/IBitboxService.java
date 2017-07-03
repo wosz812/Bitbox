@@ -38,7 +38,7 @@ public interface IBitboxService {
 
 	public boolean registMemo(PMemoDTO dto);
 
-	public List<PMemoDTO> getMemoList(String id);
+	public List<PMemoDTO> getMemoList(String id,int page);
 
 	public ArrayList<String> getPageList(int page, String id);
 }

@@ -70,8 +70,13 @@
 		values(#{m_seq}, #{m_title}, #{m_content}, #{s_id})
 	</insert>
 	
-	<select id="getMemoList" parameterType="String" resultType="com.bitbox.dto.PMemoDTO">
-		select * from pmemo where s_id = #{id}
+	<select id="getMemoList" parameterType="com.bitbox.dto.PageDTO" resultType="com.bitbox.dto.PMemoDTO">
+		select A.* from(
+			select rownum as num,temp.* from(
+				select * from pmemo where s_id=#{id} order by m_seq desc
+				) temp
+			) A 
+		where A.num between #{start} and #{start}+4
 	</select>
 	
 	<select id="getPMemoCnt" parameterType="String" resultType="Integer">

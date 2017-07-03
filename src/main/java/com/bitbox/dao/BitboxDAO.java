@@ -12,6 +12,7 @@ import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
+import com.bitbox.dto.PageDTO;
 import com.bitbox.dto.StudentDTO;
 
 @Repository
@@ -156,8 +157,9 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 
 	@Override
-	public List<PMemoDTO> getMemoList(String id) {
-		List<PMemoDTO> memoList = session.selectList(namespace + ".getMemoList", id);
+	public List<PMemoDTO> getMemoList(String id,int start) {
+		PageDTO dto = new PageDTO(id,start);
+		List<PMemoDTO> memoList = session.selectList(namespace + ".getMemoList", dto);
 		return memoList;
 	}
 
