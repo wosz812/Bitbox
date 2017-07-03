@@ -18,8 +18,8 @@ import com.bitbox.service.IBitboxService;
 @Controller
 @RequestMapping(value = "/memo")
 public class MemoController {
-
-	@Autowired
+	
+	@Autowired//injet는 불가능
 	IBitboxService service;
 
 	@RequestMapping(value = "/registMemo", method = RequestMethod.POST)
