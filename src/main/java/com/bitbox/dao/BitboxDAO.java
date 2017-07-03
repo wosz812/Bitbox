@@ -156,8 +156,15 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 
 	@Override
-	public List<PMemoDTO> getMemoList() {
-		List<PMemoDTO> memoList = session.selectList(namespace + ".getMemoList");
+	public List<PMemoDTO> getMemoList(String id) {
+		List<PMemoDTO> memoList = session.selectList(namespace + ".getMemoList", id);
 		return memoList;
 	}
+
+	@Override
+	public int PMemoCnt(String id) {
+		int cnt = session.selectOne(namespace + ".getPMemoCnt", id);
+		return cnt;
+	}
+
 }

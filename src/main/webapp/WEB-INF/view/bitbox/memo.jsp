@@ -172,7 +172,7 @@
 									<div class="modal-body">
 											<input type="text" class="form-control" placeholder="title.."
 												name="m_title">
-											<textarea class="form-control" rows="3" name="m_content"
+											<textarea class="form-control" rows="3" cols="20" name="m_content"
 												placeholder="text.."></textarea>
 									</div>
 									<div class="modal-footer">
@@ -195,7 +195,8 @@
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h4 class="modal-title">${memo.m_title}<i class="fa  fa-book"></i>
+											<h4 class="modal-title">
+												<i class="fa  fa-book">&nbsp;&nbsp;&nbsp;</i>${memo.m_title}
 											</h4>
 										</div>
 										<div class="modal-body"><p>${memo.m_content}</p></div>
@@ -207,28 +208,9 @@
 							<!-- /.modal -->
 						</div>
 						</c:forEach>
-						<div class="example-modal">
-							<div class="modal">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-
-											<h4 class="modal-title">
-												Default Memo <i class="fa  fa-book"></i>
-											</h4>
-										</div>
-										<div class="modal-body">
-											<p>One fine body&hellip;</p>
-										</div>
-
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
-							<!-- /.modal -->
+						<div align="center">
+							<h4>${pageList.toString()}</h4>
 						</div>
-						<!-- /.example-modal -->
 					</div>
 				</div>
 			</section>

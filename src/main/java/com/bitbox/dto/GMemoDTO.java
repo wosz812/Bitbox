@@ -3,7 +3,7 @@ package com.bitbox.dto;
 public class GMemoDTO {
 	private int gm_seq;
 	private String m_title;
-	private String m_context;
+	private String m_content;
 	private int group_seq;
 
 	public int getGm_seq() {
@@ -22,12 +22,12 @@ public class GMemoDTO {
 		this.m_title = m_title;
 	}
 
-	public String getM_context() {
-		return m_context;
+	public String getM_content() {
+		return m_content;
 	}
 
-	public void setM_context(String m_context) {
-		this.m_context = m_context;
+	public void setM_context(String m_content) {
+		this.m_content = m_content;
 	}
 
 	public int getGroup_seq() {
@@ -40,7 +40,7 @@ public class GMemoDTO {
 
 	@Override
 	public String toString() {
-		return "GMemoDTO [gm_seq=" + gm_seq + ", m_title=" + m_title + ", m_context=" + m_context + ", group_seq="
+		return "GMemoDTO [gm_seq=" + gm_seq + ", m_title=" + m_title + ", m_content=" + m_content + ", group_seq="
 				+ group_seq + "]";
 	}
 

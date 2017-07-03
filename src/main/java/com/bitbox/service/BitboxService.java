@@ -128,9 +128,34 @@ public class BitboxService implements IBitboxService {
 	}
 
 	@Override
-	public List<PMemoDTO> getMemoList() {
-		List<PMemoDTO> memoList  = dao.getMemoList();
+	public List<PMemoDTO> getMemoList(String id) {
+		List<PMemoDTO> memoList = dao.getMemoList(id);
 		return memoList;
+	}
+
+	@Override
+	public ArrayList<String> getPageList(int page, String id) {
+		ArrayList<String> pageList = new ArrayList<String>();
+		// 페이지 리스트를 받아와야함
+		int amount = 5;
+		int count = dao.PMemoCnt(id);// 로우 갯수
+		int pageCount = (int) Math.ceil(count / (double) amount);
+		int pageUnit = page / amount;
+		int endPage = (pageUnit * 10) + amount;
+		endPage = endPage <= pageCount ? endPage : pageCount;
+		
+		if (pageUnit != 0) {
+			pageList.add(" <a href='/memo/memoView?page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+		}
+		for (int i = pageUnit * 10; i < endPage; i++) {
+			pageList.add(" <a href='/memo/memoView?page=" + (i) + "'>" + (i + 1) + "</a> ");
+		}
+		// next
+		if (endPage < pageCount) {
+			pageList.add(" <a href='/memo/memoView?page=" + (endPage) + "'> next </a> ");
+		}
+
+		return pageList;
 	}
 
 }

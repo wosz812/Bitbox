@@ -1,5 +1,6 @@
 package com.bitbox.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bitbox.dto.CalendarFormat;
@@ -37,5 +38,7 @@ public interface IBitboxService {
 
 	public boolean registMemo(PMemoDTO dto);
 
-	public List<PMemoDTO> getMemoList();
+	public List<PMemoDTO> getMemoList(String id);
+
+	public ArrayList<String> getPageList(int page, String id);
 }
