@@ -38,7 +38,7 @@ import com.google.gson.Gson;
 
 @Controller
 public class BitBoxController {
-		//진우수정
+		//진우수정2
 
 	String path = "c:\\dev\\";
 
