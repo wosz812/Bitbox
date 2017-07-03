@@ -127,14 +127,197 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<div class="box-body">
-					<h1 align="center">Main Screen</h1>
-				</div>
-			</section>
+            <div class="box-body">
+               <h2 align="center" class="font">「 Spring Framework를 통한 모바일 웹 개발자 양성과정 」</h2>
+            </div>
+         </section>
+<section class="content">
+         <div class="row">
+                    <div class="col-md-8">
+         <div class="box box-solid">
+            <!-- /.box-header -->
+            <div class="box-body">
+               <div id="carousel-example-generic" class="carousel slide"
+                  data-ride="carousel">
+                  <ol class="carousel-indicators">
+                     <li data-target="#carousel-example-generic" data-slide-to="0"
+                        class="active"></li>
+                     <li data-target="#carousel-example-generic" data-slide-to="1"
+                        class=""></li>
+                     <li data-target="#carousel-example-generic" data-slide-to="2"
+                        class=""></li>
+                  </ol>
+                  <div class="carousel-inner">
+                  	
+                     <div class="item active">
+                     <a href="https://www.naver.com">
+                        <img
+                           src="/resources/image/118.jpg"
+                           alt="First slide" ></a>
 
-			<!-- Main content -->
-			<section class="content"></section>
-			<!-- /.content -->
+                        <div class="carousel-caption">First Slide</div>
+                     </div>
+                     <div class="item">
+                     <a href="https://www.daum.net">
+                        <img
+                           src="/resources/image/300.jpg"
+                           alt="Second slide"></a>
+
+                        <div class="carousel-caption">Second Slide</div>
+                     </div>
+                     <div class="item">
+                     <a href="https://www.gersang.co.kr">
+                        <img
+                           src="/resources/image/301.jpg"
+                           alt="Third slide"></a>
+
+                        <div class="carousel-caption">Third Slide</div>
+                     </div>
+                  </div>
+                  <a class="left carousel-control" href="#carousel-example-generic"
+                     data-slide="prev"> <span class="fa fa-angle-left"></span>
+                  </a> <a class="right carousel-control"
+                     href="#carousel-example-generic" data-slide="next"> <span
+                     class="fa fa-angle-right"></span>
+                  </a>
+               </div>
+            </div>
+            <!-- /.box-body -->
+         </div>
+         <!-- /.box -->
+         </div>
+          <!-- 정보창 -->
+          <div class="col-md-4">
+          <!-- Info Boxes Style 2 -->
+          <div class="info-box bg-yellow">
+            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Inventory</span>
+              <span class="info-box-number">5,200</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 50%"></div>
+              </div>
+                  <span class="progress-description">
+                    50% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Mentions</span>
+              <span class="info-box-number">92,050</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 20%"></div>
+              </div>
+                  <span class="progress-description">
+                    20% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+          <div class="info-box bg-red">
+            <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Downloads</span>
+              <span class="info-box-number">114,381</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+                  <span class="progress-description">
+                    70% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Direct Messages</span>
+              <span class="info-box-number">163,921</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 40%"></div>
+              </div>
+                  <span class="progress-description">
+                    40% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+          </div>
+          
+          <!-- 정보창 -->
+          </div>
+         
+          <div class = "col-md-4">
+         <!-- DONUT CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title font">커리큘럼</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body chart-responsive">
+              <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+          </div>
+           <div class="col-md-4">
+          <!-- DONUT CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title font">과목 진행도</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body chart-responsive" align="center">
+              <div class="chart" id="sales-chart2" style="height: 300px; position: relative;" align="center"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+          </div>
+          <div class = "col-md-4">
+         <!-- DONUT CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title font">무엇을 넣을까요???</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body chart-responsive">
+              <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+      </section>
 		</div>
 		<!-- /.content-wrapper -->
 		<footer class="main-footer">
