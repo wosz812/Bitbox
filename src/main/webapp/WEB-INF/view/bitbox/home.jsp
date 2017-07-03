@@ -30,6 +30,7 @@
 <!-- font -->
 <link rel="stylesheet"
    href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <style type="text/css">
      .font{
            
@@ -152,7 +153,7 @@
                      <div class="item active">
                      <a href="https://www.naver.com">
                         <img
-                           src="/resources/image/118.jpg"
+                           src="/img/1.jpg"
                            alt="First slide" ></a>
 
                         <div class="carousel-caption">First Slide</div>
@@ -160,7 +161,7 @@
                      <div class="item">
                      <a href="https://www.daum.net">
                         <img
-                           src="/resources/image/300.jpg"
+                           src="/img/2.jpg"
                            alt="Second slide"></a>
 
                         <div class="carousel-caption">Second Slide</div>
@@ -168,7 +169,7 @@
                      <div class="item">
                      <a href="https://www.gersang.co.kr">
                         <img
-                           src="/resources/image/301.jpg"
+                           src="/img/3.jpg"
                            alt="Third slide"></a>
 
                         <div class="carousel-caption">Third Slide</div>
@@ -518,5 +519,107 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
+	<!-- Morris.js charts -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+   <!-- page script -->
+   <script>
+     $(function () {
+       "use strict";
+   
+       
+   
+       //DONUT CHART
+       var donut = new Morris.Donut({
+         element: 'sales-chart',
+         resize: true,
+         colors: ["#3c8dbc", "#f56954", "#00a65a", "#ffdf3e"],
+         data: [
+           {label: "Spring", value: 12},
+           {label: "JAVA", value: 50},
+           {label: "DB", value: 20},
+           {label: "Android", value: 10}
+         ],
+         hideHover: 'auto'
+       }).on('click', function(i, row){
+           
+          //alert(row.label);
+           if(row.label=="DB"){
+              alert(row.label);
+              var donut2 = new Morris.Donut({
+                  element: 'sales-chart2',
+                  resize: true,
+                  colors: ["#00a65a", "#8ec96d"],
+                  data: [
+                    {label: "현재 일수", value: 12},
+                    
+                    {label: "남은 일수", value: 7}
+                  ],
+                  hideHover: 'auto'
+                });
+           }else if(row.label=="Spring"){
+              alert(row.label);
+              var donut2 = new Morris.Donut({
+                  element: 'sales-chart2',
+                  resize: true,
+                  colors: ["#3c8dbc", "#73d1f7"],
+                  data: [
+               {label: "현재 일수", value: 12},
+                    
+                    {label: "남은 일수", value: 7}
+                  ],
+                  hideHover: 'auto'
+                });
+           }else if(row.label=="Android"){
+              alert(row.label);
+              var donut2 = new Morris.Donut({
+                  element: 'sales-chart2',
+                  resize: true,
+                  colors: ["#ffdf3e", "#ffeeac"],
+                  data: [
+               {label: "현재 일수", value: 12},
+                    
+                    {label: "남은 일수", value: 7}
+                  ],
+                  hideHover: 'auto'
+                });
+           }else if(row.label=="JAVA"){
+              alert(row.label);
+              var donut2 = new Morris.Donut({
+                  element: 'sales-chart2',
+                  resize: true,
+                  colors: ["#da3f3a", "#f56954"],
+                  data: [
+               {label: "현재 일수", value: 12},
+                    
+                    {label: "남은 일수", value: 7}
+                  ],
+                  hideHover: 'auto'
+                });
+           }
+       });
+      
+      
+       
+       //DONUT CHART2
+//       var donut = new Morris.Donut({
+//         element: 'sales-chart2',
+//         resize: true,
+//         colors: ["#f56954", "#f56954", "#f56954", "#f56954","#f56954","#f56954","#f56954"],
+//         data: [
+//           {label: "다형성", value: 12},
+//           {label: "객체지향", value: 30},
+//           {label: "메소드", value: 14},
+//           {label: "조건문/반복문", value: 7},
+//           {label: "배열", value: 10},
+//           {label: "자료형", value: 3},
+//           {label: "상속", value: 20}
+//         ],
+//         hideHover: 'auto'
+//       });
+       
+     });
+   </script>
+	
 </body>
 </html>
