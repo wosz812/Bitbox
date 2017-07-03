@@ -39,12 +39,6 @@ import com.google.gson.Gson;
 @Controller
 public class BitBoxController {
 		//진우수정2
-	//대성 test
-<<<<<<< HEAD
-	//지원이 접속 testa  cc
-	// testvv
-=======
->>>>>>> 5535204fdf93a20cb39590786584de5329545f62
 
 	String path = "c:\\dev\\";
 
