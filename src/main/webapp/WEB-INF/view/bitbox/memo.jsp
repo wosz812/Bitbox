@@ -63,7 +63,6 @@
 		<%@include file="sidebar.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="box-body">
 					<h1 align="center">Memo</h1>
