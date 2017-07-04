@@ -2,10 +2,15 @@ package com.bitbox.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,6 +38,8 @@ import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.service.IBitboxService;
 import com.google.gson.Gson;
+
+import oracle.sql.DATE;
 
 @RequestMapping(value = "/bitbox")
 
@@ -110,7 +117,7 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/projectUpdate", method = { RequestMethod.POST, RequestMethod.GET })
 	public String projectUpdate(HttpSession session, @RequestParam("p_title") String p_title,
-			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq) {
+			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,@RequestParam(value="cal",defaultValue="")String cal) {
 		String url = "";
 		boolean flag = false;
 		PBoardDTO board = new PBoardDTO();
@@ -118,17 +125,21 @@ public class BitBoxController {
 		board.setP_title(p_title);
 		board.setP_content(p_content);
 		board.setS_id(session.getAttribute("id").toString());
-		logger.info(p_title + "," + p_content);
+		logger.info(p_title + "," + cal);
 		flag = service.projectUpdate(board);
 		if (flag) {
+			if(cal.equals("cal")){
+				url = "redirect:/bitbox/calendar";
+			}else{
 			url = "redirect:/bitbox/listAll";
+			}
 		}
 		return url;
 	}
 	
 	@RequestMapping(value = "/projectDelete", method = { RequestMethod.POST, RequestMethod.GET })
 	public String projectDelete(HttpSession session, @RequestParam("p_title") String p_title,
-			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq) {
+			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,@RequestParam(value="cal",defaultValue="")String cal) {
 		String url = "";
 		boolean flag = false;
 		PBoardDTO board = new PBoardDTO();
@@ -137,8 +148,27 @@ public class BitBoxController {
 		logger.info(p_boardseq + "," + session.getAttribute("id").toString());
 		flag = service.projectDelete(board);
 		if (flag) {
+			if(cal.equals("cal")){
+				url = "redirect:/bitbox/calendar";
+			}else{
 			url = "redirect:/bitbox/listAll";
+			}
 		}
+		return url;
+	}
+	@RequestMapping(value = "/detailProject", method = { RequestMethod.POST, RequestMethod.GET })
+	public String detailProject(Model model,HttpSession session,@RequestParam("p_title") String p_title,
+			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
+			@RequestParam("p_upload") String p_upload,@RequestParam("p_category") String p_category){
+		String url="/bitbox/projectView";	
+		PBoardDTO board=new PBoardDTO();
+		board.setP_boardseq(p_boardseq);
+		board.setP_title(p_title);
+		board.setP_content(p_content);
+		board.setP_upload(p_upload);
+		board.setP_category(p_category);	
+		board.setS_id(session.getAttribute("id").toString());
+		model.addAttribute("board",board);
 		return url;
 	}
 

@@ -57,30 +57,37 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/bitbox/regist" method="post"
-								enctype="multipart/form-data">
+							<form role="form" action="" method="post"
+								enctype="multipart/form-data" id="dataset">
+								<input type="hidden" name="p_boardseq"
+									value="${board.p_boardseq}">
 								<div class="box-body">
 									<div class="form-group">
 										<label for="exampleInputEmail1">제목</label> <input type="text"
-											class="form-control" name="p_title" value="">
+											class="form-control" name="p_title" value="${board.p_title }">
 									</div>
 									<div class="form-group">
-										<label>카테고리</label> <label>Test</label>
+										<label>카테고리</label> <br> <label>${board.p_category}</label>
 									</div>
 									<div class="form-group">
 										<label>내용</label>
-										<textarea class="form-control" rows="10"
-											value="" name="p_content"></textarea>
+										<textarea class="form-control" rows="10" value=""
+											name="p_content">${board.p_content }</textarea>
 									</div>
 									<div class="form-group">
-										<label for="exampleInputFile">File input</label> <input
-											type="text" name="p_upload" value="">
+										<label for="exampleInputFile">File Name:</label> <a
+											href="/bitbox/download?filename=${board.p_upload }"><label>${board.p_upload }</label></a>
 										<p class="help-block"></p>
 									</div>
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">확인</button>
+									<button type="button" class="btn btn-primary"
+										onclick="gourl(1)">확인</button>
+									<button type="button" class="btn btn-primary"
+										onclick="gourl(2)">수정</button>
+									<button type="button" class="btn btn-primary"
+										onclick="gourl(3)">삭제</button>
 								</div>
 							</form>
 						</div>
@@ -109,5 +116,33 @@
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
+	<script type="text/javascript">
+	 function gourl(type) {
+		var ds = document.getElementById("dataset");
+		var url = "/bitbox/";		
+		var tempurl=location.search.substring(1);
+		var urlArray=tempurl.split('&');
+		
+		if(urlArray[5]=="cal=cal"){
+			if (type == 1) {
+				url = "/bitbox/calendar";
+			} else if (type == 2) {
+				url = "/bitbox/projectUpdate?"+urlArray[5];
+			} else if (type==3){
+				url = "/bitbox/projectDelete?"+urlArray[5];
+			}
+		}else{
+			if (type == 1) {
+				url = "/bitbox/listAll";
+			} else if (type == 2) {
+				url = "/bitbox/projectUpdate";
+			} else if (type==3){
+				url = "/bitbox/projectDelete";
+			}
+		}
+		ds.action = url;
+		ds.submit();
+	}			
+	</script>
 </body>
 </html>

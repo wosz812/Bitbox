@@ -54,6 +54,8 @@ public class BitboxService implements IBitboxService {
 			format = new CalendarFormat();
 			format.setTitle(calendar.get(i).getP_title());
 			format.setStart(new SimpleDateFormat("yyyy-MM-dd").format(calendar.get(i).getP_date()));
+			format.setUrl("http://localhost:8080/bitbox/detailProject?p_boardseq="+calendar.get(i).getP_boardseq()+"&p_title="+calendar.get(i).getP_title()
+					+"&p_content="+calendar.get(i).getP_content()+"&p_upload="+calendar.get(i).getP_upload()+"&p_category="+calendar.get(i).getP_category()+"&cal=cal");
 			calendars.add(format);
 		}
 		return calendars;
