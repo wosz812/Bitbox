@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>BITBOX</title>
 <!-- Tell the browser to be responsive to screen width -->
@@ -13,8 +13,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 <!-- Bootstrap 3.3.6 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -22,11 +21,10 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
+<link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,11 +35,9 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
-				<%@include file="header.jsp"%>
-		
+		<%@include file="header.jsp"%>
 		<!-- Left side column. contains the logo and sidebar -->
-				<%@include file="sidebar.jsp"%>
-		
+		<%@include file="sidebar.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -61,7 +57,8 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/bitbox/regist" method="post"enctype="multipart/form-data">
+							<form role="form" action="/bitbox/regist" method="post"
+								enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
 										<label for="exampleInputEmail1">제목</label> <input type="text"
@@ -103,21 +100,21 @@
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
-		<%@include file="controlSideBar.jsp" %>
+		<%@include file="controlSideBar.jsp"%>
 	</div>
 	<!-- ./wrapper -->
 
 	<!-- jQuery 2.2.3 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
 	<!-- Slimscroll -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+	<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 	<!-- FastClick -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js"></script>
+	<script src="/plugins/fastclick/fastclick.js"></script>
 	<!-- AdminLTE App -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
+	<script src="/dist/js/demo.js"></script>
 </body>
 </html>
