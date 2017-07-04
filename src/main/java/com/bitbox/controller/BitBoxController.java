@@ -150,7 +150,7 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/getCalendar", method = RequestMethod.GET)
 	public @ResponseBody String getVacation(HttpServletResponse response, HttpSession session) {
-		logger.info("Calendar 筌욊쑴�뿯");
+		logger.info("Calendar 데이터 접근");
 		List<CalendarFormat> data = service.getCalendar(session.getAttribute("id").toString());
 		String json = new Gson().toJson(data);
 		logger.info(json);
