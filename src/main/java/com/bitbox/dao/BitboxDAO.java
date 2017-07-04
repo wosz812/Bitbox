@@ -179,5 +179,11 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return flag;
 	}
+	
+	@Override
+	public List<GroupDTO> getGroupList(String s_id) {
+		List<GroupDTO> groupList = session.selectList(login+".getGroupList", s_id);
+		return groupList;
+	}
 
 }

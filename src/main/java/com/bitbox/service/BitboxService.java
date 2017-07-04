@@ -165,5 +165,11 @@ public class BitboxService implements IBitboxService {
 		boolean flag=dao.projectDelete(board);
 		return flag;
 	}
+	
+	@Override
+	public List<GroupDTO> getGroupList(String s_id) {
+		List<GroupDTO> groupList = dao.getGroupList(s_id);
+		return groupList;
+	}
 
 }
