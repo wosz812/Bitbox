@@ -43,4 +43,6 @@ public interface IBitboxService {
 	public ArrayList<String> getPageList(int page, String id);
 
 	public boolean projectDelete(PBoardDTO board);
+	
+	public List<GroupDTO> getGroupList(String s_id);
 }

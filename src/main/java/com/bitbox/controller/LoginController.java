@@ -1,5 +1,7 @@
 package com.bitbox.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.StudentDTO;
 import com.bitbox.service.IBitboxService;
 
@@ -33,12 +36,16 @@ public class LoginController {
 	public String login(HttpSession session, @RequestParam("s_id") String s_id, @RequestParam("s_pw") String s_pw) {
 		String url = "";
 		StudentDTO student = new StudentDTO();
+		List<GroupDTO> groupList = null;
 		student.setS_id(s_id);
 		student.setS_pw(s_pw);
 		StudentDTO sdto = service.loginCheck(student);
 		if (sdto != null) {
-			session.setAttribute("id", s_id);
-			session.setAttribute("s_pw", s_pw);
+			groupList = service.getGroupList(sdto.getS_id());
+			System.out.println(groupList);
+			session.setAttribute("groupList", groupList);
+			session.setAttribute("id", sdto.getS_id());
+			session.setAttribute("code", sdto.getS_class_code());
 			url = "redirect:/bitbox/home";
 		}
 		return url;
