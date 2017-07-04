@@ -52,6 +52,7 @@ public class BitBoxController {
 		String url = "/bitbox/home";
 		session.setAttribute("id", session.getAttribute("id"));
 		session.setAttribute("code", session.getAttribute("code"));
+		session.setAttribute("groupList", session.getAttribute("groupList"));
 		return url;
 	}
  
@@ -145,6 +146,7 @@ public class BitBoxController {
 		String url = "/bitbox/calendar";
 		session.setAttribute("id", session.getAttribute("id"));
 		session.setAttribute("code", session.getAttribute("code"));
+		session.setAttribute("groupList", session.getAttribute("groupList"));
 		return url;
 	}
 
@@ -186,6 +188,7 @@ public class BitBoxController {
 		String url = "/bitbox/groupRegist";
 		session.setAttribute("id", session.getAttribute("id"));
 		session.setAttribute("code", session.getAttribute("code"));
+		session.setAttribute("groupList", session.getAttribute("groupList"));
 		return url;
 	}
 
@@ -194,6 +197,7 @@ public class BitBoxController {
 		String url = "/bitbox/groupRegist";
 		session.setAttribute("id", session.getAttribute("id"));
 		session.setAttribute("code", session.getAttribute("code"));
+		session.setAttribute("groupList", session.getAttribute("groupList"));
 		String id = (String) session.getAttribute("id");
 		dto.setS_id(id);
 		boolean flag = service.groupRegist(dto);

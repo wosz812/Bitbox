@@ -23,4 +23,9 @@
 	<select id="searchPw" parameterType="com.bitbox.dto.StudentDTO" resultType="com.bitbox.dto.StudentDTO">
 		select * from student where s_id = #{s_id} AND s_email = #{s_email}
 	</select>
+	
+	<select id="getGroupList" parameterType="String" resultType="com.bitbox.dto.GroupDTO">
+		select * from cgroup a, groupin b
+		where a.group_seq = b.group_seq and b.s_id = #{s_id}
+	</select>
 </mapper>
