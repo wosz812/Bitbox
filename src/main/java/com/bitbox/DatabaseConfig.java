@@ -26,8 +26,8 @@ public class DatabaseConfig {
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource db1DataSource() {
         return DataSourceBuilder.create().build();
-    }
- 
+    }    
+ //jiyeon
     @Bean(name = "db1SqlSessionFactory")
     @Primary
     public SqlSessionFactory db1SqlSessionFactory(@Qualifier("db1DataSource") DataSource db1DataSource, ApplicationContext applicationContext) throws Exception {
