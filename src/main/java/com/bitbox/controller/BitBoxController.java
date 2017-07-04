@@ -54,7 +54,7 @@ public class BitBoxController {
 		session.setAttribute("code", session.getAttribute("code"));
 		return url;
 	}
-
+ 
 	@RequestMapping(value = "/listAll", method = { RequestMethod.POST, RequestMethod.GET })
 	public String listAll(HttpSession session, Model model) {
 		String url = "";

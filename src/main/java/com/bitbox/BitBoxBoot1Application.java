@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BitBoxBoot1Application {
 
 	public static void main(String[] args) {
+		
+		
 		SpringApplication.run(BitBoxBoot1Application.class, args); 
 	}
 }
