@@ -20,8 +20,7 @@
                class="icon-bar"></span> <span class="icon-bar"></span> <span
                class="icon-bar"></span>
             </a>
-            <li><a href="#" data-toggle="control-sidebar"><i
-                  class="fa fa-gears"></i></a></li>
+           
          </nav>
       </header>
 </html>
