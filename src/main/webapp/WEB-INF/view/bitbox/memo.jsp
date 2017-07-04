@@ -107,41 +107,27 @@
 
 						<br> <br> <br>
 						<c:forEach items="${memoList}" var="memo">
-							<div class="example-modal">
-<<<<<<< HEAD
-							<div class="modal">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											
-											<h4 class="modal-title">
-												<i class="fa fa-book">&nbsp;&nbsp;&nbsp;</i>${memo.m_title}
-											</h4>
-										</div>
-										<div class="modal-body"><p>${memo.m_content}</p></div>
-										<h4 align="right"><a href="http://www.daum.net"><i class="fa fa-refresh"></i></a>
-										<a href="https://www.naver.com"><i class="fa fa-trash"></i></a></h4>
-=======
-								<div class="modal">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title">
-													<i class="fa  fa-book">&nbsp;&nbsp;&nbsp;</i>${memo.m_title}
-												</h4>
-											</div>
-											<div class="modal-body">
-												<p>${memo.m_content}</p>
-											</div>
-										</div>
-										<!-- /.modal-content -->
->>>>>>> 29c23cf0d8cffcec2dcf6956ba85c6fbc06ed9ca
-									</div>
-									<!-- /.modal-dialog -->
-								</div>
-								<!-- /.modal -->
-							</div>
-						</c:forEach>
+                     <div class="example-modal">
+                     <div class="modal">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 
+                                 <h4 class="modal-title">
+                                    <i class="fa fa-book">&nbsp;&nbsp;&nbsp;</i>${memo.m_title}
+                                 </h4>
+                              </div>
+                              <div class="modal-body"><p>${memo.m_content}</p></div>
+                              <h4 align="right"><a href="http://www.daum.net"><i class="fa fa-refresh"></i></a>
+                              <a href="https://www.naver.com"><i class="fa fa-trash"></i></a></h4>
+                           </div>
+                           <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                     </div>
+                     <!-- /.modal -->
+                  </div>
+                  </c:forEach>
 						<div align="center">
 							<h4>${pageList.toString()}</h4>
 						</div>
