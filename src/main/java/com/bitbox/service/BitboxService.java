@@ -58,7 +58,7 @@ public class BitboxService implements IBitboxService {
             format.setUrl("http://localhost:8080/bitbox/detailProject?p_boardseq="+calendar.get(i).getP_boardseq()+"&p_title="+calendar.get(i).getP_title()
                     +"&p_content="+calendar.get(i).getP_content()+"&p_upload="+calendar.get(i).getP_upload()+"&p_category="+calendar.get(i).getP_category()+"&cal=cal");
 
-
+            //수정
 			calendars.add(format);
 		}
 		return calendars;
