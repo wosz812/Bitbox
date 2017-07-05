@@ -88,7 +88,7 @@
 				select * from pmemo where s_id=#{id} order by m_seq desc
 				) temp
 			) A 
-		where A.num between #{start} and #{start}+4
+		where A.num between #{start} and #{start}+2
 	</select>
 	
 	<select id="getGMemoList" parameterType="com.bitbox.dto.gPageDTO" resultType="com.bitbox.dto.GMemoDTO">
@@ -97,7 +97,7 @@
 				select * from gmemo where group_seq=#{group_seq} order by gm_seq desc
 				) temp
 			) A 
-		where A.num between #{start} and #{start}+4
+		where A.num between #{start} and #{start}+2
 	</select>
 	
 	<select id="getPMemoCnt" parameterType="String" resultType="Integer">
@@ -106,5 +106,29 @@
 	
 	<select id="getGMemoCnt" parameterType="Integer" resultType="Integer">
 		select count(*) from gmemo where group_seq = #{group_seq}
+	</select>
+	
+	<delete id="removePMemo" parameterType="Integer">
+		delete from Pmemo where m_seq = #{m_seq}
+	</delete>
+	
+	<update id="updatePMemo" parameterType="com.bitbox.dto.PMemoDTO">
+		update pmemo set m_title = #{m_title}, m_content = #{m_content} where m_seq = #{m_seq}
+	</update>
+	
+	<select id="getPMemoModal" parameterType="Integer" resultType="com.bitbox.dto.PMemoDTO">
+		select * from pmemo where m_seq = #{seq}
+	</select>
+	
+	<delete id="removeGMemo" parameterType="Integer">
+		delete from gmemo where gm_seq = #{gm_seq}
+	</delete>
+	
+	<update id="updateGMemo" parameterType="com.bitbox.dto.GMemoDTO">
+		update gmemo set m_title = #{m_title}, m_content = #{m_content} where gm_seq = #{gm_seq} 
+	</update>
+	
+	<select id="getGMemoModal" parameterType="Integer" resultType="com.bitbox.dto.GMemoDTO">
+		select * from gmemo where gm_seq = #{seq}
 	</select>
 </mapper>
