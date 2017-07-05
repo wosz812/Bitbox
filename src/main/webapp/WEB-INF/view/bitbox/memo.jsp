@@ -113,12 +113,12 @@
 
 						<br> <br> <br>
 						<c:forEach items="${memoList}" var="memo">
+					
                      <div class="example-modal">
                      <div class="modal">
                         <div class="modal-dialog">
                            <div class="modal-content">
                               <div class="modal-header">
-                                 
                                  <h4 class="modal-title">
                                     <i class="fa fa-book">&nbsp;&nbsp;&nbsp;</i>${memo.m_title}
                                  </h4>
