@@ -13,10 +13,7 @@
                               left : 'prev,next today',
                               center : 'title',
                               right : 'month,agendaWeek,agendaDay'
-                           },
-                           selectable : true,
-                           selectHelper : true,
-                           editable : false,
+                           },                           
                            events : data
                         });
                      });
