@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-
+	
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -44,9 +44,46 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<div class="box-body">
-					<h2 align="center" class="font">「 Spring Framework를 통한 모바일 웹
-						개발자 양성과정 」</h2>
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-red"><i
+							class="fa fa-files-o"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">Upload Files</span> <span
+								class="info-box-number">13,648</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-yellow"><i
+							class="ion ion-ios-people-outline"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">Group Join</span> <span
+								class="info-box-number">2,000</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="info-box">
+						<span class="info-box-icon bg-green"><i
+							class="fa fa-comments-o"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">Comments</span> <span
+								class="info-box-number">13,648</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
 				</div>
 			</section>
 			<section class="content">
@@ -254,7 +291,7 @@
 		<%@include file="controlSideBar.jsp"%> 
 	</div>
 	<!-- ./wrapper -->
-
+	<script src="https://unpkg.com/vue"></script>
 	<!-- jQuery 2.2.3 -->
 	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->

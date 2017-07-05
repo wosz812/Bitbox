@@ -28,4 +28,5 @@ public interface IBitboxDAO {
 	public int PMemoCnt(String id);
 	public boolean projectDelete(PBoardDTO board);
 	public List<GroupDTO> getGroupList(String s_id);
+	public int getPBoardCnt();
 }

@@ -185,5 +185,13 @@ public class BitboxDAO implements IBitboxDAO {
 		List<GroupDTO> groupList = session.selectList(login+".getGroupList", s_id);
 		return groupList;
 	}
+	
+	@Override
+	public int getPBoardCnt() {
+		int cnt =session.selectOne(namespace+".getPBoardCnt");
+		System.out.println(cnt);
+		return cnt;
+	}
+	
 
 }

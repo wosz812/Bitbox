@@ -86,4 +86,8 @@
 	<select id="getPMemoCnt" parameterType="String" resultType="Integer">
 		select count(*) from pmemo where s_id = #{id}
 	</select>
+	
+	<select id="getPBoardCnt" resultType="Integer">
+		select count(*) from pboard 
+	</select>
 </mapper>
