@@ -16,7 +16,7 @@
                            },
                            selectable : true,
                            selectHelper : true,
-                           editable : true,
+                           editable : false,
                            events : data
                         });
                      });
