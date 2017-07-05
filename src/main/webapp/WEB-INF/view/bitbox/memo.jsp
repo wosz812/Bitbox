@@ -88,17 +88,10 @@
 									</div>
 									<form action="/memo/registMemo?group_seq=${group_seq}" method="post">
 										<div class="modal-body">
-										
 											<input type="text" class="form-control" placeholder="title.."
 												name="m_title">
-												
-										</div>
-										<div>
-										
 											<textarea class="form-control" rows="3" cols="20"
 												placeholder="text.." name="m_content"></textarea> 
-												
-											
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default"
@@ -110,9 +103,38 @@
 								</div>
 							</div>
 						</div>
+						<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">메모 수정</h4>
+									</div>
+									<form action="/memo/updateMemo?page=${page}&group_seq=${group_seq}" method="post">
+										<div class="modal-body">
+											<input type="text" class="form-control"
+												name="m_title" id="m_title">
+											<input type="hidden" name="m_seq" id="m_seq">
+											<textarea class="form-control" rows="3" cols="20"
+												name="m_content" id="m_content"></textarea>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">닫기</button>
 
+											<input type="submit" class="btn btn-primary" value="수정"></input>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 						<br> <br> <br>
 						<c:forEach items="${memoList}" var="memo">
+<<<<<<< HEAD
 					
                      <div class="example-modal">
                      <div class="modal">
@@ -134,6 +156,31 @@
                      <!-- /.modal -->
                   </div>
                   </c:forEach>
+=======
+							<div class="example-modal">
+								<div class="modal">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">
+													<i class="fa fa-book">&nbsp;&nbsp;&nbsp;</i>${memo.m_title}
+												</h4>
+											</div>
+											<div class="modal-body"><p>${memo.m_content}</p></div>
+											<h4 align="right">
+											<a class="mUpdate" seq="${memo.m_seq}" group_seq="${group_seq}"><i class="fa fa-refresh"></i></a>
+											<a href="/memo/removeMemo?seq=${memo.m_seq}&page=${page}&group_seq=${group_seq}"><i
+											class="fa fa-trash"></i></a>
+											</h4>
+										</div>
+										<!-- /.modal-content -->
+									</div>
+									<!-- /.modal-dialog -->
+								</div>
+								<!-- /.modal -->
+							</div>
+						</c:forEach>
+>>>>>>> bd4754a405c47b041d41cb24370ee14a50d1e24d
 						<div align="center">
 							<h4>${pageList.toString()}</h4>
 						</div>
@@ -162,5 +209,40 @@
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
+	
+	<script type="text/javascript">
+		$('.mUpdate').click(function(e) {
+			var seq = $(this).attr("seq");
+			var group_seq = $(this).attr("group_seq");
+			if(group_seq==0){
+				var str = 'p';
+				ajax_data(seq, group_seq, str);
+			}else{
+				var str = 'g';
+				ajax_data(seq, group_seq, str);
+			}			
+			$("#updateModal").modal('show');
+		});
+		function ajax_data(seq, group_seq, str) {
+			var controller = '/memo/modal'+str; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
+			//var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
+			var url = controller + "?seq=" + seq + "&group_seq=" + group_seq;
+			//var url = controller;
+			$.ajax({
+				url : url,
+				type : 'POST',
+				//data: { "gno": JSON.stringify(gno)},
+				//data: { "gno": gno},
+				success : function(data) {
+					//console.log(data);
+					//alert(data);
+					$('#m_seq').val(data.m_seq);
+					$('#m_title').val(data.m_title);
+					$('#m_content').val(data.m_content)
+					//alert(data.title);
+				}
+			});
+		}
+	</script>
 </body>
 </html>

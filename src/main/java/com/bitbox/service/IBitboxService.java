@@ -53,5 +53,15 @@ public interface IBitboxService {
 
 	public ArrayList<String> getGPageList(int page, int group_seq);
 
+	public boolean removePMemo(int m_seq);
+
+	public boolean updatePMemo(PMemoDTO pmemo);
 	
+	public PMemoDTO getPMemoModal(int seq);
+
+	public boolean updateGMemo(GMemoDTO gmemo);
+
+	public boolean removeGMemo(int seq);
+
+	public GMemoDTO getGMemoModal(int seq);
 }
