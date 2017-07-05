@@ -255,4 +255,12 @@ public class BitboxService implements IBitboxService {
 		return gmemo;
 	}
 
+	@Override
+	public int getCnt() {
+		//System.out.println("service call");
+		int cnt=dao.getCnt();
+		//System.out.println("dao call-service");
+		return cnt;
+	}
+
 }

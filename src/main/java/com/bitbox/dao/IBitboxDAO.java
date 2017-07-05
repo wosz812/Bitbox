@@ -39,4 +39,5 @@ public interface IBitboxDAO {
 	public boolean updateGMemo(GMemoDTO gmemo);
 	public boolean removeGMemo(int seq);
 	public GMemoDTO getGMemoModal(int seq);
+	public int getCnt();
 }

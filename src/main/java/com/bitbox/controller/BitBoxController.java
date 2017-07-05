@@ -284,5 +284,15 @@ public class BitBoxController {
 	      // System.out.println("groupJoin: "+id);
 	      return url;
 	   }
+	@RequestMapping(value = "/alarm", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody int alarm() {
+		String url = "";
+		//System.out.println("alarm call");
+		// System.out.println("modal: "+gNo);
+		int cnt=service.getCnt();
+		// System.out.println("controller: "+modal);
+
+		return cnt;
+	}
 
 }

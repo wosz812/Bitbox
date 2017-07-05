@@ -64,4 +64,6 @@ public interface IBitboxService {
 	public boolean removeGMemo(int seq);
 
 	public GMemoDTO getGMemoModal(int seq);
+	
+	public int getCnt();
 }

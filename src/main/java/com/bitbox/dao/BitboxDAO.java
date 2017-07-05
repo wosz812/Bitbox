@@ -270,4 +270,12 @@ public class BitboxDAO implements IBitboxDAO {
 		return gmemo;
 	}
 
+	@Override
+	public int getCnt() {
+		//System.out.println("dao call");
+		int cnt=session.selectOne(namespace + ".getCnt");
+		//System.out.println("dao getCnt: "+cnt);
+		return cnt;
+	}
+
 }

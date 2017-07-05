@@ -134,4 +134,8 @@
 	<select id="getGMemoModal" parameterType="Integer" resultType="com.bitbox.dto.GMemoDTO">
 		select * from gmemo where gm_seq = #{seq}
 	</select>
+	
+	<select id="getCnt" resultType="Integer">
+		select count(*) from pboard
+	</select>
 </mapper>

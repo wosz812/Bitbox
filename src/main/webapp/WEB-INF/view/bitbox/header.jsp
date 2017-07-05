@@ -71,7 +71,7 @@
           methods: {
 
             fetchEventsList: function() {
-              var url="/test/alarm";
+              var url="/bitbox/alarm";
               var self=this;
               $.ajax({
                 url : url,
