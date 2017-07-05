@@ -210,5 +210,58 @@ public class BitboxDAO implements IBitboxDAO {
 		List<GroupDTO> groupList = session.selectList(login+".getGroupList", s_id);
 		return groupList;
 	}
+	
+	@Override
+	public boolean removePMemo(int m_seq) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".removePMemo", m_seq);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean updatePMemo(PMemoDTO pmemo) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".updatePMemo", pmemo);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public PMemoDTO getPMemoModal(int seq) {
+		PMemoDTO pmemo = session.selectOne(namespace + ".getPMemoModal", seq);
+		return pmemo;
+	}
+
+	@Override
+	public boolean updateGMemo(GMemoDTO gmemo) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".updateGMemo", gmemo);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean removeGMemo(int gm_seq) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".removeGMemo", gm_seq);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		System.out.println("dao : " + flag);
+		return flag;
+	}
+
+	@Override
+	public GMemoDTO getGMemoModal(int seq) {
+		GMemoDTO gmemo = session.selectOne(namespace + ".getGMemoModal", seq);
+		return gmemo;
+	}
 
 }

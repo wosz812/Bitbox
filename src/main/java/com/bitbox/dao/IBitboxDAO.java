@@ -32,5 +32,10 @@ public interface IBitboxDAO {
 	public boolean projectDelete(PBoardDTO board);
 	public List<GroupDTO> getGroupList(String s_id);
 	public int GMemoCnt(int group_seq);
-	
+	public boolean removePMemo(int m_seq);
+	public boolean updatePMemo(PMemoDTO pmemo);
+	public PMemoDTO getPMemoModal(int seq);
+	public boolean updateGMemo(GMemoDTO gmemo);
+	public boolean removeGMemo(int seq);
+	public GMemoDTO getGMemoModal(int seq);
 }

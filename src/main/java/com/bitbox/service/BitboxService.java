@@ -127,7 +127,7 @@ public class BitboxService implements IBitboxService {
 		flag = dao.registPMemo(dto);
 		return flag;
 	}
-	
+
 	@Override
 	public boolean registGMemo(GMemoDTO dto) {
 		boolean flag = false;
@@ -136,17 +136,17 @@ public class BitboxService implements IBitboxService {
 	}
 
 	@Override
-	public List<PMemoDTO> getPMemoList(String id,int page) {
-		int start = (page*5) +1;
-		List<PMemoDTO> memoList = dao.getPMemoList(id,start);
+	public List<PMemoDTO> getPMemoList(String id, int page) {
+		int start = (page * 3) + 1;
+		List<PMemoDTO> memoList = dao.getPMemoList(id, start);
 		return memoList;
 	}
-	
+
 	@Override
 	public List<GMemoDTO> getGMemoList(int group_seq, int page) {
 		// TODO Auto-generated method stub
-		int start = (page*5) +1;
-		List<GMemoDTO> memoList = dao.getGMemoList(group_seq,start);
+		int start = (page * 3) + 1;
+		List<GMemoDTO> memoList = dao.getGMemoList(group_seq, start);
 		return memoList;
 	}
 
@@ -154,47 +154,48 @@ public class BitboxService implements IBitboxService {
 	public ArrayList<String> getPageList(int page, String id) {
 		ArrayList<String> pageList = new ArrayList<String>();
 		// 페이지 리스트를 받아와야함
-		int amount = 5;
+		int amount = 3;
 		int count = dao.PMemoCnt(id);// 로우 갯수
 		int pageCount = (int) Math.ceil(count / (double) amount);
-		int pageUnit = page / amount;
-		int endPage = (pageUnit * 10) + amount;
+		int pageUnit = page / 10;
+		int endPage = (pageUnit * 10) + 10;
 		endPage = endPage <= pageCount ? endPage : pageCount;
-		
+
 		if (pageUnit != 0) {
-			pageList.add(" <a href='/memo/memoView?page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/memo/memoView?page=" + (i) + "'>" + (i + 1) + "</a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (i) + "'>" + (i + 1) + "</a> ");
 		}
 		// next
 		if (endPage < pageCount) {
-			pageList.add(" <a href='/memo/memoView?page=" + (endPage) + "'> next </a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (endPage) + "'> next </a> ");
 		}
 
 		return pageList;
 	}
-	
+
 	@Override
 	public ArrayList<String> getGPageList(int page, int group_seq) {
 		ArrayList<String> pageList = new ArrayList<String>();
 		// 페이지 리스트를 받아와야함
-		int amount = 5;
+		int amount = 3;
 		int count = dao.GMemoCnt(group_seq);// 로우 갯수
 		int pageCount = (int) Math.ceil(count / (double) amount);
-		int pageUnit = page / amount;
-		int endPage = (pageUnit * 10) + amount;
+		int pageUnit = page / 10;
+		int endPage = (pageUnit * 10) + 10;
 		endPage = endPage <= pageCount ? endPage : pageCount;
-		
+
 		if (pageUnit != 0) {
-			pageList.add(" <a href='/memo/memoView?page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + ((pageUnit - 1) * 10)
+					+ "'> prev </a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/memo/memoView?page=" + (i) + "'>" + (i + 1) + "</a> ");
+			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (i) + "'>" + (i + 1) + "</a> ");
 		}
 		// next
 		if (endPage < pageCount) {
-			pageList.add(" <a href='/memo/memoView?page=" + (endPage) + "'> next </a> ");
+			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (endPage) + "'> next </a> ");
 		}
 
 		return pageList;
@@ -203,16 +204,51 @@ public class BitboxService implements IBitboxService {
 	@Override
 	public boolean projectDelete(PBoardDTO board) {
 		// TODO Auto-generated method stub
-		boolean flag=dao.projectDelete(board);
+		boolean flag = dao.projectDelete(board);
 		return flag;
 	}
-	
+
 	@Override
 	public List<GroupDTO> getGroupList(String s_id) {
 		List<GroupDTO> groupList = dao.getGroupList(s_id);
 		return groupList;
 	}
 
-	
+	@Override
+	public boolean removePMemo(int m_seq) {
+		boolean flag = dao.removePMemo(m_seq);
+		return flag;
+	}
+
+	@Override
+	public boolean updatePMemo(PMemoDTO pmemo) {
+		boolean flag = dao.updatePMemo(pmemo);
+		return flag;
+	}
+
+	@Override
+	public PMemoDTO getPMemoModal(int seq) {
+		PMemoDTO pmemo = dao.getPMemoModal(seq);
+		return pmemo;
+	}
+
+	@Override
+	public boolean updateGMemo(GMemoDTO gmemo) {
+		boolean flag = dao.updateGMemo(gmemo);
+		return flag;
+	}
+
+	@Override
+	public boolean removeGMemo(int gm_seq) {
+		boolean flag = dao.removeGMemo(gm_seq);
+		System.out.println("service : " + flag);
+		return flag;
+	}
+
+	@Override
+	public GMemoDTO getGMemoModal(int seq) {
+		GMemoDTO gmemo = dao.getGMemoModal(seq);
+		return gmemo;
+	}
 
 }
