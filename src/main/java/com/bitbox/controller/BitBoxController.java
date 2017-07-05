@@ -47,7 +47,7 @@ import oracle.sql.DATE;
 public class BitBoxController {
 	//지원
 	//대성
-	//대성1
+	//대성1지연이
 	String path = "c:\\dev\\";
 
 	@Autowired
