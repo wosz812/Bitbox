@@ -86,12 +86,19 @@
 										</button>
 										<h4 class="modal-title" id="myModalLabel">메모 작성</h4>
 									</div>
-									<form action="/memo/registMemo" method="post">
+									<form action="/memo/registMemo?group_seq=${group_seq}" method="post">
 										<div class="modal-body">
+										
 											<input type="text" class="form-control" placeholder="title.."
 												name="m_title">
+												
+										</div>
+										<div>
+										
 											<textarea class="form-control" rows="3" cols="20"
-												name="m_content" placeholder="text.."></textarea>
+												placeholder="text.." name="m_content"></textarea> 
+												
+											
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default"

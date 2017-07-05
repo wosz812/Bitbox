@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bitbox.dto.CalendarFormat;
+import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
@@ -36,13 +37,21 @@ public interface IBitboxService {
 
 	public boolean groupRegist(GroupDTO dto);
 
-	public boolean registMemo(PMemoDTO dto);
+	public boolean registPMemo(PMemoDTO dto);
+	
+	public boolean registGMemo(GMemoDTO dto);
 
-	public List<PMemoDTO> getMemoList(String id,int page);
+	public List<PMemoDTO> getPMemoList(String id,int page);
+	
+	public List<GMemoDTO> getGMemoList(int group_seq, int page);
 
 	public ArrayList<String> getPageList(int page, String id);
 
 	public boolean projectDelete(PBoardDTO board);
 	
 	public List<GroupDTO> getGroupList(String s_id);
+
+	public ArrayList<String> getGPageList(int page, int group_seq);
+
+	
 }

@@ -2,6 +2,7 @@ package com.bitbox.dao;
 
 import java.util.List;
 
+import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
@@ -23,9 +24,13 @@ public interface IBitboxDAO {
 	boolean groupIn(GinDTO gin);
 	GinDTO selectGin(GinDTO gIn);
 	public boolean groupRegist(GroupDTO dto);
-	public boolean registMemo(PMemoDTO dto);
-	public List<PMemoDTO> getMemoList(String id,int start);
+	public boolean registPMemo(PMemoDTO dto);
+	public boolean registGMemo(GMemoDTO dto);
+	public List<PMemoDTO> getPMemoList(String id,int start);
+	public List<GMemoDTO> getGMemoList(int group_seq, int start);
 	public int PMemoCnt(String id);
 	public boolean projectDelete(PBoardDTO board);
 	public List<GroupDTO> getGroupList(String s_id);
+	public int GMemoCnt(int group_seq);
+	
 }

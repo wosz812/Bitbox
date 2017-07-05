@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bitbox.dao.IBitboxDAO;
 import com.bitbox.dto.CalendarFormat;
+import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
@@ -54,8 +55,6 @@ public class BitboxService implements IBitboxService {
 			format = new CalendarFormat();
 			format.setTitle(calendar.get(i).getP_title());
 			format.setStart(new SimpleDateFormat("yyyy-MM-dd").format(calendar.get(i).getP_date()));
-			format.setUrl("http://localhost:8080/bitbox/detailProject?p_boardseq="+calendar.get(i).getP_boardseq()+"&p_title="+calendar.get(i).getP_title()
-					+"&p_content="+calendar.get(i).getP_content()+"&p_upload="+calendar.get(i).getP_upload()+"&p_category="+calendar.get(i).getP_category()+"&cal=cal");
 			calendars.add(format);
 		}
 		return calendars;
@@ -123,16 +122,31 @@ public class BitboxService implements IBitboxService {
 	}
 
 	@Override
-	public boolean registMemo(PMemoDTO dto) {
+	public boolean registPMemo(PMemoDTO dto) {
 		boolean flag = false;
-		flag = dao.registMemo(dto);
+		flag = dao.registPMemo(dto);
+		return flag;
+	}
+	
+	@Override
+	public boolean registGMemo(GMemoDTO dto) {
+		boolean flag = false;
+		flag = dao.registGMemo(dto);
 		return flag;
 	}
 
 	@Override
-	public List<PMemoDTO> getMemoList(String id,int page) {
+	public List<PMemoDTO> getPMemoList(String id,int page) {
 		int start = (page*5) +1;
-		List<PMemoDTO> memoList = dao.getMemoList(id,start);
+		List<PMemoDTO> memoList = dao.getPMemoList(id,start);
+		return memoList;
+	}
+	
+	@Override
+	public List<GMemoDTO> getGMemoList(int group_seq, int page) {
+		// TODO Auto-generated method stub
+		int start = (page*5) +1;
+		List<GMemoDTO> memoList = dao.getGMemoList(group_seq,start);
 		return memoList;
 	}
 
@@ -142,6 +156,31 @@ public class BitboxService implements IBitboxService {
 		// 페이지 리스트를 받아와야함
 		int amount = 5;
 		int count = dao.PMemoCnt(id);// 로우 갯수
+		int pageCount = (int) Math.ceil(count / (double) amount);
+		int pageUnit = page / amount;
+		int endPage = (pageUnit * 10) + amount;
+		endPage = endPage <= pageCount ? endPage : pageCount;
+		
+		if (pageUnit != 0) {
+			pageList.add(" <a href='/memo/memoView?page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+		}
+		for (int i = pageUnit * 10; i < endPage; i++) {
+			pageList.add(" <a href='/memo/memoView?page=" + (i) + "'>" + (i + 1) + "</a> ");
+		}
+		// next
+		if (endPage < pageCount) {
+			pageList.add(" <a href='/memo/memoView?page=" + (endPage) + "'> next </a> ");
+		}
+
+		return pageList;
+	}
+	
+	@Override
+	public ArrayList<String> getGPageList(int page, int group_seq) {
+		ArrayList<String> pageList = new ArrayList<String>();
+		// 페이지 리스트를 받아와야함
+		int amount = 5;
+		int count = dao.GMemoCnt(group_seq);// 로우 갯수
 		int pageCount = (int) Math.ceil(count / (double) amount);
 		int pageUnit = page / amount;
 		int endPage = (pageUnit * 10) + amount;
@@ -173,5 +212,7 @@ public class BitboxService implements IBitboxService {
 		List<GroupDTO> groupList = dao.getGroupList(s_id);
 		return groupList;
 	}
+
+	
 
 }

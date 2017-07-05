@@ -26,7 +26,7 @@ public class GMemoDTO {
 		return m_content;
 	}
 
-	public void setM_context(String m_content) {
+	public void setM_content(String m_content) {
 		this.m_content = m_content;
 	}
 
