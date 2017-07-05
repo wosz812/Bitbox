@@ -51,7 +51,7 @@ $(document)
 
 																data : "null",
 																"targets" : 0,
-																"defaultContent" : '<button class="btn_view" data-toggle="modal" data-target="#myModal" >상세보기</button>'
+																"defaultContent" : '<button  class="btn_view" type="submit" >상세보기</button>'
 															} ]
 
 												});
@@ -66,43 +66,13 @@ $(document)
 																	'tr'))
 															.data();
 													var boardseq = a.p_boardseq;
+													var category=a.p_category;
 													var title = a.p_title;
 													var date = a.p_date;
 													var upload = a.p_upload;
 													var content = a.p_content;
-													$('#myModal')
-															.on(
-																	'shown.bs.modal',
-																	function() {
-																		$(
-																				"#myModal")
-																				.modal(
-																						'show');
-																		$(
-																				'.modal-body #p_title')
-																				.val(
-																						title);
-																		$(
-																				'.modal-body #p_date')
-																				.val(
-																						date);
-																		$(
-																				'.modal-body #p_upload')
-																				.val(
-																						upload);
-																		$(
-																				'.modal-body #p_content')
-																				.val(
-																						content);
-																		$(
-																				'.modal-body #p_boardseq')
-																				.val(
-																						boardseq);
-																		$(
-																				'#myInput')
-																				.focus()
-																	});
-
+													location.href="/bitbox/detailProject?p_boardseq="+boardseq+"&p_title="+title+"&p_date="+date+"&p_upload="+upload+
+													"&p_content="+content+"&p_category="+category;
 												});
 
 							});
@@ -116,4 +86,4 @@ $(document)
 				}
 				ds.action = url;
 				ds.submit();
-			}
+			}			

@@ -47,15 +47,15 @@
 				class="fa fa-angle-left pull-right"></i>
 		</span> </a>
 		<ul class="treeview-menu">
-			<li><a href="/memo/memoView"><i class="fa fa-user"></i>
+			<li><a href="/memo/pMemo?group_seq=0"><i class="fa fa-user"></i>
 					Personal MEMO</a></li>
-			<li><a href="/bitbox/getGroupList"><i class="fa fa-users"></i>
+			<li><a href="#"><i class="fa fa-users"></i>
 					Group MEMO <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span> </a>
 				<ul class="treeview-menu">
 					<c:forEach items="${groupList}" var="group">
-						<li><a href="/memo/memoView?title=${group.title}"><i class="fa fa-group"></i>
+						<li><a href="/memo/gMemo?group_seq=${group.group_seq}"><i class="fa fa-group"></i>
 							${group.title}</a></li>
 					</c:forEach>
 				</ul></li>

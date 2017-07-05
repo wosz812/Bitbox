@@ -8,12 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.PageDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.gPageDTO;
 
 @Repository
 public class BitboxDAO implements IBitboxDAO {
@@ -147,28 +149,51 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 
 	@Override
-	public boolean registMemo(PMemoDTO dto) {
+	public boolean registPMemo(PMemoDTO dto) {
 		boolean flag = false;
-		int aCnt = session.insert(namespace + ".registMemo", dto);
+		int aCnt = session.insert(namespace + ".registPMemo", dto);
 		if (aCnt > 0) {
 			flag = true;
 		}
-		return false;
+		return flag;
+	}
+	
+	@Override
+	public boolean registGMemo(GMemoDTO dto) {
+		boolean flag = false;
+		int aCnt = session.insert(namespace + ".registGMemo", dto);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
 	}
 
 	@Override
-	public List<PMemoDTO> getMemoList(String id,int start) {
+	public List<PMemoDTO> getPMemoList(String id,int start) {
 		PageDTO dto = new PageDTO(id,start);
-		List<PMemoDTO> memoList = session.selectList(namespace + ".getMemoList", dto);
+		List<PMemoDTO> memoList = session.selectList(namespace + ".getPMemoList", dto);
 		return memoList;
 	}
-
+	
+	@Override
+	public List<GMemoDTO> getGMemoList(int group_seq,int start) {
+		gPageDTO dto = new gPageDTO(group_seq,start);
+		List<GMemoDTO> memoList = session.selectList(namespace + ".getGMemoList", dto);
+		return memoList;
+	}
+	
 	@Override
 	public int PMemoCnt(String id) {
 		int cnt = session.selectOne(namespace + ".getPMemoCnt", id);
 		return cnt;
 	}
-
+	
+	@Override
+	public int GMemoCnt(int group_seq) {
+		int cnt = session.selectOne(namespace + ".getGMemoCnt", group_seq);
+		return cnt;
+	}
+	
 	@Override
 	public boolean projectDelete(PBoardDTO board) {
 		// TODO Auto-generated method stub
@@ -187,11 +212,65 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 	
 	@Override
+<<<<<<< HEAD
 	public int getPBoardCnt() {
 		int cnt =session.selectOne(namespace+".getPBoardCnt");
 		System.out.println(cnt);
 		return cnt;
 	}
 	
+=======
+	public boolean removePMemo(int m_seq) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".removePMemo", m_seq);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean updatePMemo(PMemoDTO pmemo) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".updatePMemo", pmemo);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public PMemoDTO getPMemoModal(int seq) {
+		PMemoDTO pmemo = session.selectOne(namespace + ".getPMemoModal", seq);
+		return pmemo;
+	}
+
+	@Override
+	public boolean updateGMemo(GMemoDTO gmemo) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".updateGMemo", gmemo);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean removeGMemo(int gm_seq) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".removeGMemo", gm_seq);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		System.out.println("dao : " + flag);
+		return flag;
+	}
+
+	@Override
+	public GMemoDTO getGMemoModal(int seq) {
+		GMemoDTO gmemo = session.selectOne(namespace + ".getGMemoModal", seq);
+		return gmemo;
+	}
+>>>>>>> 73b941aa03a04ffbed73561cecf760d77232898d
 
 }

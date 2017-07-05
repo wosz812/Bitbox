@@ -66,7 +66,7 @@
 		values(#{group_seq}, #{pw}, #{title}, #{s_id}, #{info})
 	</insert>
 	
-	<insert id="registMemo" parameterType="com.bitbox.dto.PMemoDTO">
+	<insert id="registPMemo" parameterType="com.bitbox.dto.PMemoDTO">
 		<selectKey keyProperty="m_seq" order="BEFORE" resultType="Integer">
 			select m_seq.nextval from dual
 		</selectKey>
@@ -74,20 +74,66 @@
 		values(#{m_seq}, #{m_title}, #{m_content}, #{s_id})
 	</insert>
 	
-	<select id="getMemoList" parameterType="com.bitbox.dto.PageDTO" resultType="com.bitbox.dto.PMemoDTO">
+	<insert id="registGMemo" parameterType="com.bitbox.dto.GMemoDTO">
+		<selectKey keyProperty="gm_seq" order="BEFORE" resultType="Integer">
+			select gm_seq.nextval from dual
+		</selectKey>
+		insert into gmemo(gm_seq, m_title, m_content, group_seq)
+		values(#{gm_seq}, #{m_title}, #{m_content}, #{group_seq})
+	</insert>
+	
+	<select id="getPMemoList" parameterType="com.bitbox.dto.PageDTO" resultType="com.bitbox.dto.PMemoDTO">
 		select A.* from(
 			select rownum as num,temp.* from(
 				select * from pmemo where s_id=#{id} order by m_seq desc
 				) temp
 			) A 
-		where A.num between #{start} and #{start}+4
+		where A.num between #{start} and #{start}+2
+	</select>
+	
+	<select id="getGMemoList" parameterType="com.bitbox.dto.gPageDTO" resultType="com.bitbox.dto.GMemoDTO">
+		select A.* from(
+			select rownum as num,temp.* from(
+				select * from gmemo where group_seq=#{group_seq} order by gm_seq desc
+				) temp
+			) A 
+		where A.num between #{start} and #{start}+2
 	</select>
 	
 	<select id="getPMemoCnt" parameterType="String" resultType="Integer">
 		select count(*) from pmemo where s_id = #{id}
 	</select>
 	
+<<<<<<< HEAD
 	<select id="getPBoardCnt" resultType="Integer">
 		select count(*) from pboard 
+=======
+	<select id="getGMemoCnt" parameterType="Integer" resultType="Integer">
+		select count(*) from gmemo where group_seq = #{group_seq}
+	</select>
+	
+	<delete id="removePMemo" parameterType="Integer">
+		delete from Pmemo where m_seq = #{m_seq}
+	</delete>
+	
+	<update id="updatePMemo" parameterType="com.bitbox.dto.PMemoDTO">
+		update pmemo set m_title = #{m_title}, m_content = #{m_content} where m_seq = #{m_seq}
+	</update>
+	
+	<select id="getPMemoModal" parameterType="Integer" resultType="com.bitbox.dto.PMemoDTO">
+		select * from pmemo where m_seq = #{seq}
+	</select>
+	
+	<delete id="removeGMemo" parameterType="Integer">
+		delete from gmemo where gm_seq = #{gm_seq}
+	</delete>
+	
+	<update id="updateGMemo" parameterType="com.bitbox.dto.GMemoDTO">
+		update gmemo set m_title = #{m_title}, m_content = #{m_content} where gm_seq = #{gm_seq} 
+	</update>
+	
+	<select id="getGMemoModal" parameterType="Integer" resultType="com.bitbox.dto.GMemoDTO">
+		select * from gmemo where gm_seq = #{seq}
+>>>>>>> 73b941aa03a04ffbed73561cecf760d77232898d
 	</select>
 </mapper>
