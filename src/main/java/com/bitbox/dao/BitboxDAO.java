@@ -212,14 +212,12 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 	
 	@Override
-<<<<<<< HEAD
 	public int getPBoardCnt() {
 		int cnt =session.selectOne(namespace+".getPBoardCnt");
 		System.out.println(cnt);
 		return cnt;
 	}
 	
-=======
 	public boolean removePMemo(int m_seq) {
 		boolean flag = false;
 		int aCnt = session.delete(namespace + ".removePMemo", m_seq);
@@ -271,6 +269,5 @@ public class BitboxDAO implements IBitboxDAO {
 		GMemoDTO gmemo = session.selectOne(namespace + ".getGMemoModal", seq);
 		return gmemo;
 	}
->>>>>>> 73b941aa03a04ffbed73561cecf760d77232898d
 
 }

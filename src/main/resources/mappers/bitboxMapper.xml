@@ -104,10 +104,9 @@
 		select count(*) from pmemo where s_id = #{id}
 	</select>
 	
-<<<<<<< HEAD
 	<select id="getPBoardCnt" resultType="Integer">
 		select count(*) from pboard 
-=======
+	</select>
 	<select id="getGMemoCnt" parameterType="Integer" resultType="Integer">
 		select count(*) from gmemo where group_seq = #{group_seq}
 	</select>
@@ -134,6 +133,5 @@
 	
 	<select id="getGMemoModal" parameterType="Integer" resultType="com.bitbox.dto.GMemoDTO">
 		select * from gmemo where gm_seq = #{seq}
->>>>>>> 73b941aa03a04ffbed73561cecf760d77232898d
 	</select>
 </mapper>
