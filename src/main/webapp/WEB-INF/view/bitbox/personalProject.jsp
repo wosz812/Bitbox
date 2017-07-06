@@ -87,7 +87,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<div style="width: 150px;">
+								<div style="width: 150px;float:right;">
 									<a href="/bitbox/registForm"><button
 											class="btn btn-primary btn-block">Create Project</button></a>
 								</div>
