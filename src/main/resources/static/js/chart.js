@@ -25,7 +25,7 @@
 
 				//alert(row.label);
 				if (row.label == "DB") {
-					alert(row.label);
+					//alert(row.label);
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,
@@ -42,7 +42,7 @@
 						hideHover : 'auto'
 					});
 				} else if (row.label == "Spring") {
-					alert(row.label);
+					//alert(row.label);
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,
@@ -59,7 +59,7 @@
 						hideHover : 'auto'
 					});
 				} else if (row.label == "Android") {
-					alert(row.label);
+					//alert(row.label);
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,
@@ -76,7 +76,7 @@
 						hideHover : 'auto'
 					});
 				} else if (row.label == "JAVA") {
-					alert(row.label);
+					//alert(row.label);
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,

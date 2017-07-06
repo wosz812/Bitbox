@@ -142,7 +142,7 @@
 			
 
 				
-				<div class="col-md-4">
+				<div class="row-md-6 col-md-4">
 					<!-- DONUT CHART -->
 					<div class="box box-primary">
 						<div class="box-header with-border">
@@ -224,7 +224,7 @@
 		<%@include file="controlSideBar.jsp"%> 
 	</div>
 	<!-- ./wrapper -->
-	<script src="https://unpkg.com/vue"></script>
+
 	<!-- jQuery 2.2.3 -->
 	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
