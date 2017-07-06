@@ -229,12 +229,19 @@ public class BitBoxController {
 	public String groupRegist(HttpSession session, GroupDTO dto) {
 		String url = "/bitbox/groupRegist";
 		session.setAttribute("id", session.getAttribute("id"));
+		String session_id = (String) session.getAttribute("id");
 		session.setAttribute("code", session.getAttribute("code"));
+		Object session_code = session.getAttribute("code");
 		session.setAttribute("groupList", session.getAttribute("groupList"));
 		String id = (String) session.getAttribute("id");
 		dto.setS_id(id);
 		boolean flag = service.groupRegist(dto);
 		if (flag) {
+			//url = "redirect:/bitbox/group";
+			session.removeAttribute("groupList");
+			List<GroupDTO> groupList = service.getGroupList(session_id);
+			session.setAttribute("groupList", groupList);
+			
 			url = "redirect:/bitbox/group";
 		}
 
