@@ -75,8 +75,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer" align="right">
-									<a href="/bitbox/group/"><button class="btn btn-primary">돌아가기</button></a>
-									<button type="submit" class="btn btn-primary">생성하기</button>
+									<button type="submit" class="btn btn-primary">그룹생성</button>
 								</div>
 							</form>
 						</div>

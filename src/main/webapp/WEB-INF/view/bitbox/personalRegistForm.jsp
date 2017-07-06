@@ -87,7 +87,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Submit</button>
+									<button type="submit" class="btn btn-primary">프로젝트 생성</button>
 								</div>
 							</form>
 						</div>

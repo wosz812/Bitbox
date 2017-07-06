@@ -34,8 +34,7 @@
 						class="fa fa-angle-left pull-right"></i>
 				</span> </a>
 				<ul class="treeview-menu">
-					<li><a href="/bitbox/group"><i class="fa fa-list"></i>
-							Group List</a></li>
+					
 					<c:forEach items="${groupList}" var="group">
 						<li><a href="/memo/memoView?title=${group.title}"><i class="fa fa-group"></i>
 							${group.title}</a></li>
@@ -63,6 +62,10 @@
 
 	<li><a href="/bitbox/calendar"> <i class="fa fa-calendar"></i>
 			<span>Calendar</span> <span class="pull-right-container"> </span>
+	</a></li>
+	
+	<li><a href="/bitbox/group"> <i class="fa fa-users"></i>
+			<span>Group</span> <span class="pull-right-container"> </span>
 	</a></li>
 </ul>
 </section> <!-- /.sidebar --> </aside>
