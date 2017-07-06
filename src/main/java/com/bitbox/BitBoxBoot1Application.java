@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //대성3
 //마스터
 //마스터2
+//지원
 @SpringBootApplication
 public class BitBoxBoot1Application {
 
