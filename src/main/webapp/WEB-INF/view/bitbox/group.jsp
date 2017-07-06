@@ -52,7 +52,7 @@
 							<div class="box-header">
 								<div style="width: 150px;">
 									<a href="/bitbox/groupRegistForm"><button type="button"
-											class="btn btn-primary" onclick="">그룹생성</button></a>
+											class="btn btn-primary" onclick="">Create Group</button></a>
 								</div>
 								<div class="box-tools">
 									<div class="input-group input-group-sm" style="width: 150px;">

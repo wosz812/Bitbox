@@ -71,7 +71,7 @@
                <div class="box" id="whitebox">
                   <button id="btn_button" type="button"
                      class="btn btn-primary btn-lg" data-toggle="modal"
-                     data-target="#myModal">메모 추가</button>
+                     data-target="#myModal">Add Memo</button>
 
                   <!-- Modal -->
                   <br>
