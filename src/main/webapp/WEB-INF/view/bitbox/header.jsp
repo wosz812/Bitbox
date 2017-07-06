@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <script src="https://unpkg.com/vue"></script>
+ 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
@@ -56,6 +56,7 @@
     </header>
   </div>
     <!-- jQuery 2.2.3 -->
+    <script src="../js/vue.js"></script>
     <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script>
       var app = new Vue({
