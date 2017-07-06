@@ -3,6 +3,7 @@ package com.bitbox;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//마스터
 @SpringBootApplication
 public class BitBoxBoot1Application {
 
