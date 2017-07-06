@@ -23,9 +23,9 @@
 				hideHover : 'auto'
 			}).on('click', function(i, row) {
 
-				//alert(row.label);
+				
 				if (row.label == "DB") {
-					//alert(row.label);
+					
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,
@@ -42,7 +42,7 @@
 						hideHover : 'auto'
 					});
 				} else if (row.label == "Spring") {
-					//alert(row.label);
+					
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,
@@ -59,7 +59,7 @@
 						hideHover : 'auto'
 					});
 				} else if (row.label == "Android") {
-					//alert(row.label);
+					
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,
@@ -76,7 +76,7 @@
 						hideHover : 'auto'
 					});
 				} else if (row.label == "JAVA") {
-					//alert(row.label);
+				
 					var donut2 = new Morris.Donut({
 						element : 'sales-chart2',
 						resize : true,
@@ -96,21 +96,21 @@
 			});
 
 			//DONUT CHART2
-			//       var donut = new Morris.Donut({
-			//         element: 'sales-chart2',
-			//         resize: true,
-			//         colors: ["#f56954", "#f56954", "#f56954", "#f56954","#f56954","#f56954","#f56954"],
-			//         data: [
-			//           {label: "다형성", value: 12},
-			//           {label: "객체지향", value: 30},
-			//           {label: "메소드", value: 14},
-			//           {label: "조건문/반복문", value: 7},
-			//           {label: "배열", value: 10},
-			//           {label: "자료형", value: 3},
-			//           {label: "상속", value: 20}
-			//         ],
-			//         hideHover: 'auto'
-			//       });
+			var donut = new Morris.Donut({
+				element: 'sales-chart2',
+				resize: true,
+				colors : [ "#da3f3a", "#f56954" ],
+				data : [ {
+					label : "현재 일수",
+					value : 12
+				},
+
+				{
+					label : "남은 일수",
+					value : 7
+				} ],
+					hideHover: 'auto'
+			});
 
 		});
 
