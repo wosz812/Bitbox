@@ -48,6 +48,9 @@
  		margin-top:-100px;
  		margin-left:250px;
  	}
+ 	#slide{
+ 		margin-top:-100px;
+ 	}
  	
  </style>
 </head>
@@ -142,22 +145,11 @@
 			
 
 				
-				<div class="row-md-6 col-md-4">
+				<div class="col-md-4">
 					<!-- DONUT CHART -->
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<h3 class="box-title font">TO DO</h3>
-
-							<div class="box-tools pull-right">
-								<button type="button" class="btn btn-box-tool"
-									data-widget="collapse">
-									<i class="fa fa-minus"></i>
-								</button>
-								<button type="button" class="btn btn-box-tool"
-									data-widget="remove">
-									<i class="fa fa-times"></i>
-								</button>
-							</div>
 						</div>
 						<div class="box-body chart-responsive">
 							<div class="chart" id="sales-chart"
@@ -167,8 +159,8 @@
 					</div>
 				</div>
 				
-				<div class="row">
-					<div class="col-md-8">
+			
+					<div class="col-md-8" id="slide">
 						<div class="box box-solid">
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -217,14 +209,13 @@
 						<!-- /.box -->
 					</div>
 					
-				</div>
+				
 			</section>
 		</div>
 		<!-- /.content-wrapper -->
 		<%@include file="controlSideBar.jsp"%> 
 	</div>
 	<!-- ./wrapper -->
-
 	<!-- jQuery 2.2.3 -->
 	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
