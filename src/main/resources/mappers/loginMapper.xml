@@ -17,7 +17,7 @@
 	</select>
 
 	<select id="searchId" parameterType="com.bitbox.dto.StudentDTO" resultType="com.bitbox.dto.StudentDTO">
-		select * from student where s_email = #{s_email}
+		select * from student where s_email = #{s_email} and s_name=#{s_name}
 	</select>
 
 	<select id="searchPw" parameterType="com.bitbox.dto.StudentDTO" resultType="com.bitbox.dto.StudentDTO">
