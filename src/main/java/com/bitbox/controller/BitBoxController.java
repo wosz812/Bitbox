@@ -281,6 +281,13 @@ public class BitBoxController {
 	      //System.out.println(gIn);
 
 	      int state = service.groupJoin(group, gIn);
+	      
+	      if(state==0){
+	    	  session.removeAttribute("groupList");
+	    	  List<GroupDTO> groupList = service.getGroupList(id);
+	    	  session.setAttribute("groupList", groupList);
+	      }
+	      
 	      //System.out.println(state);
 	      /*
 	       * if(state==0){ url="redirect:/bitbox/group"; }else if(state==1){
