@@ -198,20 +198,20 @@
 									<div class="carousel-inner">
 
 										<div class="item active">
-											<a href="https://www.naver.com"> <img src="/img/1.jpg"
+											<a href="http://www.bitacademy.com"> <img src="/img/img_bit.JPG"
 												alt="First slide"></a>
 
 											<div class="carousel-caption">First Slide</div>
 										</div>
 										<div class="item">
-											<a href="https://www.daum.net"> <img src="/img/2.jpg"
+											<a href="http://www.hrd.go.kr"> <img src="/img/img_hrd.JPG"
 												alt="Second slide"></a>
 
 											<div class="carousel-caption">Second Slide</div>
 										</div>
 										<div class="item">
-											<a href="https://www.gersang.co.kr"> <img
-												src="/img/3.jpg" alt="Third slide"></a>
+											<a href="https://www.aladin.co.kr"> <img
+												src="/img/img_aladin.jpg" alt="Third slide"></a>
 
 											<div class="carousel-caption">Third Slide</div>
 										</div>
