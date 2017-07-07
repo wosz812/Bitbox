@@ -54,6 +54,9 @@
  	.btn{
  		text-align:right;
  	}
+ 	.btn-item{
+ 		width:80%;
+ 	}
  	.inp{
  		width:65%;
  	}
@@ -150,7 +153,6 @@
 				</div>
 			
 
-				
 				<div class="col-md-4">
 					<!-- DONUT CHART -->
 					<div class="box box-primary">
@@ -171,9 +173,7 @@
 										<tr v-for="(item,key) in items">
 											<td colspan="2">{{ item }}</td>
 											<td class="btn"><button @click="deletedd(key)" class="btn btn-warning">Delete</button></td>
-										</tr>
-
-									
+										</tr>		
 								</div>
 							</table>
 							</div>
@@ -181,8 +181,6 @@
 						<!-- /.box-body -->
 					</div>
 				</div>
-				
-
 					<div class="col-md-8" id="slide">
 						<div class="box box-solid">
 							<!-- /.box-header -->
@@ -231,8 +229,6 @@
 						</div>
 						<!-- /.box -->
 					</div>
-					
-				
 			</section>
 		</div>
 		<!-- /.content-wrapper -->
@@ -258,12 +254,18 @@
 	<!-- page script -->
 	<script type="text/javascript" src="/js/chart.js"></script>
 	<script type="text/javascript">
-
+		var STORAGE_KEY = 'vue-js-todo-P7oZi9sL';
 		var app = new Vue({
 			el : '#todo-list',
 			data : {
-				items : [],
+				items : JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'),
 				todoText : ''
+			},
+			watch: {
+				  items: function (items) {
+					  //todoStorage.save(todos);
+					  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+				  }
 			},
 			methods : {
 				add : function() {
@@ -271,6 +273,7 @@
 					//alert(txt);
 					//this.$set('todo-list.items', txt);
 					this.items.push(txt);
+					//localStorage.setItem('items');
 					//console.log(this.items[0]);
 					document.getElementById("todoText").value = "";
 				},
