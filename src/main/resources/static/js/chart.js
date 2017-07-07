@@ -32,7 +32,7 @@
 						colors : [ "#00a65a", "#8ec96d" ],
 						data : [ {
 							label : "현재 일수",
-							value : 12
+							value : 13
 						},
 
 						{
@@ -49,7 +49,7 @@
 						colors : [ "#3c8dbc", "#73d1f7" ],
 						data : [ {
 							label : "현재 일수",
-							value : 12
+							value : 1
 						},
 
 						{
@@ -66,12 +66,12 @@
 						colors : [ "#ffdf3e", "#ffeeac" ],
 						data : [ {
 							label : "현재 일수",
-							value : 12
+							value : 11
 						},
 
 						{
 							label : "남은 일수",
-							value : 7
+							value : 10
 						} ],
 						hideHover : 'auto'
 					});
@@ -83,12 +83,12 @@
 						colors : [ "#da3f3a", "#f56954" ],
 						data : [ {
 							label : "현재 일수",
-							value : 12
+							value : 22
 						},
 
 						{
 							label : "남은 일수",
-							value : 7
+							value : 6
 						} ],
 						hideHover : 'auto'
 					});
@@ -102,12 +102,12 @@
 				colors : [ "#da3f3a", "#f56954" ],
 				data : [ {
 					label : "현재 일수",
-					value : 12
+					value : 22
 				},
 
 				{
 					label : "남은 일수",
-					value : 7
+					value : 6
 				} ],
 					hideHover: 'auto'
 			});
