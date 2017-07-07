@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +36,8 @@ import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
+import com.bitbox.dto.QnaDTO;
+import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.service.IBitboxService;
 import com.google.gson.Gson;
 
@@ -309,6 +311,99 @@ public class BitBoxController {
 		// System.out.println("controller: "+modal);
 
 		return cnt;
+	}
+	
+	@RequestMapping(value = "/qna", method = { RequestMethod.POST, RequestMethod.GET })
+	public String qna(HttpSession session, Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+		String url = "/bitbox/qna";
+		List<QnaDTO> qnaList = service.getQnaList(page);
+		ArrayList<String> pageList = service.getQnaPageList(page);
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("pageList", pageList);
+		model.addAttribute("page", page);
+		session.setAttribute("id", session.getAttribute("id"));
+		session.setAttribute("code", session.getAttribute("code"));
+		session.setAttribute("groupList", session.getAttribute("groupList"));
+		return url;
+	}
+
+	@RequestMapping(value = "/readQna", method = { RequestMethod.POST, RequestMethod.GET })
+	public String readQna(HttpSession session, Model model, @RequestParam("page") int page,
+			@RequestParam("q_seq") int q_seq) {
+		String url = "/bitbox/qnaView";
+		QnaDTO qnaList = service.detailQna(q_seq);
+		List<ReQnaDTO> replyList = service.getReplyList(q_seq);
+		System.out.println("readQna / replyList : " + replyList);
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("page", page);
+		return url;
+	}
+
+	@RequestMapping(value = "/createQ", method = { RequestMethod.POST, RequestMethod.GET })
+	public String createQ(HttpSession session) {
+		String url = "/bitbox/qnaRegistForm";
+		return url;
+	}
+
+	@RequestMapping(value = "/question", method = { RequestMethod.POST, RequestMethod.GET })
+	public String question(HttpSession session, MultipartFile q_upload, QnaDTO qna) {
+		String url = "";
+		String path = this.path;
+		String fileName = null;
+		qna.setS_id((String) session.getAttribute("id"));
+		QnaDTO dto = qna;
+		boolean flag = false;
+		if (q_upload == null) {
+			flag = service.registQna(dto);
+		} else {
+			fileName = q_upload.getOriginalFilename();
+			try {
+				q_upload.transferTo(new File(path + fileName));
+				dto.setS_id(session.getAttribute("id").toString());
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			flag = service.registQna(dto);
+		}
+		if (flag) {
+			url = "redirect:/bitbox/qna";
+		}
+		return url;
+	}
+
+	@RequestMapping(value = "/qnaUpdate", method = { RequestMethod.POST, RequestMethod.GET })
+	public String qnaUpdate(HttpSession session, @RequestParam("page") int page, Model model, QnaDTO qna) {
+		String url = "";
+		boolean flag = service.qnaUpdate(qna);
+		if (flag) {
+			url = "redirect:/bitbox/qna";
+		}
+		model.addAttribute("page", page);
+		return url;
+	}
+
+	@RequestMapping(value = "/qnaDelete", method = { RequestMethod.POST, RequestMethod.GET })
+	public String qnaDelete(HttpSession session, @RequestParam("page") int page, Model model,
+			@RequestParam("q_seq") int q_seq) {
+		String url = "";
+		boolean flag = service.qnaDelete(q_seq);
+		if (flag) {
+			url = "redirect:/bitbox/qna";
+		}
+		model.addAttribute("page", page);
+		return url;
+	}
+
+	@RequestMapping(value = "/registReply", method = { RequestMethod.POST, RequestMethod.GET })
+	public String registReply(HttpSession session, ReQnaDTO reply, @RequestParam("page") int page,
+			@RequestParam("q_seq") int q_seq) {
+		String url = null;
+		boolean flag = service.registReply(reply);
+		if (flag) {
+			url = "redirect:/bitbox/readQna?page=" + page + "&q_seq=" + q_seq;
+		}
+		return url;
 	}
 
 }

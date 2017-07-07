@@ -138,4 +138,48 @@
 	<select id="getCnt" resultType="Integer">
 		select count(*) from pboard
 	</select>
+	
+	<select id="detailQna" resultType="com.bitbox.dto.QnaDTO" parameterType="Integer">
+		select * from qna where q_seq = #{q_seq}
+	</select>
+	
+	<select id="getQnaList" resultType="com.bitbox.dto.QnaDTO">
+		select A.* from(
+			select rownum as num,temp.* from(
+				select * from qna order by q_seq desc
+				) temp
+			) A 
+		where A.num between #{start} and #{start}+9
+	</select>
+	
+	<insert id="registQna" parameterType="com.bitbox.dto.QnaDTO">
+		<selectKey keyProperty="q_seq" order="BEFORE" resultType="Integer">
+			select q_seq.nextval from dual
+		</selectKey>
+		insert into qna(q_seq, q_title, q_content, q_upload, q_image, q_category, s_id)
+		values(#{q_seq}, #{q_title}, #{q_content}, #{q_upload}, #{q_image}, #{q_category}, #{s_id})
+	</insert>
+	
+	<select id="qnaCnt" resultType="Integer">
+		select count(*) from qna
+	</select>
+	
+	<update id="qnaUpdate" parameterType="com.bitbox.dto.QnaDTO">
+		update qna set q_title = #{q_title}, q_content = #{q_content} where q_seq = #{q_seq}
+	</update>
+	
+	<delete id="qnaDelete" parameterType="Integer">
+		delete from qna where q_seq = #{q_seq}
+	</delete>
+	<select id="getReplyList" parameterType="com.bitbox.dto.ReQnaDTO" resultType="com.bitbox.dto.ReQnaDTO">
+		select * from reqna where q_seq = #{q_seq}
+	</select>
+	
+	<insert id="registReply" parameterType="com.bitbox.dto.ReQnaDTO">
+		<selectKey keyProperty="re_seq" order="BEFORE" resultType="Integer">
+			select re_seq.nextval from dual
+		</selectKey>
+		insert into reqna(re_seq, re_writer, re_content, q_seq)
+		values(#{re_seq}, #{re_writer}, #{re_content}, #{q_seq})
+	</insert>
 </mapper>

@@ -1,0 +1,182 @@
+//�������� Ŭ����
+create table bitclass(
+  class_code number primary key,
+  total_date number not null,
+  class_name varchar(100)not null
+);
+
+insert into BITCLASS values(1,120,'Spring FrameWork �缺����');
+
+select * from BITCLASS;
+
+//??
+create table subject(
+  sub_name varchar(100) primary key,
+  book varchar(100)
+);
+
+select * from SUBJECT;
+//??
+create table cclass(
+  c_seq number primary key,
+  class_code number not null
+  CONSTRAINT bitclass_class_code_fk REFERENCES bitclass(class_code),
+  sub_name varchar(100) not null
+  CONSTRAINT subject_sub_name_fk REFERENCES subject(sub_name),
+  start_date date,
+  end_date date
+);
+
+//c_seq ������
+create sequence c_seq start with 1;
+
+//�л�
+create table student(
+  s_id varchar(100) primary key,
+  s_seq number not null,
+  s_pw varchar(200) not null,
+  s_name varchar(100) not null,
+  s_email varchar(200)not null,
+  s_phone number not null,
+  s_class_code number not null
+  CONSTRAINT bitclass_class_code_fk1 REFERENCES bitclass(class_code)
+);
+
+
+//s_seq ������
+create SEQUENCE s_seq start with 1;
+
+insert into student values('admin',s_seq.nextval,'1234','��뼺','9251992@naver.com',01050300976,1);
+
+select *from student;
+
+//���� ������Ʈ
+create table Pboard(
+  p_boardseq number primary key,
+  p_title varchar(200) not null,
+  p_content varchar(500)not null,
+  p_upload varchar(200),
+  p_date date default SYSDATE,
+  p_category varchar(100) not null, 
+  s_id varchar(100)not null
+  CONSTRAINT student_s_id_fk REFERENCES student(s_id)
+);
+
+//p_boardseq ������
+create SEQUENCE p_boardseq start with 1;
+
+insert into PBOARD(P_BOARDseq,P_TITLE,P_CONTENT,P_UPLOAD,P_CATEGORY,s_ID) values(p_boardseq.nextval,'First File','Testing...','Test.zip','Java','admin');
+
+select * from PBOARD;
+
+//�׷���� �� ����Ʈ
+create table cgroup(
+  group_seq number primary key,
+  pw varchar(200) not null,
+  title varchar(100)not null,
+  info varchar(100),
+  s_id varchar(100)not null
+  CONSTRAINT student_s_id_fk1 REFERENCES student(s_id)
+);
+
+//group_seq  ������
+create SEQUENCE group_seq start with 1;
+
+insert into cgroup values(group_seq.nextval,'1234','��Ʈ�ڽ����͵�','�׽�Ʈ���Դϴ�.','admin');
+
+select * from cgroup;
+
+select * from cgroup,student where cgroup.G_ID=student.S_ID;
+
+//�׷�������Ʈ
+create table gboard(
+  g_boardseq number primary key,
+  g_title varchar(200) not null,
+  g_content varchar(500)not null,
+  g_upload varchar(200),
+  g_date date default SYSDATE,
+  group_seq number not null
+  CONSTRAINT cgroup_group_seq_fk REFERENCES cgroup(group_seq)
+);
+
+//g_boardseq ������
+create SEQUENCE g_boardseq start with 1;
+
+insert into gboard(g_BOARDseq,g_TITLE,g_CONTENT,g_UPLOAD,group_seq) values(g_boardseq.nextval,'First Test','Testing','Test.zip',1);
+
+select * from gboard;
+
+//�׷� �Ҽ�
+create table groupin(
+  gin_seq number primary key,
+  group_seq number not null
+  CONSTRAINT cgroup_group_seq_fk1 REFERENCES cgroup(group_seq),
+  s_id varchar(100)not null
+  CONSTRAINT student_s_id_fk2 REFERENCES student(s_id),
+  g_date date default SYSDATE
+);
+
+//gom_seq ������
+create sequence gin_seq start with 1;
+
+
+//���θ޸�
+create table pmemo(
+  m_seq number primary key,
+  m_title varchar(100) not null,
+  m_content varchar(500) not null,
+  s_id varchar(20) not null
+ CONSTRAINT student_s_id_fk3 REFERENCES student(s_id)
+);
+
+//m_seq ������
+create sequence m_seq start with 1;
+
+select * from pmemo;
+//�׷�޸�
+
+create table gmemo(
+  gm_seq number primary key,
+  m_title varchar(100) not null,
+  m_content varchar(500) not null,
+  group_seq number not null
+ CONSTRAINT cgroup_group_seq_fk3 REFERENCES cgroup(group_seq)
+);
+
+//gm_seq ������
+create sequence gm_seq start with 1;
+
+select * from gmemo;
+
+create table qna(
+  q_seq number primary key,
+  q_title varchar(100) not null,
+  q_content varchar(500) not null,
+  q_upload varchar(200),
+  q_image varchar(200),
+  q_category varchar(20) not null,
+  s_id varchar(20) not null
+  CONSTRAINT student_s_id_fk4 REFERENCES student(s_id)
+);
+
+insert into qna values(q_seq.nextval, 'what is your name?', 'how old are you?', '300.jpg', 'minions', 'JAVA', 'admin');
+
+
+create sequence q_seq start with 1;
+
+select * from qna;
+
+create table reqna(
+  re_seq number primary key,
+  re_writer varchar(50) not null,
+  re_content varchar(500) not null,
+  q_seq number not null
+  CONSTRAINT qna_q_seq_fk REFERENCES qna(q_seq)
+  ON DELETE CASCADE
+);
+
+create sequence re_seq start with 1;
+
+insert into reqna values(re_seq.nextval, 'JINU', 'HELLO WORLD', 1);
+
+select * from reqna;

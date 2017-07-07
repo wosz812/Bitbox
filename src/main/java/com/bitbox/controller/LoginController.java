@@ -42,7 +42,6 @@ public class LoginController {
 		StudentDTO sdto = service.loginCheck(student);
 		if (sdto != null) {
 			groupList = service.getGroupList(sdto.getS_id());
-			System.out.println(groupList);
 			session.setAttribute("groupList", groupList);
 			session.setAttribute("id", sdto.getS_id());
 			session.setAttribute("code", sdto.getS_class_code());

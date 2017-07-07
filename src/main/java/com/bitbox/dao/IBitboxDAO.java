@@ -7,6 +7,8 @@ import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
+import com.bitbox.dto.QnaDTO;
+import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
 
 public interface IBitboxDAO {
@@ -40,4 +42,12 @@ public interface IBitboxDAO {
 	public boolean removeGMemo(int seq);
 	public GMemoDTO getGMemoModal(int seq);
 	public int getCnt();
+	public List<QnaDTO> getQnaList(int start);
+	public boolean registQna(QnaDTO qna);
+	public QnaDTO detailQna(int q_seq);
+	public int qnaCnt();
+	public boolean qnaDelete(int q_seq);
+	public boolean qnaUpdate(QnaDTO qna);
+	public List<ReQnaDTO> getReplyList(int q_seq);
+	public boolean registReply(ReQnaDTO reply);
 }

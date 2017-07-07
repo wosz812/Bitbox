@@ -63,6 +63,9 @@
 	<li><a href="/bitbox/calendar"> <i class="fa fa-calendar"></i>
 			<span>Calendar</span> <span class="pull-right-container"> </span>
 	</a></li>
+	<li><a href="/bitbox/qna"> <i class="fa fa-question"></i>
+			<span>Q & A</span> <span class="pull-right-container"> </span>
+	</a></li>
 	
 	<li><a href="/bitbox/group"> <i class="fa fa-users"></i>
 			<span>Group</span> <span class="pull-right-container"> </span>

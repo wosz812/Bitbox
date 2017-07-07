@@ -14,6 +14,8 @@ import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.PageDTO;
+import com.bitbox.dto.QnaDTO;
+import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
 import com.bitbox.dto.gPageDTO;
 
@@ -276,6 +278,71 @@ public class BitboxDAO implements IBitboxDAO {
 		int cnt=session.selectOne(namespace + ".getCnt");
 		//System.out.println("dao getCnt: "+cnt);
 		return cnt;
+	}
+	
+	@Override
+	public List<QnaDTO> getQnaList(int start) {
+		List<QnaDTO> qnaList = session.selectList(namespace + ".getQnaList", start);
+		return qnaList;
+	}
+
+	@Override
+	public boolean registQna(QnaDTO qna) {
+		boolean flag = false;
+		System.out.println("dao, QNADTO" + qna);
+		int aCnt = session.insert(namespace + ".registQna", qna);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public QnaDTO detailQna(int q_seq) {
+		QnaDTO qna = session.selectOne(namespace + ".detailQna", q_seq);
+		return qna;
+	}
+
+	@Override
+	public int qnaCnt() {
+		int cnt = session.selectOne(namespace + ".qnaCnt");
+		return cnt;
+	}
+
+	@Override
+	public boolean qnaDelete(int q_seq) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".qnaDelete", q_seq);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean qnaUpdate(QnaDTO qna) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".qnaUpdate", qna);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public List<ReQnaDTO> getReplyList(int q_seq) {
+		List<ReQnaDTO> replyList = session.selectList(namespace + ".getReplyList", q_seq);
+		return replyList;
+	}
+
+	@Override
+	public boolean registReply(ReQnaDTO reply) {
+		boolean flag = false;
+		int aCnt = session.insert(namespace + ".registReply", reply);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
 	}
 
 }

@@ -14,6 +14,8 @@ import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
+import com.bitbox.dto.QnaDTO;
+import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
 
 @Service
@@ -261,6 +263,74 @@ public class BitboxService implements IBitboxService {
 		int cnt=dao.getCnt();
 		//System.out.println("dao call-service");
 		return cnt;
+	}
+	
+	@Override
+	public List<QnaDTO> getQnaList(int page) {
+		int start = (page * 10) + 1;
+		List<QnaDTO> qnaList = dao.getQnaList(start);
+		return qnaList;
+	}
+
+	@Override
+	public boolean registQna(QnaDTO qna) {
+		boolean flag = dao.registQna(qna);
+		return flag;
+	}
+
+	@Override
+	public QnaDTO detailQna(int q_seq) {
+		QnaDTO qna = dao.detailQna(q_seq);
+		return qna;
+	}
+
+	@Override
+	public ArrayList<String> getQnaPageList(int page) {
+		ArrayList<String> pageList = new ArrayList<String>();
+		// 페이지 리스트를 받아와야함
+		int amount = 10;
+		int count = dao.qnaCnt();// 로우 갯수
+		int pageCount = (int) Math.ceil(count / (double) amount);
+		int pageUnit = page / 10;
+		int endPage = (pageUnit * 10) + amount;
+		endPage = endPage <= pageCount ? endPage : pageCount;
+
+		if (pageUnit != 0) {
+			pageList.add(" <a href='/memo/gMemo?&page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+		}
+		for (int i = pageUnit * 10; i < endPage; i++) {
+			pageList.add(" <a href='/memo/gMemo?page=" + (i) + "'>" + (i + 1) + "</a> ");
+		}
+		// next
+		if (endPage < pageCount) {
+			pageList.add(" <a href='/memo/gMemo?page=" + (endPage) + "'> next </a> ");
+		}
+
+		return pageList;
+	}
+
+	@Override
+	public boolean qnaDelete(int q_seq) {
+		boolean flag = dao.qnaDelete(q_seq);
+		return flag;
+	}
+
+	@Override
+	public boolean qnaUpdate(QnaDTO qna) {
+		boolean flag = dao.qnaUpdate(qna);
+		return flag;
+	}
+
+	@Override
+	public List<ReQnaDTO> getReplyList(int q_seq) {
+		List<ReQnaDTO> replyList = dao.getReplyList(q_seq);
+		return replyList;
+	}
+
+	@Override
+	public boolean registReply(ReQnaDTO reply) {
+		boolean flag = dao.registReply(reply);
+		return flag;
 	}
 
 }
