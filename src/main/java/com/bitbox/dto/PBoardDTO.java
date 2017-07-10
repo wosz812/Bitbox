@@ -6,24 +6,13 @@ public class PBoardDTO {
 	private int p_boardseq;
 	private String p_title;
 	private String p_content;
-	private String p_upload;
+	private String p_filename;
+	private String p_uuidname;
 	private Date p_date;
 	private String p_category;
 	private String s_id;
 
 	public PBoardDTO() {
-	}
-
-	public PBoardDTO(int p_boardseq, String p_title, String p_content, String p_upload, Date p_date, String p_category,
-			String s_id) {
-		super();
-		this.p_boardseq = p_boardseq;
-		this.p_title = p_title;
-		this.p_content = p_content;
-		this.p_upload = p_upload;
-		this.p_date = p_date;
-		this.p_category = p_category;
-		this.s_id = s_id;
 	}
 
 	public int getP_boardseq() {
@@ -50,12 +39,22 @@ public class PBoardDTO {
 		this.p_content = p_content;
 	}
 
-	public String getP_upload() {
-		return p_upload;
+	public String getP_filename() {
+		return p_filename;
 	}
 
-	public void setP_upload(String p_upload) {
-		this.p_upload = p_upload;
+	public void setP_filename(String p_filename) {
+		this.p_filename = p_filename;
+	}
+
+	
+
+	public String getP_uuidname() {
+		return p_uuidname;
+	}
+
+	public void setP_uuidname(String p_uuidname) {
+		this.p_uuidname = p_uuidname;
 	}
 
 	public Date getP_date() {
@@ -81,12 +80,7 @@ public class PBoardDTO {
 	public void setS_id(String s_id) {
 		this.s_id = s_id;
 	}
-
-	@Override
-	public String toString() {
-		return "PBoardDTO [p_boardseq=" + p_boardseq + ", p_title=" + p_title + ", p_content=" + p_content
-				+ ", p_upload=" + p_upload + ", p_date=" + p_date + ", p_category=" + p_category + ", s_id=" + s_id
-				+ "]";
-	};
-
+	
+	
+	
 }

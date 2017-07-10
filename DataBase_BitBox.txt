@@ -5,7 +5,7 @@ create table bitclass(
   class_name varchar(100)not null
 );
 
-insert into BITCLASS values(1,120,'Spring FrameWork �缺����');
+insert into BITCLASS values(1,120,'Spring FrameWork ');
 
 select * from BITCLASS;
 
@@ -55,7 +55,8 @@ create table Pboard(
   p_boardseq number primary key,
   p_title varchar(200) not null,
   p_content varchar(500)not null,
-  p_upload varchar(200),
+  p_filename varchar(200),
+  p_uuidname varchar(500),
   p_date date default SYSDATE,
   p_category varchar(100) not null, 
   s_id varchar(100)not null

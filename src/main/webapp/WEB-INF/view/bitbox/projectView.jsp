@@ -76,7 +76,7 @@
 									</div>
 									<div class="form-group">
 										<label for="exampleInputFile">File Name:</label> <a
-											href="/bitbox/download?filename=${board.p_upload }"><label>${board.p_upload }</label></a>
+											href="/bitbox/download?p_boardseq=${board.p_boardseq }"><label>${board.p_filename }</label></a>
 										<p class="help-block"></p>
 									</div>
 								</div>

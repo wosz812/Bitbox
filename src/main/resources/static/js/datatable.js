@@ -29,7 +29,7 @@ $(document)
 																data : "p_date"
 															},
 															{
-																data : "p_upload",
+																data : "p_filename",
 																"render" : function(
 																		data,
 																		type,
@@ -37,8 +37,8 @@ $(document)
 																		meta) {
 																	if(data!=null){
 																	if (type === 'display') {
-																		data = '<a href=/bitbox/download?filename='
-																				+ data
+																		data = '<a href=/bitbox/download?p_boardseq='
+																				+ row.p_boardseq
 																				+ '>'
 																				+ data
 																				+ '</a>';
@@ -47,6 +47,7 @@ $(document)
 																	return data;
 																}
 															},
+															
 															{
 
 																data : "null",
@@ -69,9 +70,10 @@ $(document)
 													var category=a.p_category;
 													var title = a.p_title;
 													var date = a.p_date;
-													var upload = a.p_upload;
+													var filename = a.p_filename;
+											
 													var content = a.p_content;
-													location.href="/bitbox/detailProject?p_boardseq="+boardseq+"&p_title="+title+"&p_date="+date+"&p_upload="+upload+
+													location.href="/bitbox/detailProject?p_boardseq="+boardseq+"&p_title="+title+"&p_date="+date+"&p_filename="+filename+
 													"&p_content="+content+"&p_category="+category;
 												});
 

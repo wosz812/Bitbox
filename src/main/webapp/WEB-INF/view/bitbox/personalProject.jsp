@@ -69,7 +69,7 @@
 									name="p_content" value=""></textarea>
 								<br> <label>등록일:</label> <input type="text" id="p_date"
 									value="" readonly="readonly" /><br> <label>파일명:</label> <input
-									type="text" id="p_upload" value="" readonly="readonly" /><br>
+									type="text" id="p_filename" value="" readonly="readonly" /><br>
 
 							</div>
 							<div class="modal-footer">

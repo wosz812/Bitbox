@@ -14,10 +14,14 @@
 			select p_boardseq.nextval from dual
 		</selectKey>
 		insert into
-		pboard(p_boardseq,p_title,p_content,p_upload,p_category,s_id)
-		values(#{p_boardseq},#{p_title},#{p_content},#{p_upload},#{p_category},#{s_id})
+		pboard(p_boardseq,p_title,p_content,p_filename,p_uuidname,p_category,s_id)
+		values(#{p_boardseq},#{p_title},#{p_content},#{p_filename},#{p_uuidname},#{p_category},#{s_id})
 
 	</insert>
+	
+	<select id="finduuidname" resultType="com.bitbox.dto.PBoardDTO">
+		select * from pboard where p_boardseq=#{p_boardseq}
+	</select>
 
 	<select id="getCalendar" resultType="com.bitbox.dto.PBoardDTO" parameterType="String">
 		select * from pboard where s_id=#{s_id}

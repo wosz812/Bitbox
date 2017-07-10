@@ -81,7 +81,7 @@
 									</div>
 									<div class="form-group">
 										<label for="exampleInputFile">File input</label> <input
-											type="file" name="p_upload">
+											type="file" name="p_filename">
 										<p class="help-block"></p>
 									</div>
 								</div>

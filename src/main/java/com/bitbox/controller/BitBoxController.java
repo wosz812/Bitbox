@@ -2,15 +2,12 @@ package com.bitbox.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,8 +37,6 @@ import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.service.IBitboxService;
 import com.google.gson.Gson;
-
-import oracle.sql.DATE;
 
 @RequestMapping(value = "/bitbox")
 
@@ -85,19 +80,21 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/regist", method = { RequestMethod.POST, RequestMethod.GET })
 	public String regist(@RequestParam("p_title") String p_title, @RequestParam("p_content") String p_content,
-			@RequestParam("p_category") String p_category, HttpSession session, MultipartFile p_upload) { // 占쎈쐻占쎈셾占쎈뻻繹먮씮�굲
+			@RequestParam("p_category") String p_category, HttpSession session, MultipartFile p_filename) { // 占쎈쐻占쎈셾占쎈뻻繹먮씮�굲
 																											// 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲癲됯퇊�쐻�뜝占�
 		String url = null;
 		PBoardDTO board = new PBoardDTO();
 		String path = this.path;
 		boolean flag = false;
-		String fileName = p_upload.getOriginalFilename();		
+		String fileNames = p_filename.getOriginalFilename();
+		UUID uuidname=UUID.randomUUID();
 		try {
-			p_upload.transferTo(new File(path + fileName));
+			p_filename.transferTo(new File(path + uuidname.toString()+"_"+fileNames));
 			board.setP_title(p_title);
 			board.setP_content(p_content);
 			board.setP_category(p_category);
-			board.setP_upload(fileName);
+			board.setP_filename(fileNames);
+			board.setP_uuidname(uuidname.toString()+"_"+fileNames);
 			board.setS_id(session.getAttribute("id").toString());
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
@@ -111,11 +108,15 @@ public class BitBoxController {
 	}
 
 	@RequestMapping(value = "/download", method = { RequestMethod.POST, RequestMethod.GET })
-	public HttpEntity<?> downloadtest(@RequestParam("filename") String filename, HttpServletRequest req) {
+	public HttpEntity<?> downloadtest(@RequestParam("p_boardseq") String p_boardseq, HttpServletRequest req) {
 		String path = SystemPropertyUtils.resolvePlaceholders("${storage.path:" + this.path + "}");
 		HttpHeaders header = new HttpHeaders();
+		PBoardDTO board=service.finduuidname(p_boardseq);
+		logger.info("file seq or uuidname is {}",p_boardseq +","+board.getP_uuidname());
+		String filename=board.getP_uuidname();
 		header.setContentDispositionFormData("name", filename);
 		header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		
 		return ResponseEntity.ok().headers(header).body(new FileSystemResource(new File(path + filename)));
 	}
 
@@ -163,13 +164,13 @@ public class BitBoxController {
 	@RequestMapping(value = "/detailProject", method = { RequestMethod.POST, RequestMethod.GET })
 	public String detailProject(Model model,HttpSession session,@RequestParam("p_title") String p_title,
 			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
-			@RequestParam("p_upload") String p_upload,@RequestParam("p_category") String p_category){
+			@RequestParam("p_filename") String p_filename,@RequestParam("p_category") String p_category){
 		String url="/bitbox/projectView";	
 		PBoardDTO board=new PBoardDTO();
 		board.setP_boardseq(p_boardseq);
 		board.setP_title(p_title);
 		board.setP_content(p_content);
-		board.setP_upload(p_upload);
+		board.setP_filename(p_filename);
 		board.setP_category(p_category);	
 		board.setS_id(session.getAttribute("id").toString());
 		model.addAttribute("board",board);

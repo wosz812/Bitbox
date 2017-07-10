@@ -50,4 +50,5 @@ public interface IBitboxDAO {
 	public boolean qnaUpdate(QnaDTO qna);
 	public List<ReQnaDTO> getReplyList(int q_seq);
 	public boolean registReply(ReQnaDTO reply);
+	public PBoardDTO finduuidname(String p_boardseq);
 }

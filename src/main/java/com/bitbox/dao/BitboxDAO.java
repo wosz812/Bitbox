@@ -345,4 +345,11 @@ public class BitboxDAO implements IBitboxDAO {
 		return flag;
 	}
 
+	@Override
+	public PBoardDTO finduuidname(String p_boardseq) {
+		// TODO Auto-generated method stub
+		PBoardDTO board=session.selectOne(namespace+".finduuidname",p_boardseq);
+		return board;
+	}
+
 }

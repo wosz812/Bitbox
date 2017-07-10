@@ -58,7 +58,7 @@ public class BitboxService implements IBitboxService {
 			format.setTitle(calendar.get(i).getP_title());
 			format.setStart(new SimpleDateFormat("yyyy-MM-dd").format(calendar.get(i).getP_date()));
             format.setUrl("http://localhost:8080/bitbox/detailProject?p_boardseq="+calendar.get(i).getP_boardseq()+"&p_title="+calendar.get(i).getP_title()
-                    +"&p_content="+calendar.get(i).getP_content()+"&p_upload="+calendar.get(i).getP_upload()+"&p_category="+calendar.get(i).getP_category()+"&cal=cal");
+                    +"&p_content="+calendar.get(i).getP_content()+"&p_filename="+calendar.get(i).getP_filename()+"&p_category="+calendar.get(i).getP_category()+"&cal=cal");
 
             //수정
 			calendars.add(format);
@@ -331,6 +331,13 @@ public class BitboxService implements IBitboxService {
 	public boolean registReply(ReQnaDTO reply) {
 		boolean flag = dao.registReply(reply);
 		return flag;
+	}
+
+	@Override
+	public PBoardDTO finduuidname(String p_boardseq) {
+		// TODO Auto-generated method stub
+		PBoardDTO board=dao.finduuidname(p_boardseq);
+		return board;
 	}
 
 }
