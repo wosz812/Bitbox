@@ -119,6 +119,24 @@ public class BitBoxController {
 		
 		return ResponseEntity.ok().headers(header).body(new FileSystemResource(new File(path + filename)));
 	}
+	@RequestMapping(value="/uploadImage", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody String uploadImage(HttpServletRequest  req,HttpServletResponse res,MultipartFile image){
+		//String path="C:\\dev\\image\\";
+		String path=req.getSession().getServletContext().getRealPath("/")+"image\\";
+		System.out.println(path);
+		UUID uuidname=UUID.randomUUID();
+		String imageName=uuidname.toString()+image.getOriginalFilename();
+		try {
+			image.transferTo(new File(path+imageName));
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String url="http://localhost:8080/image/"+imageName;
+		res.setCharacterEncoding("UTF-8");
+		return url;
+	}
 
 	@RequestMapping(value = "/projectUpdate", method = { RequestMethod.POST, RequestMethod.GET })
 	public String projectUpdate(HttpSession session, @RequestParam("p_title") String p_title,

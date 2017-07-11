@@ -70,7 +70,7 @@
 									</div>
 									<div class="form-group">
 										<label>내용</label>
-										<textarea class="form-control" rows="10" name="q_content">${qnaList.q_content}</textarea>
+										<textarea class="form-control" rows="10" name="q_content" id="summernote">${qnaList.q_content}</textarea>
 									</div>
 									<div class="form-group">
 										<label for="exampleInputFile">File Name:</label> <a
@@ -101,7 +101,7 @@
 										<label>작성자</label>
 										<input type="text" class="form-control" name="re_writer">
 										<label>댓글 내용</label>
-										<textarea class="form-control" rows="2" name="re_content"></textarea>
+										<textarea class="form-control" rows="2" name="re_content" ></textarea>
 									</div>
 									<div class="form-group" align="right">
 										<button type="submit" class="btn btn-primary">댓글 작성</button>
@@ -132,6 +132,8 @@
 	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script>
 	<!-- Slimscroll -->
 	<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 	<!-- FastClick -->
@@ -154,6 +156,37 @@
 		ds.action = url;
 		ds.submit();
 	}			
+	</script>
+	<script>
+	$('#summernote').summernote({
+	    height: ($(window).height() - 300),
+	    callbacks: {
+	        onImageUpload: function(image,editor,welEditable) {
+	            uploadImage(image[0]);
+	        }
+	    }
+	});
+
+	function uploadImage(image,editor,welEditable) {
+	    var data = new FormData();
+	    data.append("image", image);
+	    $.ajax({
+	        url: '/bitbox/uploadImage',
+	        cache: false,
+	        contentType: false,
+	        processData: false,
+	        data: data,
+	        type: "post",
+	        success: function(url) {
+	            var image = $('<img>').attr('src',  url);
+	            editor.insertImage(welEditable,url);
+	           // $('#summernote').summernote("insertNode", image[0]);
+	        },
+	        error: function(data) {
+	            console.log(data);
+	        }
+	    });
+	}
 	</script>
 </body>
 </html>
