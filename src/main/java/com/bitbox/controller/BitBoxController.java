@@ -1,7 +1,13 @@
 package com.bitbox.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -405,6 +411,30 @@ public class BitBoxController {
 			url = "redirect:/bitbox/readQna?page=" + page + "&q_seq=" + q_seq;
 		}
 		return url;
+	}
+	
+	@RequestMapping(value="/diff", method=RequestMethod.GET)
+	public String diff(){
+		String url ="/bitbox/diff";
+		
+		return url;
+	}
+	
+	@RequestMapping(value="/read", method=RequestMethod.POST)
+	public @ResponseBody String read(@RequestParam("file") MultipartFile file,Model model){
+//		String url ="";
+		//MultipartFile file = (MultipartFile) uploadfile;
+		System.out.println("controller in");
+		StringBuffer temp = service.readFile(file);
+		String list = null;
+		if(temp!=null){
+			model.addAttribute("list", list);
+		}else{
+			temp.append("no Text");
+		}
+		list = temp.toString();
+//		url="/bitbox/test2";
+		return list;
 	}
 
 }
