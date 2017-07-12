@@ -70,6 +70,10 @@
 	<li><a href="/bitbox/group"> <i class="fa fa-users"></i>
 			<span>Group</span> <span class="pull-right-container"> </span>
 	</a></li>
+	
+	<li><a href="/bitbox/diff"> <i class="fa fa-users"></i>
+			<span>Diff</span> <span class="pull-right-container"> </span>
+	</a></li>
 </ul>
 </section> <!-- /.sidebar --> </aside>
 

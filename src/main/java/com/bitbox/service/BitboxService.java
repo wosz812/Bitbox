@@ -1,11 +1,16 @@
 package com.bitbox.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bitbox.dao.IBitboxDAO;
 import com.bitbox.dto.CalendarFormat;
@@ -17,6 +22,7 @@ import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+
 
 @Service
 public class BitboxService implements IBitboxService {
@@ -338,6 +344,43 @@ public class BitboxService implements IBitboxService {
 		// TODO Auto-generated method stub
 		PBoardDTO board=dao.finduuidname(p_boardseq);
 		return board;
+	}
+
+	@Override
+	public StringBuffer readFile(MultipartFile file) {
+		// TODO Auto-generated method stub
+		InputStream input = null;
+		InputStreamReader isr = null;
+		BufferedReader br = null;
+		StringBuffer list = new StringBuffer();
+		
+		String line;
+		//System.out.println(fileName);
+		try {
+			
+			input = file.getInputStream();
+			isr = new InputStreamReader(input,"UTF-8");
+			br = new BufferedReader(isr);
+//			model.addAttribute("list",br.toString());
+			while((line=br.readLine())!=null){
+				list.append(line);
+				list.append("\n");
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			try {
+				br.close();
+				isr.close();
+				input.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 }

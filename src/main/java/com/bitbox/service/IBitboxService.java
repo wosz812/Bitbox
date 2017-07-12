@@ -3,6 +3,8 @@ package com.bitbox.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
@@ -86,4 +88,6 @@ public interface IBitboxService {
 	public boolean registReply(ReQnaDTO reply);
 
 	public PBoardDTO finduuidname(String p_boardseq);
+
+	public StringBuffer readFile(MultipartFile file);
 }
