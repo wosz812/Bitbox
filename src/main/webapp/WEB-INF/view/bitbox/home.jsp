@@ -40,13 +40,17 @@
  		height:100px;
  	
  	}
+ 	#sales-chart3{
+ 		
+ 		
+ 	}
  	#sales-chart{
  		
- 		margin-left:50px;
+ 		margin-left: 20px;
  	}
  	#sales-chart2{
- 		margin-top:-100px;
- 		margin-left:250px;
+ 		
+ 		
  	}
  	#slide{
  		margin-top:-10px;
@@ -132,20 +136,25 @@
 			<section class="content">
 				<div class="col-md-8">
 					<!-- DONUT CHART -->
-					<div class="box box-primary">
+					<div class="box box-primary" style="height: 300px">
 						<div class="box-header with-border">
-							<h3 class="box-title font">커리큘럼</h3>
+							<h3 class="box-title font">과정 커리큘럼</h3>
 
 						</div>
 
-						<div id="graph" class="box-body chart-responsive" align="left" style="width:10px;">
+						<div class="box-body chart-responsive col-md-4" align="left">
 							<div class="chart" id="sales-chart"
-								style="width: 200px; height: 200px; position: relative;"></div>
+								style="width: 180px; height: 180px; position: relative;"></div>
+						</div>
+						
+						<div class="box-body chart-responsive col-md-4" align="center" style="width:10px; margin-left: 10">
+							<div class="chart" id="sales-chart3"
+								style="width: 180px; height: 180px; position: relative;"></div>
 						</div>
 
-						<div class="box-body chart-responsive" align="center">
+						<div class="box-body chart-responsive col-md-4" align="right" style="margin-left: 190px">
 							<div class="chart" id="sales-chart2"
-								style=" width:200px; height: 200px; position: relative;" align="center"></div>
+								style=" width:180px; height: 180px; position: relative;" align="center"></div>
 						</div>
 						<!-- /.box-body -->
 					</div>
@@ -154,7 +163,7 @@
 			
 
 				<div class="col-md-4">
-					<!-- DONUT CHART -->
+					
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<h3 class="box-title font">TO DO</h3>
@@ -181,6 +190,8 @@
 						<!-- /.box-body -->
 					</div>
 				</div>
+				
+				
 					<div class="col-md-8" id="slide">
 						<div class="box box-solid">
 							<!-- /.box-header -->
@@ -229,6 +240,17 @@
 						</div>
 						<!-- /.box -->
 					</div>
+					
+					<div class="col-md-4">
+					<!-- DONUT CHART -->
+					<div class="box box-primary" style="height: 400px">
+						<div class="box-header with-border">
+							<h3 class="box-title font">간편 메뉴</h3>
+						</div>
+						
+						<!-- /.box-body -->
+					</div>
+				</div>
 			</section>
 		</div>
 		<!-- /.content-wrapper -->

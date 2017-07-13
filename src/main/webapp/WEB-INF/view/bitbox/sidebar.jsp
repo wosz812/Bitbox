@@ -71,7 +71,7 @@
 			<span>Group</span> <span class="pull-right-container"> </span>
 	</a></li>
 	
-	<li><a href="/bitbox/diff"> <i class="fa fa-users"></i>
+	<li><a href="/bitbox/diff"> <i class="fa fa-check"></i>
 			<span>Diff</span> <span class="pull-right-container"> </span>
 	</a></li>
 </ul>

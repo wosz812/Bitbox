@@ -161,42 +161,45 @@ del {
 			<section class="content-header">
 				<div class="box-body">
 					<h2 align="center">Diff</h2>
+					<h3 align="center">코드 비교</h3>
 				</div>
 			</section>
 			<section style="padding: 15px">
 				<div class="box">
 					<div class="content">
 						<div class="form-group" style="padding-left: 10px;">
-							<h4>
-								표시 형식
+							<h3 style="border-bottom: 1px solid gray">
+								<i class="fa fa-cog"></i> 표시 형식
 								</h3>
 								<label> <input type='radio' name='methods' value='a'
-									checked='checked' />다른부분 밑줄긋기(비추천)
+									checked='checked'/>다른부분 밑줄긋기(비추천)
 								</label><br> <label> <input type='radio' name='methods'
-									value='b' />한 페이지로 보기
+									value='b'/>한 페이지로 보기
 								</label><br> <label> <input type='radio' name='methods'
 									value='c' />두 페이지로 보기
 								</label><br>
 						</div>
-						<div class="row">
+						<div style="padding: 20px">
+						<div class="row" style="border: 3px solid white">
 							<div class="col-xs-6">
 								<!-- form action="/bitbox/read" enctype="multipart/form-data" method="post" -->
-								<h3>첫 번째 텍스트</h3>
-								<input class="file1" type="file" name="file1" id="file1">
-								<input type="button" id="file1Submit" value="▼" style="margin-left: 20px">
+								<h3><i class="fa fa-file-text-o"></i> 첫번째 코드</h3>
+								<input class="file1 file" type="file" name="file1" id="file1" style="background-color: antiquewhite;">
+								<br>
 								<!-- /form -->
 								<textarea id='oldtext' cols="120" rows="15" name='oldtext'
-									class='old text'>${list }</textarea>
+									class='old text'></textarea>
 							</div>
 							<div class="col-xs-6">
 								<!-- form -->
-								<h3>두 번째 텍스트</h3>
-								<input class="file2" type="file" name="file2" id="file2">
-								<input type="button" id="file2Submit" value="▼" style="margin-left: 20px">
+								<h3><i class="fa fa-file-text-o"></i> 두번째 코드</h3>
+								<input class="file2 file" type="file" name="file2" id="file2" style="background-color: antiquewhite;">
+								<br>
 								<!-- /form -->
 								<textarea id='newtext' cols="120" rows="15" name='newtext'
-									class='new text'>${list }</textarea>
+									class='new text'></textarea>
 							</div>
+						</div>
 						</div>
 						<div class="form-group"
 							style="padding-left: 5px; padding-top: 10px;">
@@ -307,19 +310,14 @@ del {
 		var files = [];
 		$(document).on("change", "#file1", function(event) {
 			files = event.target.files;
+			processUpload_1();
 		})
 		
 		$(document).on("change", "#file2", function(event) {
 			files = event.target.files;
-		})
-
-		$(document).on("click", "#file1Submit", function() {
-			processUpload_1();
-		})
-		
-		$(document).on("click", "#file2Submit", function() {
 			processUpload_2();
 		})
+
 		
 		function processUpload_1() {
 			var oMyForm = new FormData();
