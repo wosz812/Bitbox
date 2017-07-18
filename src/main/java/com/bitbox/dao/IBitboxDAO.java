@@ -5,11 +5,13 @@ import java.util.List;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.MinutesDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.mPageDTO;
 
 public interface IBitboxDAO {
 	public List<PBoardDTO> listAll(String id);
@@ -51,4 +53,12 @@ public interface IBitboxDAO {
 	public List<ReQnaDTO> getReplyList(int q_seq);
 	public boolean registReply(ReQnaDTO reply);
 	public PBoardDTO finduuidname(String p_boardseq);
+	public List<MinutesDTO> minutesList(mPageDTO mList);
+	public List<String> getNameList(int group_seq);
+	public boolean registMinutes(MinutesDTO minutes);
+	public MinutesDTO readMinutes(int seq);
+	public int mCnt(int group_seq);
+	public boolean updateMinutes(MinutesDTO minutes);
+	public boolean deleteMinutes(int min_seq);
+	public boolean updateReadCount(int q_seq);
 }

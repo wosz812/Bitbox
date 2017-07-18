@@ -46,27 +46,30 @@
 			</section>
 
 			<!-- Main content -->
-			<section class="content" >
+						<section class="content" >
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-6">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">Q & A</h3>
-							</div>
-							<!-- /.box-header -->
-							<!-- form start -->
 							<form role="form" action="" method="post"
 								enctype="multipart/form-data" id="dataset">
 								<input type="hidden" name="q_seq" value="${qnaList.q_seq}">
 								<div class="box-body" style="padding: 20px">
 									<div class="form-group">
-										<label for="exampleInputEmail1">제목</label> <input type="text"
+										<div class="col-md-10">
+											<label for="exampleInputEmail1">제목</label> <input type="text"
 											class="form-control" name="q_title" value="${qnaList.q_title}">
+										</div>
+										<div class="col-md-2">
+											<label for="exampleInputEmail1">조회수</label> <input type="text"
+											class="form-control" name="q_readCount" value="${qnaList.q_readCount}">
+										</div>										
 									</div>
 									<div class="form-group">
-										카테고리 <label>${qnaList.q_category}</label>
+										<div class="col-md-12">
+											<label>카테고리&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qnaList.q_category}</label>
+										</div>										
 									</div>
 									<div class="form-group">
 										<label>내용</label>
@@ -91,8 +94,14 @@
 									<h4>Coment</h4>
 								</div>
 							</form>
-							<div>
-							</div>
+							<c:forEach var="re" items="${replyList}">
+								<div class="form-group" style="padding: 20px; border: 1px solid green;">
+									<label>작성자</label>
+									<input type="text" class="form-control" name="re_writer" value="${re.re_writer}" readonly="readonly">
+									<label>댓글 내용</label>
+									<textarea class="form-control" rows="2" name="re_content" readonly="readonly">${re.re_content}</textarea>
+								</div>
+							</c:forEach>
 							<form action="/bitbox/registReply" method="post">
 								<div style="padding: 20px;">
 									<div class="form-group">
@@ -108,14 +117,6 @@
 									</div>
 								</div>
 							</form>
-							<c:forEach var="re" items="${replyList}">
-								<div class="form-group" style="padding: 20px; border: 1px solid green;">
-									<label>작성자</label>
-									<input type="text" class="form-control" name="re_writer" value="${re.re_writer}" readonly="readonly">
-									<label>댓글 내용</label>
-									<textarea class="form-control" rows="2" name="re_content" readonly="readonly">${re.re_content}</textarea>
-								</div>
-							</c:forEach>
 						</div>
 					</div>
 				</div>

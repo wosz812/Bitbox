@@ -63,7 +63,7 @@
 											<td>${qList.q_category}</td>
 											<td><a href="/bitbox/readQna?q_seq=${qList.q_seq}&page=${page}">${qList.q_title}</a></td>
 											<td>${qList.s_id}</td>
-											<td>조회수</td>
+											<td>${qList.q_readCount}</td>
 										</tr>
 									</c:forEach>
 								</table>

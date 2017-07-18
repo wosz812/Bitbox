@@ -143,6 +143,10 @@
 		select count(*) from pboard
 	</select>
 	
+	<update id="updateReadCount" parameterType="Integer">
+		update qna set q_readcount = q_readcount + 1 where q_seq = #{q_seq} 
+	</update>
+	
 	<select id="detailQna" resultType="com.bitbox.dto.QnaDTO" parameterType="Integer">
 		select * from qna where q_seq = #{q_seq}
 	</select>
@@ -186,4 +190,46 @@
 		insert into reqna(re_seq, re_writer, re_content, q_seq)
 		values(#{re_seq}, #{re_writer}, #{re_content}, #{q_seq})
 	</insert>
+	
+		<select id="minutesList" parameterType="com.bitbox.dto.mPageDTO" resultType="com.bitbox.dto.MinutesDTO">
+		select A.* from(
+			select rownum as num,temp.* from(
+				select * from gminutes where group_seq=#{group_seq} order by min_seq desc
+				) temp
+			) A 
+		where A.num between #{start} and #{start}+9
+	</select>
+	
+	<select id="getNameList" parameterType="Integer" resultType="String">
+		select s_name from student s, groupin g
+		where s.s_id = g.s_id and g.group_seq = #{group_seq}
+	</select>
+	
+	<insert id="registMinutes" parameterType="com.bitbox.dto.MinutesDTO">
+		<selectKey keyProperty="min_seq" order="BEFORE" resultType="Integer">
+			select min_seq.nextval from dual
+		</selectKey>
+		insert into gminutes(min_seq, min_date, min_attendee, min_subject, min_content, min_opinion, min_decide,
+		min_schedule, min_prepare, group_seq) 
+		values(#{min_seq}, #{min_date}, #{min_attendee}, #{min_subject}, #{min_content}, #{min_opinion}, #{min_decide}, 
+		#{min_schedule}, #{min_prepare}, #{group_seq})
+	</insert>
+	
+	<select id="readMinutes" parameterType="Integer" resultType="com.bitbox.dto.MinutesDTO">
+		select * from gminutes where min_seq = #{seq}
+	</select>
+	
+	<select id="mCnt" resultType="Integer" parameterType="Integer">
+		select count(*) from gminutes where group_seq = #{group_seq}
+	</select>
+	
+	<update id="updateMinutes" parameterType="com.bitbox.dto.MinutesDTO">
+		update gminutes set min_subject = #{min_subject}, min_content = #{min_content}, min_opinion = #{min_opinion},
+		min_decide = #{min_decide}, min_schedule = #{min_schedule}, min_prepare = #{min_prepare}
+		where min_seq = #{min_seq}
+	</update>
+	
+	<delete id="deleteMinutes" parameterType="Integer">
+		delete from gminutes where min_seq = #{min_seq}
+	</delete>
 </mapper>

@@ -38,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.MinutesDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
@@ -358,7 +359,6 @@ public class BitBoxController {
 		String url = "/bitbox/qnaView";
 		QnaDTO qnaList = service.detailQna(q_seq);
 		List<ReQnaDTO> replyList = service.getReplyList(q_seq);
-		System.out.println("readQna / replyList : " + replyList);
 		model.addAttribute("replyList", replyList);
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("page", page);
@@ -453,6 +453,97 @@ public class BitBoxController {
 		list = temp.toString();
 //		url="/bitbox/test2";
 		return list;
+	}
+	
+	@RequestMapping(value = "/registMinutesForm", method = { RequestMethod.POST, RequestMethod.GET })
+	public String minutes(HttpSession session, @RequestParam("group_seq") int group_seq,
+			@RequestParam("group_title") String group_title, Model model) {
+		String url = "/bitbox/registMinutes";
+		ArrayList<String> member = service.getMember(group_seq);
+		System.out.println("registMinutesForm : " + member);
+		model.addAttribute("group_title", group_title);
+		model.addAttribute("group_seq", group_seq);
+		model.addAttribute("member", member);
+		return url;
+	}
+
+	@RequestMapping(value = "/registMinutes", method = { RequestMethod.POST, RequestMethod.GET })
+	public String registMinutes(HttpSession session, MinutesDTO minutes, @RequestParam("member") String[] nameList,
+			@RequestParam("group_title") String group_title, @RequestParam("group_seq") int group_seq, Model model) {
+		System.out.println("registMinutes : " + minutes);
+		String url = "";
+		StringBuffer sb = new StringBuffer();
+		sb.append(nameList[0]);
+		if (nameList.length > 1) {
+			for (int i = 1; i < nameList.length; i++) {
+				sb.append("," + nameList[i]);
+			}
+		}
+		minutes.setMin_attendee(sb.toString());
+		boolean flag = service.registMinutes(minutes);
+		if (flag) {
+			url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title;
+		}
+		return url;
+	}
+
+	@RequestMapping(value = "/minutesList", method = { RequestMethod.POST, RequestMethod.GET })
+	public String minutesList(HttpSession session, @RequestParam("group_seq") int group_seq,
+			@RequestParam("group_title") String group_title, Model model,
+			@RequestParam(value = "page", defaultValue = "0") int page) {
+		String url = "/bitbox/minutesList";
+		List<MinutesDTO> list = service.minutesList(group_seq, page);
+		ArrayList<String> mPageList = service.getMinutesPageList(group_seq, page, group_title);
+		model.addAttribute("list", list);
+		model.addAttribute("mPageList", mPageList);
+		model.addAttribute("group_seq", group_seq);
+		model.addAttribute("group_title", group_title);
+		model.addAttribute("page", page);
+		return url;
+	}
+
+	@RequestMapping(value = "/minutesView", method = { RequestMethod.POST, RequestMethod.GET })
+	public String minuteView(HttpSession session, @RequestParam("seq") int seq,
+			@RequestParam("group") String group_title, Model model, @RequestParam("page") int page) {
+		String url = "/bitbox/minutesView";
+		MinutesDTO minutes = service.readMinutes(seq);
+		System.out.println("minutesView : " + minutes);
+		model.addAttribute("minutes", minutes);
+		model.addAttribute("group_title", group_title);
+		model.addAttribute("page", page);
+		return url;
+	}
+
+	@RequestMapping(value = "/minutesUpdate", method = { RequestMethod.POST, RequestMethod.GET })
+	public String minuteUpdate(HttpSession session, MinutesDTO minutes, @RequestParam("group_title") String group_title,
+			Model model, @RequestParam("page") int page) {
+		String url = "";
+		boolean flag = service.updateMinutes(minutes);
+		if (flag) {
+			url = "redirect:/bitbox/minutesView?seq=" + minutes.getMin_seq() + "&group=" + group_title + "&page="
+					+ page;
+		}
+		return url;
+	}
+
+	@RequestMapping(value = "/minutesDelete", method = { RequestMethod.POST, RequestMethod.GET })
+	public String minuteDelete(HttpSession session, MinutesDTO minutes, @RequestParam("group_title") String group_title,
+			Model model, @RequestParam("page") int page) {
+		String url = "";
+		boolean flag = service.deleteMinutes(minutes.getMin_seq());
+		if (flag) {
+			url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title
+					+ "&page=" + page;
+		}
+		return url;
+	}
+	
+	@RequestMapping(value = "/minutesDownload", method = { RequestMethod.POST, RequestMethod.GET })
+	public String minutesDownload(MinutesDTO minutes, @RequestParam("group_title") String group_title, Model model) {
+		String url = "/bitbox/download";
+		model.addAttribute("data", minutes);
+		model.addAttribute("title", group_title);
+		return url;
 	}
 
 }

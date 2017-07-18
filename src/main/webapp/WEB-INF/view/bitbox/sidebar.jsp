@@ -59,6 +59,16 @@
 					</c:forEach>
 				</ul></li>
 		</ul></li>
+	
+	<li><a href="#"><i class="fa fa-commenting-o"></i>
+		<span>Minutes</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i>
+		</span></a>
+		<ul class="treeview-menu">
+			<c:forEach items="${groupList}" var="group">
+				<li><a href="/bitbox/minutesList?group_seq=${group.group_seq}&group_title=${group.title}"><i class="fa fa-group"></i>${group.title}</a></li>
+			</c:forEach>
+		</ul>
+	</li>
 
 	<li><a href="/bitbox/calendar"> <i class="fa fa-calendar"></i>
 			<span>Calendar</span> <span class="pull-right-container"> </span>

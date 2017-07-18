@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.MinutesDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.PageDTO;
@@ -18,6 +19,7 @@ import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
 import com.bitbox.dto.gPageDTO;
+import com.bitbox.dto.mPageDTO;
 
 @Repository
 public class BitboxDAO implements IBitboxDAO {
@@ -296,6 +298,16 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return flag;
 	}
+	
+	@Override
+	public boolean updateReadCount(int q_seq) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".updateReadCount", q_seq);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
 
 	@Override
 	public QnaDTO detailQna(int q_seq) {
@@ -350,6 +362,60 @@ public class BitboxDAO implements IBitboxDAO {
 		// TODO Auto-generated method stub
 		PBoardDTO board=session.selectOne(namespace+".finduuidname",p_boardseq);
 		return board;
+	}
+	
+	@Override
+	public List<MinutesDTO> minutesList(mPageDTO mList) {
+		List<MinutesDTO> list = session.selectList(namespace + ".minutesList", mList);
+		return list;
+	}
+
+	@Override
+	public List<String> getNameList(int group_seq) {
+		List<String> nameList = session.selectList(namespace + ".getNameList", group_seq);
+		return nameList;
+	}
+
+	@Override
+	public boolean registMinutes(MinutesDTO minutes) {
+		boolean flag = false;
+		int aCnt = session.insert(namespace + ".registMinutes", minutes);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public MinutesDTO readMinutes(int seq) {
+		MinutesDTO minutes = session.selectOne(namespace + ".readMinutes", seq);
+		return minutes;
+	}
+
+	@Override
+	public int mCnt(int group_seq) {
+		int cnt = session.selectOne(namespace + ".mCnt", group_seq);
+		return cnt;
+	}
+
+	@Override
+	public boolean updateMinutes(MinutesDTO minutes) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".updateMinutes", minutes);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean deleteMinutes(int min_seq) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".deleteMinutes", min_seq);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
 	}
 
 }

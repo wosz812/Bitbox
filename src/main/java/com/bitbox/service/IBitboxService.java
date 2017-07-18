@@ -9,6 +9,7 @@ import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.MinutesDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
@@ -90,4 +91,18 @@ public interface IBitboxService {
 	public PBoardDTO finduuidname(String p_boardseq);
 
 	public StringBuffer readFile(MultipartFile file);
+	
+	public List<MinutesDTO> minutesList(int group_seq, int page);
+
+	public ArrayList<String> getMember(int group_seq);
+
+	public boolean registMinutes(MinutesDTO minutes);
+
+	public MinutesDTO readMinutes(int seq);
+
+	public ArrayList<String> getMinutesPageList(int group_seq, int page, String group_title);
+
+	public boolean updateMinutes(MinutesDTO minutes);
+
+	public boolean deleteMinutes(int min_seq);
 }

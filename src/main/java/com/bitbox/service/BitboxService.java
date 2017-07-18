@@ -17,11 +17,13 @@ import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.MinutesDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.mPageDTO;
 
 
 @Service
@@ -286,7 +288,11 @@ public class BitboxService implements IBitboxService {
 
 	@Override
 	public QnaDTO detailQna(int q_seq) {
-		QnaDTO qna = dao.detailQna(q_seq);
+		boolean flag = dao.updateReadCount(q_seq);
+		QnaDTO qna = null;
+		if(flag){
+			qna = dao.detailQna(q_seq);
+		}
 		return qna;
 	}
 
@@ -381,6 +387,75 @@ public class BitboxService implements IBitboxService {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public List<MinutesDTO> minutesList(int group_seq, int page) {
+		int start = (page * 10) + 1;
+		List<MinutesDTO> list = dao.minutesList(new mPageDTO(group_seq, start));
+		return list;
+	}
+
+	@Override
+	public ArrayList<String> getMinutesPageList(int group_seq, int page, String group_title) {
+		ArrayList<String> mpageList = new ArrayList<String>();
+		// 페이지 리스트를 받아와야함
+		int amount = 10;
+		int count = dao.mCnt(group_seq);// 로우 갯수
+		int pageCount = (int) Math.ceil(count / (double) amount);
+		int pageUnit = page / 10;
+		int endPage = (pageUnit * 10) + amount;
+		endPage = endPage <= pageCount ? endPage : pageCount;
+
+		if (pageUnit != 0) {
+			mpageList.add(" <a href='/bitbox/minutesList?page=" + ((pageUnit - 1) * 10) + "&group_seq=" + group_seq
+					+ "&group_title=" + group_title + "'> prev </a> ");
+		}
+		for (int i = pageUnit * 10; i < endPage; i++) {
+			mpageList.add(" <a href='/bitbox/minutesList?page=" + (i) + "&group_seq=" + group_seq
+					+ "&group_title=" + group_title + "'>" + (i + 1) + "</a> ");
+		}
+		// next
+		if (endPage < pageCount) {
+			mpageList.add(" <a href='/bitbox/minutesList?page=" + (endPage) + "&group_seq=" + group_seq
+					+ "&group_title=" + group_title + "'> next </a> ");
+		}
+
+		return mpageList;
+	}
+
+	@Override
+	public ArrayList<String> getMember(int group_seq) {
+		ArrayList<String> member = new ArrayList<String>();
+		List<String> nameList = dao.getNameList(group_seq);
+		for (String name : nameList) {
+			member.add("<input type=\"checkbox\" name=\"member\" value=\"" + name + "\">" + name);
+		}
+		return member;
+	}
+
+	@Override
+	public boolean registMinutes(MinutesDTO minutes) {
+		boolean flag = dao.registMinutes(minutes);
+		return flag;
+	}
+
+	@Override
+	public MinutesDTO readMinutes(int seq) {
+		MinutesDTO minutes = dao.readMinutes(seq);
+		return minutes;
+	}
+
+	@Override
+	public boolean updateMinutes(MinutesDTO minutes) {
+		boolean flag = dao.updateMinutes(minutes);
+		return flag;
+	}
+
+	@Override
+	public boolean deleteMinutes(int min_seq) {
+		boolean flag = dao.deleteMinutes(min_seq);
+		return flag;
 	}
 
 }

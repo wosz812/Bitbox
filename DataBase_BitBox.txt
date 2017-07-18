@@ -153,6 +153,7 @@ create table qna(
   q_seq number primary key,
   q_title varchar(100) not null,
   q_content varchar(500) not null,
+  q_readcount number not null,
   q_upload varchar(200),
   q_image varchar(200),
   q_category varchar(20) not null,
@@ -181,3 +182,21 @@ create sequence re_seq start with 1;
 insert into reqna values(re_seq.nextval, 'JINU', 'HELLO WORLD', 1);
 
 select * from reqna;
+
+create table gminutes(
+  min_seq number primary key,
+  min_date DATE not null,
+  min_attendee VARCHAR2(200) not null,
+  min_subject VARCHAR2(200) not null,
+  min_content varchar2(500) not null,
+  min_opinion varchar2(500),
+  min_decide varchar2(500),
+  min_schedule varchar2(500),
+  min_prepare varchar2(500),
+  group_seq number not null
+ CONSTRAINT cgroup_group_seq_fk4 REFERENCES cgroup(group_seq)
+);
+
+select * from gminutes;
+
+create SEQUENCE min_seq start with 1;

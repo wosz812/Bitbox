@@ -9,17 +9,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>BITBOX</title>
 <!-- Tell the browser to be responsive to screen width -->
-<meta
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-	name="viewport">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Bootstrap 3.3.6 -->
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 <!-- Font Awesome -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <!-- Ionicons -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -43,7 +39,7 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="box-body">
-					<h1 align="center">Personal Project</h1>
+					<h1 align="left">Minutes</h1>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -53,29 +49,37 @@
 						<div class="box">
 							<div class="box-header">
 								<div style="width: 150px;float:right;">
-									<a href="/bitbox/registForm"><button
-											class="btn btn-primary btn-block">Create Project</button></a>
+									<a href="/bitbox/registMinutesForm?group_seq=${group_seq}&group_title=${group_title}"><button
+											class="btn btn-primary btn-block">Create Minutes</button></a>
 								</div>
-								<div class="box-body">
-									<table class="table table-striped table-bordered nowrap"
-										id="test">
-										<thead>
+								<div class="box-body table-responsive no-padding">
+									<h4 align="left">[ ${group_title} ] 그룹의 회의록리스트 </h4>
+									<table class="table table-hover">
+										<tr align="center">
+											<td>회의주제</td>
+											<td>회의일자</td>
+											<td>회의 참석자</td>
+											<td>상세보기</td>
+										</tr>
+										<c:forEach var="mList" items="${list}">
 											<tr align="center">
-												<td>순번</td>
-												<td>카테고리</td>
-												<td>제목</td>
-												<td>등록일자</td>
-												<td>파일첨부</td>
-												<td>내용</td>
+												<td>${mList.min_subject}</td>
+												<td>${mList.min_date}</td>
+												<td>${mList.min_attendee}</td>
+												<td><a href="/bitbox/minutesView?seq=${mList.min_seq}&group=${group_title}&page=${page}"><button class="btn btn-primary">상세보기</button></a></td>
 											</tr>
-										</thead>
+										</c:forEach>
 									</table>
+									<div align="center">
+                     					<h4>${mPageList.toString()}</h4>
+                  					</div>
 								</div>
 								<!-- /.box-body -->
 							</div>
 							<!-- /.box -->
 						</div>
 					</div>
+				</div>
 			</section>
 			<!-- /.content -->
 		</div>
@@ -91,22 +95,16 @@
 	<!-- Slimscroll -->
 	<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 	<!-- FastClick -->
-<script
-			src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-		<script
-			src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-
+	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
 	<script src="/plugins/fastclick/fastclick.js"></script>
 	<!-- AdminLTE App -->
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
 	<!-- modal -->
-	<script
-		src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
-	<script
-		src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
-
+	<script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/datatable.js"></script>
 
 
