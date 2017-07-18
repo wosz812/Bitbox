@@ -57,28 +57,27 @@
 								<input type="hidden" name="q_seq" value="${qnaList.q_seq}">
 								<div class="box-body" style="padding: 20px">
 									<div class="form-group">
-										<div class="col-md-10">
-											<label for="exampleInputEmail1">제목</label> <input type="text"
-											class="form-control" name="q_title" value="${qnaList.q_title}">
+										<div class="col-md-12" style="margin-bottom: 20px">
+											<label>제목</label> 
+											<input type="text" class="form-control" name="q_title" value="${qnaList.q_title}">
 										</div>
-										<div class="col-md-2">
-											<label for="exampleInputEmail1">조회수</label> <input type="text"
-											class="form-control" name="q_readCount" value="${qnaList.q_readCount}">
-										</div>										
 									</div>
 									<div class="form-group">
-										<div class="col-md-12">
+										<label></label> 
+										<div class="col-md-6">
 											<label>카테고리&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qnaList.q_category}</label>
-										</div>										
+										</div>
+										<div class="col-md-6">
+											<label>조회수&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qnaList.q_readCount}</label>
+										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
 										<label>내용</label>
 										<textarea class="form-control" rows="10" name="q_content" id="summernote">${qnaList.q_content}</textarea>
 									</div>
-									<div class="form-group">
+									<div class="form-group" style="padding: 15px">
 										<label for="exampleInputFile">File Name:</label> <a
 											href="/bitbox/download?filename=${qnaList.q_upload}"><label>${qnaList.q_upload}</label></a>
-										<p class="help-block"></p>
 									</div>
 								</div>
 								<!-- /.box-body -->
@@ -108,7 +107,7 @@
 										<input type="hidden" name="q_seq" value="${qnaList.q_seq}">
 										<input type="hidden" name="page" value="${page}">
 										<label>작성자</label>
-										<input type="text" class="form-control" name="re_writer">
+										<input type="text" class="form-control" name="re_writer" value="${replyUser}" readonly="readonly">
 										<label>댓글 내용</label>
 										<textarea class="form-control" rows="2" name="re_content" ></textarea>
 									</div>

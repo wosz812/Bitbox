@@ -61,4 +61,5 @@ public interface IBitboxDAO {
 	public boolean updateMinutes(MinutesDTO minutes);
 	public boolean deleteMinutes(int min_seq);
 	public boolean updateReadCount(int q_seq);
+	public StudentDTO getReplyUser(String s_id);
 }

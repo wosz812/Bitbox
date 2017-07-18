@@ -158,7 +158,6 @@ public class BitboxService implements IBitboxService {
 
 	@Override
 	public List<GMemoDTO> getGMemoList(int group_seq, int page) {
-		// TODO Auto-generated method stub
 		int start = (page * 3) + 1;
 		List<GMemoDTO> memoList = dao.getGMemoList(group_seq, start);
 		return memoList;
@@ -217,7 +216,6 @@ public class BitboxService implements IBitboxService {
 
 	@Override
 	public boolean projectDelete(PBoardDTO board) {
-		// TODO Auto-generated method stub
 		boolean flag = dao.projectDelete(board);
 		return flag;
 	}
@@ -347,14 +345,12 @@ public class BitboxService implements IBitboxService {
 
 	@Override
 	public PBoardDTO finduuidname(String p_boardseq) {
-		// TODO Auto-generated method stub
 		PBoardDTO board=dao.finduuidname(p_boardseq);
 		return board;
 	}
 
 	@Override
 	public StringBuffer readFile(MultipartFile file) {
-		// TODO Auto-generated method stub
 		InputStream input = null;
 		InputStreamReader isr = null;
 		BufferedReader br = null;
@@ -374,7 +370,6 @@ public class BitboxService implements IBitboxService {
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			try {
@@ -382,7 +377,6 @@ public class BitboxService implements IBitboxService {
 				isr.close();
 				input.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -456,6 +450,13 @@ public class BitboxService implements IBitboxService {
 	public boolean deleteMinutes(int min_seq) {
 		boolean flag = dao.deleteMinutes(min_seq);
 		return flag;
+	}
+	
+	@Override
+	public String getReplyUser(String s_id) {
+		StudentDTO student = dao.getReplyUser(s_id);
+		String replyUser = student.getS_id() + " ( " + student.getS_name() + " )";
+		return replyUser;
 	}
 
 }

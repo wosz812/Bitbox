@@ -359,8 +359,10 @@ public class BitBoxController {
 		String url = "/bitbox/qnaView";
 		QnaDTO qnaList = service.detailQna(q_seq);
 		List<ReQnaDTO> replyList = service.getReplyList(q_seq);
+		String replyUser = service.getReplyUser((String) session.getAttribute("id"));
 		model.addAttribute("replyList", replyList);
 		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("replyUser", replyUser);
 		model.addAttribute("page", page);
 		return url;
 	}

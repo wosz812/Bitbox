@@ -232,4 +232,8 @@
 	<delete id="deleteMinutes" parameterType="Integer">
 		delete from gminutes where min_seq = #{min_seq}
 	</delete>
+	
+	<select id="getReplyUser" resultType="com.bitbox.dto.StudentDTO" parameterType="String">
+		select * from student where s_id = #{s_id}
+	</select>
 </mapper>

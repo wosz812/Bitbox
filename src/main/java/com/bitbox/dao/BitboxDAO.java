@@ -93,7 +93,6 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public boolean projectUpdate(PBoardDTO board) {
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		logger.info("DAO is " + board.getP_title() + "," + board.getP_content());
 		int aCnt = session.update(namespace + ".projectUpdate", board);
@@ -117,7 +116,6 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public GroupDTO getGroup(int seq) {
-		// TODO Auto-generated method stub
 		GroupDTO dto = session.selectOne(namespace + ".getGroup", seq);
 		System.out.println("getGroup dao: " + dto);
 		return dto;
@@ -125,7 +123,6 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public boolean groupIn(GinDTO gin) {
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		int aCnt = session.insert(namespace + ".groupIn", gin);
 		if (aCnt > 0) {
@@ -200,7 +197,6 @@ public class BitboxDAO implements IBitboxDAO {
 	
 	@Override
 	public boolean projectDelete(PBoardDTO board) {
-		// TODO Auto-generated method stub
 		boolean flag=false;
 		int aCnt=session.delete(namespace+".projectDelete",board);
 		if(aCnt>0){
@@ -359,7 +355,6 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public PBoardDTO finduuidname(String p_boardseq) {
-		// TODO Auto-generated method stub
 		PBoardDTO board=session.selectOne(namespace+".finduuidname",p_boardseq);
 		return board;
 	}
@@ -416,6 +411,12 @@ public class BitboxDAO implements IBitboxDAO {
 			flag = true;
 		}
 		return flag;
+	}
+	
+	@Override
+	public StudentDTO getReplyUser(String s_id) {
+		StudentDTO student = session.selectOne(namespace + ".getReplyUser", s_id);
+		return student;
 	}
 
 }

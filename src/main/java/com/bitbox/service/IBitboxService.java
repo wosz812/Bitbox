@@ -105,4 +105,6 @@ public interface IBitboxService {
 	public boolean updateMinutes(MinutesDTO minutes);
 
 	public boolean deleteMinutes(int min_seq);
+	
+	public String getReplyUser(String s_id);
 }
