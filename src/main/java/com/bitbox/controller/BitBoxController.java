@@ -547,5 +547,13 @@ public class BitBoxController {
 		model.addAttribute("title", group_title);
 		return url;
 	}
+	
+	@RequestMapping(value="/gitBoard", method=RequestMethod.GET)
+	public String gitBoard(@RequestParam("title") String title){
+		System.out.println("gitBoard controller: "+title);
+		String url ="/bitbox/gitBoard";
+		
+		return url;
+	}
 
 }
