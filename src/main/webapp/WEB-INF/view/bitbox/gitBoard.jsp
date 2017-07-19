@@ -35,7 +35,7 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<a href="#"><span id="title"></span></a>
-			
+			<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download</button></a>
 			<table class="table table-hover" id="gBlist">
 	
 			</table>
