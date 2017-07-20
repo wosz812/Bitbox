@@ -24,7 +24,9 @@ public interface IBitboxService {
 
 	public boolean studentRegist(StudentDTO student);
 
-	public StudentDTO loginCheck(StudentDTO student);
+	public StudentDTO login(String s_id);
+	
+	public String passwordCheck(String s_id);
 
 	public List<CalendarFormat> getCalendar(String id);
 
@@ -108,5 +110,7 @@ public interface IBitboxService {
 	
 	public String getReplyUser(String s_id);
 	
-	String enter(String str);
+	public String enter(String str);
+
+	public boolean idCheck(String s_id);
 }
