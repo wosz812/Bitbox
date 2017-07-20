@@ -90,33 +90,28 @@
 			<!-- /.content -->
 		</div>
 		<!-- Fullsize Modal -->
-		<div class="modal fade" id="myFullsizeModal" tabindex="-1"
-			role="dialog" aria-labelledby="myFullsizeModalLabel">
+		<div class="modal fade" id="myFullsizeModal" tabindex="-1" role="dialog" aria-labelledby="myFullsizeModalLabel">
 			<div class="modal-dialog modal-fullsize" role="document">
 				<div class="modal-content modal-fullsize">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<h4 class="modal-title" id="myModalLabel">그룹 상세정보</h4>
 					</div>
 					<form action="/bitbox/groupJoin" method="post">
 						<div class="modal-body">
-							<input type="text" class="form-control" id="mgno"
-								readonly="readonly" name="group_seq"> <input type="text"
-								class="form-control" id="mtitle" name="title"
-								readonly="readonly">
-							<textarea class="form-control col-sm-5" rows="5" id="mexplain"
-								name="info" readonly="readonly"></textarea>
-							<input type="password" class="form-control" id="pw" name="pw"
-								placeholder="password">
+							<input type="hidden" class="form-control" id="mgno" name="group_seq">
+							<label>그룹명</label>
+							<input type="text" class="form-control" id="mtitle" name="title" readonly="readonly">
+							<label>그룹 설명</label>
+							<textarea class="form-control" rows="5" id="mexplain" name="info" readonly="readonly"></textarea>
+							<label>가입시 필요한 비밀번호를 입력해주세요.</label>
+							<input type="password" class="form-control" id="pw" name="pw" placeholder="password">
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">닫기</button>
-
 							<button type="submit" class="btn btn-primary">가입</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						</div>
 					</form>
 				</div>

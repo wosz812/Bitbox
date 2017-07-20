@@ -54,7 +54,7 @@ td{
 <title>Download</title>
 </head>
 <body>
-	<span><p class="title" align="center">회  의  록</p></span>
+	<p class="title" align="center">회  의  록</p>
 	<table border="1px solid black">
 			<tr>
 				<td class="col">그룹명</td>

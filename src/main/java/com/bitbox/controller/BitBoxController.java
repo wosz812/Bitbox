@@ -104,7 +104,6 @@ public class BitBoxController {
 			board.setP_uuidname(uuidname.toString()+"_"+fileNames);
 			board.setS_id(session.getAttribute("id").toString());
 		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		flag = service.regist(board);
@@ -136,7 +135,6 @@ public class BitBoxController {
 		try {
 			image.transferTo(new File(path+imageName));
 		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -259,7 +257,6 @@ public class BitBoxController {
 		session.setAttribute("id", session.getAttribute("id"));
 		String session_id = (String) session.getAttribute("id");
 		session.setAttribute("code", session.getAttribute("code"));
-		Object session_code = session.getAttribute("code");
 		session.setAttribute("groupList", session.getAttribute("groupList"));
 		String id = (String) session.getAttribute("id");
 		dto.setS_id(id);
@@ -280,7 +277,6 @@ public class BitBoxController {
 	public String group(Model model, HttpSession session,
 			@RequestParam(value = "state", defaultValue = "-1") int state) {
 		String url = "";
-		String id = session.getId();
 		// System.out.println("groupJoin: "+id);
 		List<GroupDTO> list = service.getGroupList();
 		model.addAttribute("list", list);
@@ -290,7 +286,6 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/modal", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody GroupDTO modal(@RequestParam("gno") String gNo, Model model) {
-		String url = "";
 		// System.out.println("modal: "+gNo);
 		GroupDTO modal = service.getGroupModal(gNo);
 		// System.out.println("controller: "+modal);
@@ -330,7 +325,6 @@ public class BitBoxController {
 	   }
 	@RequestMapping(value = "/alarm", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody int alarm() {
-		String url = "";
 		//System.out.println("alarm call");
 		// System.out.println("modal: "+gNo);
 		int cnt=service.getCnt();
@@ -436,7 +430,6 @@ public class BitBoxController {
 	@RequestMapping(value="/diff", method=RequestMethod.GET)
 	public String diff(){
 		String url ="/bitbox/diff";
-		
 		return url;
 	}
 	
@@ -444,7 +437,6 @@ public class BitBoxController {
 	public @ResponseBody String read(@RequestParam("file") MultipartFile file,Model model){
 //		String url ="";
 		//MultipartFile file = (MultipartFile) uploadfile;
-		System.out.println("controller in");
 		StringBuffer temp = service.readFile(file);
 		String list = null;
 		if(temp!=null){
@@ -462,7 +454,6 @@ public class BitBoxController {
 			@RequestParam("group_title") String group_title, Model model) {
 		String url = "/bitbox/registMinutes";
 		ArrayList<String> member = service.getMember(group_seq);
-		System.out.println("registMinutesForm : " + member);
 		model.addAttribute("group_title", group_title);
 		model.addAttribute("group_seq", group_seq);
 		model.addAttribute("member", member);
@@ -472,7 +463,6 @@ public class BitBoxController {
 	@RequestMapping(value = "/registMinutes", method = { RequestMethod.POST, RequestMethod.GET })
 	public String registMinutes(HttpSession session, MinutesDTO minutes, @RequestParam("member") String[] nameList,
 			@RequestParam("group_title") String group_title, @RequestParam("group_seq") int group_seq, Model model) {
-		System.out.println("registMinutes : " + minutes);
 		String url = "";
 		StringBuffer sb = new StringBuffer();
 		sb.append(nameList[0]);
@@ -509,7 +499,6 @@ public class BitBoxController {
 			@RequestParam("group") String group_title, Model model, @RequestParam("page") int page) {
 		String url = "/bitbox/minutesView";
 		MinutesDTO minutes = service.readMinutes(seq);
-		System.out.println("minutesView : " + minutes);
 		model.addAttribute("minutes", minutes);
 		model.addAttribute("group_title", group_title);
 		model.addAttribute("page", page);
@@ -543,6 +532,13 @@ public class BitBoxController {
 	@RequestMapping(value = "/minutesDownload", method = { RequestMethod.POST, RequestMethod.GET })
 	public String minutesDownload(MinutesDTO minutes, @RequestParam("group_title") String group_title, Model model) {
 		String url = "/bitbox/download";
+		//줄바꿈처리
+		minutes.setMin_content(service.enter(minutes.getMin_content()));
+		minutes.setMin_opinion(service.enter(minutes.getMin_opinion()));
+		minutes.setMin_schedule(service.enter(minutes.getMin_schedule()));
+		minutes.setMin_decide(service.enter(minutes.getMin_decide()));
+		minutes.setMin_prepare(service.enter(minutes.getMin_prepare()));
+		
 		model.addAttribute("data", minutes);
 		model.addAttribute("title", group_title);
 		return url;

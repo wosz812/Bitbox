@@ -107,4 +107,6 @@ public interface IBitboxService {
 	public boolean deleteMinutes(int min_seq);
 	
 	public String getReplyUser(String s_id);
+	
+	String enter(String str);
 }

@@ -458,5 +458,11 @@ public class BitboxService implements IBitboxService {
 		String replyUser = student.getS_id() + " ( " + student.getS_name() + " )";
 		return replyUser;
 	}
+	
+	@Override
+	public String enter(String str) {
+		String str2 = str.replace("\r\n", "<br>");
+		return str2;
+	}
 
 }

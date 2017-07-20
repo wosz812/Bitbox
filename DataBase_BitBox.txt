@@ -185,7 +185,7 @@ select * from reqna;
 
 create table gminutes(
   min_seq number primary key,
-  min_date DATE not null,
+  min_date VARCHAR2(200) not null,
   min_attendee VARCHAR2(200) not null,
   min_subject VARCHAR2(200) not null,
   min_content varchar2(500) not null,
