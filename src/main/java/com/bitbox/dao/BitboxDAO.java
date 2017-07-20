@@ -60,9 +60,9 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 
 	@Override
-	public StudentDTO loginCheck(StudentDTO student) {
-		logger.info(student.toString());
-		StudentDTO a = session.selectOne(login + ".loginCheck", student);
+	public StudentDTO login(String s_id) {
+		logger.info(s_id.toString());
+		StudentDTO a = session.selectOne(login + ".login", s_id);
 		return a;
 	}
 
@@ -416,6 +416,20 @@ public class BitboxDAO implements IBitboxDAO {
 	@Override
 	public StudentDTO getReplyUser(String s_id) {
 		StudentDTO student = session.selectOne(namespace + ".getReplyUser", s_id);
+		return student;
+	}
+
+	@Override
+	public String passwordCheck(String s_id) {
+		String encodedPw = session.selectOne(login + ".getEncodedPw", s_id) ;
+		return encodedPw;
+	}
+
+	@Override
+	public StudentDTO idCheck(String s_id) {
+		// TODO Auto-generated method stub
+		StudentDTO student = session.selectOne(login + ".idCheck", s_id);
+		
 		return student;
 	}
 

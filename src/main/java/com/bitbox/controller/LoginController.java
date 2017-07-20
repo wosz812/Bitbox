@@ -1,7 +1,10 @@
 package com.bitbox.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -33,8 +36,11 @@ public class LoginController {
    public String loginView(@RequestParam(value = "check", defaultValue = "0") int check, Model model) {
       String url = "/login/loginForm";
       if (check == 1) {
-         String different = "입력하신 정보가 맞지 않습니다.";
-         model.addAttribute("different", different);
+         String different_pw = "비밀번호가 맞지 않습니다.";
+         model.addAttribute("different", different_pw);
+      }else if(check == 2){
+    	 String different_id = "존재하지 않는 아이디입니다.";
+    	 model.addAttribute("different", different_id);
       }
       return url;
    }
@@ -42,20 +48,34 @@ public class LoginController {
    @RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
    public String login(HttpSession session, @RequestParam("s_id") String s_id, @RequestParam("s_pw") String s_pw) {
       String url = "";
-      StudentDTO student = new StudentDTO();
+      //StudentDTO student = new StudentDTO();
       List<GroupDTO> groupList = null;
-      student.setS_id(s_id);
-      student.setS_pw(s_pw);
-      StudentDTO sdto = service.loginCheck(student);
-      if (sdto != null) {
-         groupList = service.getGroupList(sdto.getS_id());
-         session.setAttribute("groupList", groupList);
-         session.setAttribute("id", sdto.getS_id());
-         session.setAttribute("code", sdto.getS_class_code());
-         url = "redirect:/bitbox/home";
-      } else {
-         url = "redirect:/login/?check=1";
+      //id 조회
+      boolean check_id = service.idCheck(s_id);
+      if(check_id){
+    	//id로 encodedPw 조회
+          String encodedPw = service.passwordCheck(s_id);
+          //s_pw 가 받아온 값 --입력값 비교
+          boolean flag = bitboxSecurity.matches(s_pw, encodedPw);
+          if(flag){
+        	  //login 성공
+        	  //session / groupList
+        	  StudentDTO sdto = service.login(s_id);
+        	  groupList = service.getGroupList(sdto.getS_id());
+        	  //session담기
+        	  session.setAttribute("groupList", groupList);
+              session.setAttribute("id", sdto.getS_id());
+              session.setAttribute("code", sdto.getS_class_code());
+              url = "redirect:/bitbox/home";
+          }else{
+        	  //login 실패(pw 오류)
+        	  url = "redirect:/login/?check=1";
+          }
+      }else{
+    	  //login 실패(id 오류)
+    	  url = "redirect:/login/?check=2";
       }
+      
       return url;
    }
 
@@ -66,16 +86,26 @@ public class LoginController {
    }
 
    @RequestMapping(value = "/regist", method = { RequestMethod.GET, RequestMethod.POST })
-   public String regist(StudentDTO student) {
+   public String regist(StudentDTO student,HttpServletResponse response) {
       String url = "";
       logger.info(student.toString());
       ///////**password encoding(암호화)**///////
       bitboxSecurity.setSalt(null);
       String encodedPw = bitboxSecurity.encode(student.getS_pw());
       student.setS_pw(encodedPw);
-      //////////////////////////////////
+      /////////////////////////////////////////
       boolean flag = service.studentRegist(student);
       if (flag) {
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('회원가입을 축하드립니다');</script>");
+			out.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	 
          url = "/login/loginForm";
       }
       return url;

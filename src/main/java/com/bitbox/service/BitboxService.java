@@ -51,8 +51,8 @@ public class BitboxService implements IBitboxService {
 	}
 
 	@Override
-	public StudentDTO loginCheck(StudentDTO student) {
-		StudentDTO sdto = dao.loginCheck(student);
+	public StudentDTO login(String s_id) {
+		StudentDTO sdto = dao.login(s_id);
 		return sdto;
 	}
 
@@ -463,6 +463,23 @@ public class BitboxService implements IBitboxService {
 	public String enter(String str) {
 		String str2 = str.replace("\r\n", "<br>");
 		return str2;
+	}
+
+	@Override
+	public String passwordCheck(String s_id) {
+		// TODO Auto-generated method stub
+		String encodedPw = dao.passwordCheck(s_id);
+		return encodedPw;
+	}
+
+	@Override
+	public boolean idCheck(String s_id) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		if(dao.idCheck(s_id)!=null){
+			flag = true;
+		}
+		return flag;
 	}
 
 }

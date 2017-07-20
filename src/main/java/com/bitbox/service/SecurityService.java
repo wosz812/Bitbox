@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 public class SecurityService implements PasswordEncoder{
 
 
-	
-	
 	private ShaPasswordEncoder passwordEncoder;
 	
 	private Object salt = null;
@@ -39,7 +37,7 @@ public class SecurityService implements PasswordEncoder{
 	@Override
 	public boolean matches(CharSequence rawPw, String encodedPw) {
 		// TODO Auto-generated method stub
-		return false;
+		return passwordEncoder.isPasswordValid(encodedPw, rawPw.toString(), salt);
 	}
 	
 	

@@ -14,10 +14,10 @@ import com.bitbox.dto.StudentDTO;
 import com.bitbox.dto.mPageDTO;
 
 public interface IBitboxDAO {
+	public StudentDTO idCheck(String s_id);
 	public List<PBoardDTO> listAll(String id);
 	public boolean regist(PBoardDTO board);
 	public boolean studentRegist(StudentDTO student);
-	public StudentDTO loginCheck(StudentDTO student);
 	public List<PBoardDTO> getCalendar(String id);
 	public StudentDTO search(StudentDTO dto, int type);
 	public List<PBoardDTO> listAll();
@@ -62,4 +62,6 @@ public interface IBitboxDAO {
 	public boolean deleteMinutes(int min_seq);
 	public boolean updateReadCount(int q_seq);
 	public StudentDTO getReplyUser(String s_id);
+	public String passwordCheck(String s_id);
+	public StudentDTO login(String s_id);
 }
