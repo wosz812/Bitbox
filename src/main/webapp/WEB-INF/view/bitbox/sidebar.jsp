@@ -36,7 +36,7 @@
 				<ul class="treeview-menu">
 					
 					<c:forEach items="${groupList}" var="group">
-						<li><a href="/bitbox/gitBoard?title=${group.title}"><i class="fa fa-group"></i>
+						<li><a href="/git/gitBoard?title=${group.title}"><i class="fa fa-group"></i>
 							${group.title}</a></li>
 					</c:forEach>
 				</ul></li>
