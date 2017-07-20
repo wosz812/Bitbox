@@ -47,7 +47,7 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 		antMatcher("/**").authorizeRequests().antMatchers("/","/git/**","/mappers/**", "/login/**","/bitbox/**", "/webjars/**", "/bootstrap/**", "/dist/**", "/img/**", "/js/**", "/plugins/**").permitAll().anyRequest()
 				.authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
-				.logoutSuccessUrl("/").permitAll().and().csrf()
+				.logoutSuccessUrl("/bitbox/home").permitAll().and().csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).disable()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 		// @formatter:on

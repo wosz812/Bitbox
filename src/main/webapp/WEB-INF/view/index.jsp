@@ -61,7 +61,7 @@
 					self.logout = function() {
 						$http.post('logout', {}).success(function() {
 							self.authenticated = false;
-							$location.path("/bitbox/home");
+							$location.path("/");
 						}).error(function(data) {
 							console.log("Logout failed")
 							self.authenticated = false;
