@@ -423,7 +423,7 @@ public class BitboxService implements IBitboxService {
 		ArrayList<String> member = new ArrayList<String>();
 		List<String> nameList = dao.getNameList(group_seq);
 		for (String name : nameList) {
-			member.add("<input type=\"checkbox\" name=\"member\" value=\"" + name + "\">" + name);
+			member.add("<option>"+name+"</option>");
 		}
 		return member;
 	}
