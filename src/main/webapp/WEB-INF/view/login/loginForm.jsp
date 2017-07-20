@@ -23,18 +23,17 @@
 			<a href="/login/"><b>BIT</b>BOX</a>
 		</div>
 		<!-- /.login-logo -->
-		<div class="login-box-body">
+				<div class="login-box-body">
 			<p class="login-box-msg">Sign in to start your session</p>
-
 			<form action="/login/login" method="post">
 				<div class="form-group has-feedback">
 					<input type="text" class="form-control" placeholder="Id" name="s_id">
 					<span class="glyphicon glyphicon-check form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input type="password" class="form-control" placeholder="Password"
-						name="s_pw"> <span
-						class="glyphicon glyphicon-lock form-control-feedback"></span>
+					<input type="password" class="form-control" placeholder="Password" name="s_pw"> 
+					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					<h6 style="color: red;">${different}</h6>
 				</div>
 				<div class="row">
 					<div class="col-xs-8">
@@ -42,8 +41,7 @@
 						<a href="/login/registView">Register a new membership</a>
 					</div>
 					<div class="col-xs-4">
-						<button type="submit" class="btn btn-primary btn-block btn-flat">Sign
-							In</button>
+						<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
 					</div>
 				</div>
 			</form>

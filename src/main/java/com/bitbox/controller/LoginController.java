@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,9 +27,12 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
-	public String loginView() {
-		System.out.println("LoginController-loginview");
+	public String loginView(@RequestParam(value = "check", defaultValue = "0") int check, Model model) {
 		String url = "/login/loginForm";
+		if (check == 1) {
+			String different = "입력하신 정보가 맞지 않습니다.";
+			model.addAttribute("different", different);
+		}
 		return url;
 	}
 
@@ -46,6 +50,8 @@ public class LoginController {
 			session.setAttribute("id", sdto.getS_id());
 			session.setAttribute("code", sdto.getS_class_code());
 			url = "redirect:/bitbox/home";
+		} else {
+			url = "redirect:/login/?check=1";
 		}
 		return url;
 	}
