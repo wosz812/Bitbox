@@ -43,7 +43,7 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="box-body">
-					<h1 align="center">Personal Project</h1>
+					<h2 align="center">Personal Project</h2>
 				</div>
 			</section>
 			<!-- Main content -->

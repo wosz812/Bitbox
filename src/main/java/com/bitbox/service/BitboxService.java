@@ -306,14 +306,14 @@ public class BitboxService implements IBitboxService {
 		endPage = endPage <= pageCount ? endPage : pageCount;
 
 		if (pageUnit != 0) {
-			pageList.add(" <a href='/memo/gMemo?&page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+			pageList.add(" <a href='/bitbox/qna?&page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/memo/gMemo?page=" + (i) + "'>" + (i + 1) + "</a> ");
+			pageList.add(" <a href='/bitbox/qna?page=" + (i) + "'>" + (i + 1) + "</a> ");
 		}
 		// next
 		if (endPage < pageCount) {
-			pageList.add(" <a href='/memo/gMemo?page=" + (endPage) + "'> next </a> ");
+			pageList.add(" <a href='/bitbox/qna?page=" + (endPage) + "'> next </a> ");
 		}
 
 		return pageList;

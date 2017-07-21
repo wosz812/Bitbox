@@ -42,46 +42,49 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Q & A Content</h1>
-			</section>
-
+            <div class="box-body">
+               <h2 align="center">Q & A Content</h2>
+            </div>
+         </section>
 			<!-- Main content -->
-						<section class="content" >
+		<section class="content" >
 				<div class="row">
 					<!-- left column -->
-					<div class="col-md-6">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box">
 							<form role="form" action="" method="post"
 								enctype="multipart/form-data" id="dataset">
 								<input type="hidden" name="q_seq" value="${qnaList.q_seq}">
 								<div class="box-body" style="padding: 20px">
 									<div class="form-group">
 										<div class="col-md-12" style="margin-bottom: 20px">
-											<label>제목</label> 
+											<h5><label>제목</label></h5>
 											<input type="text" class="form-control" name="q_title" value="${qnaList.q_title}">
 										</div>
 									</div>
 									<div class="form-group">
 										<label></label> 
 										<div class="col-md-6">
-											<label>카테고리&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qnaList.q_category}</label>
+											<h5><label>카테고리&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qnaList.q_category}</label></h5>
 										</div>
-										<div class="col-md-6">
-											<label>조회수&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qnaList.q_readCount}</label>
+										<div class="col-md-6" align="right">
+											<h5><label><i class="fa fa-eye"></i>${qnaList.q_readCount}</label></h5>
 										</div>
 									</div>
 									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
-										<label>내용</label>
-										<textarea class="form-control" rows="10" name="q_content" id="summernote">${qnaList.q_content}</textarea>
+										<h5><label>내용</label></h5>
+										<textarea class="form-control" rows="10" name="q_content" id="summernote" style="resize:none;">${qnaList.q_content}</textarea>
 									</div>
 									<div class="form-group" style="padding: 15px">
-										<label for="exampleInputFile">File Name:</label> <a
-											href="/bitbox/download?filename=${qnaList.q_upload}"><label>${qnaList.q_upload}</label></a>
+										<h5><label for="exampleInputFile">File Name:</label></h5>
+										<a href="/bitbox/download?filename=${qnaList.q_upload}"><label>${qnaList.q_upload}</label></a>
 									</div>
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
+								<div class="box-footer" align="right">
 									<button type="button" class="btn btn-primary"
 										onclick="gourl(1)">확인</button>
 									<button type="button" class="btn btn-primary"
@@ -90,7 +93,7 @@
 										onclick="gourl(3)">삭제</button>
 								</div>
 								<div align="center">
-									<h4>Coment</h4>
+									<h4><label>Coment</label></h4>
 								</div>
 							</form>
 							<c:forEach var="re" items="${replyList}">
@@ -98,7 +101,7 @@
 									<label>작성자</label>
 									<input type="text" class="form-control" name="re_writer" value="${re.re_writer}" readonly="readonly">
 									<label>댓글 내용</label>
-									<textarea class="form-control" rows="2" name="re_content" readonly="readonly">${re.re_content}</textarea>
+									<textarea class="form-control" rows="2" name="re_content" readonly="readonly" style="resize:none;">${re.re_content}</textarea>
 								</div>
 							</c:forEach>
 							<form action="/bitbox/registReply" method="post">
@@ -109,7 +112,7 @@
 										<label>작성자</label>
 										<input type="text" class="form-control" name="re_writer" value="${replyUser}" readonly="readonly">
 										<label>댓글 내용</label>
-										<textarea class="form-control" rows="2" name="re_content" ></textarea>
+										<textarea class="form-control" rows="2" name="re_content" style="resize:none;"></textarea>
 									</div>
 									<div class="form-group" align="right">
 										<button type="submit" class="btn btn-primary">댓글 작성</button>
@@ -117,6 +120,8 @@
 								</div>
 							</form>
 						</div>
+					</div>
+					<div class="col-md-2">
 					</div>
 				</div>
 				<!-- /.row -->

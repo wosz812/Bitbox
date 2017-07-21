@@ -160,8 +160,7 @@ del {
 		<div class="content-wrapper">
 			<section class="content-header">
 				<div class="box-body">
-					<h2 align="center">Diff</h2>
-					<h3 align="center">코드 비교</h3>
+					<h2 align="center">코드 비교</h2>
 				</div>
 			</section>
 			<section style="padding: 15px">
@@ -188,7 +187,7 @@ del {
 								<br>
 								<!-- /form -->
 								<textarea id='oldtext' cols="120" rows="15" name='oldtext'
-									class='old text'></textarea>
+									class='old text' style="resize:none;"></textarea>
 							</div>
 							<div class="col-xs-6">
 								<!-- form -->
@@ -197,12 +196,12 @@ del {
 								<br>
 								<!-- /form -->
 								<textarea id='newtext' cols="120" rows="15" name='newtext'
-									class='new text'></textarea>
+									class='new text' style="resize:none;"></textarea>
 							</div>
 						</div>
 						</div>
 						<div class="form-group"
-							style="padding-left: 5px; padding-top: 10px;">
+							style="padding-left: 5px; padding-top: 10px;" align="right">
 							<input type='button' name='compare' class="btn btn-primary"
 								value='비교하기' />
 						</div>

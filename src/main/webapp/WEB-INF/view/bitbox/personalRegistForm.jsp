@@ -42,19 +42,19 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Create Project</h1>
+				<div class="box-body">
+					<h2 align="center">Create Project</h2>
+				</div>
 			</section>
-
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
 					<!-- left column -->
-					<div class="col-md-6">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
 						<!-- general form elements -->
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">Create Project</h3>
-							</div>
+						<div class="box">
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/bitbox/regist" method="post"
@@ -77,7 +77,7 @@
 									<div class="form-group">
 										<label>내용</label>
 										<textarea class="form-control" rows="10"
-											placeholder="Enter ..." name="p_content"></textarea>
+											placeholder="Enter ..." name="p_content" style="resize:none;"></textarea>
 									</div>
 									<div class="form-group">
 										<label for="exampleInputFile">File input</label> <input
@@ -86,11 +86,13 @@
 									</div>
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
+								<div class="box-footer" align="right">
 									<button type="submit" class="btn btn-primary">프로젝트 생성</button>
 								</div>
 							</form>
 						</div>
+					</div>
+					<div class="col-md-2">
 					</div>
 				</div>
 				<!-- /.row -->

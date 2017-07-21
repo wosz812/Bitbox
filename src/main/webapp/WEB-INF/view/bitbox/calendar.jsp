@@ -48,12 +48,14 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Calendar</h1>
-			</section>
+            <div class="box-body">
+               <h2 align="center">Calendar</h2>
+            </div>
+         </section>
 			<!-- Main content -->
 			<section class="content">
 				<div class="row"></div>
-				<div class="box box-primary">
+				<div class="box">
 					<div class="box-body no-padding">
 						<!-- THE CALENDAR -->
 						<div id="calendar"></div>

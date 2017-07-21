@@ -65,8 +65,10 @@
       <div class="content-wrapper">
          <section class="content-header">
             <div class="box-body">
-               <h1 align="center">Memo</h1>
+               <h2 align="center">Memo</h2>
             </div>
+         </section>
+         <section class="content">
             <div class="col-xs-12">
                <div class="box" id="whitebox">
                   <button id="btn_button" type="button"
@@ -91,7 +93,7 @@
                                  <input type="text" class="form-control" placeholder="title.."
                                     name="m_title">
                                  <textarea class="form-control" rows="3" cols="20"
-                                    placeholder="text.." name="m_content"></textarea> 
+                                    placeholder="text.." name="m_content" style="resize:none;"></textarea> 
                               </div>
                               <div class="modal-footer">
                                  <button type="button" class="btn btn-default"

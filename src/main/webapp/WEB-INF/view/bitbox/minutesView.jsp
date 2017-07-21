@@ -47,7 +47,7 @@
 					</div>
 					<div class="col-md-8">
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box">
 							<form role="form" action="" id="dataset" method="post">
 								<div class="box-body">
 									<div class="form-group">

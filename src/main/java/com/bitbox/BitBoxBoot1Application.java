@@ -44,7 +44,7 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
 		http.
-		antMatcher("/**").authorizeRequests().antMatchers("/","/git/**","/memeo/**","/mail/**","/mappers/**", "/login/**","/bitbox/**", "/webjars/**", "/bootstrap/**", "/dist/**", "/img/**", "/js/**", "/plugins/**").permitAll().anyRequest()
+		antMatcher("/**").authorizeRequests().antMatchers("/","/git/**","/memo/**","/mail/**","/mappers/**", "/login/**","/bitbox/**", "/webjars/**", "/bootstrap/**", "/dist/**", "/img/**", "/js/**", "/plugins/**").permitAll().anyRequest()
 				.authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
 				.logoutSuccessUrl("/bitbox/home").permitAll().and().csrf()

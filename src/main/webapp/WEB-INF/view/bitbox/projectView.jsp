@@ -42,7 +42,9 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Detail Project</h1>
+				<div class="box-body">
+					<h2 align="center">Detail Project</h2>
+				</div>
 			</section>
 
 			<!-- Main content -->
@@ -51,7 +53,7 @@
 					<!-- left column -->
 					<div class="col-md-6">
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box">
 							<div class="box-header with-border">
 								<h3 class="box-title">Project</h3>
 							</div>

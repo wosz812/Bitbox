@@ -136,7 +136,7 @@
 			<section class="content">
 				<div class="col-md-8">
 					<!-- DONUT CHART -->
-					<div class="box box-primary" style="height: 300px">
+					<div class="box" style="height: 300px">
 						<div class="box-header with-border">
 							<h3 class="box-title font">과정 커리큘럼</h3>
 
@@ -164,7 +164,7 @@
 
 				<div class="col-md-4">
 					
-					<div class="box box-primary">
+					<div class="box">
 						<div class="box-header with-border">
 							<h3 class="box-title font">TO DO</h3>
 						</div>
@@ -243,7 +243,7 @@
 					
 					<div class="col-md-4">
 					<!-- DONUT CHART -->
-					<div class="box box-primary" style="height: 400px">
+					<div class="box" style="height: 400px">
 						<div class="box-header with-border">
 							<h3 class="box-title font">간편 메뉴</h3>
 						</div>

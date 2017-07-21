@@ -42,15 +42,19 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Group Create</h1>
+				<div class="box-body">
+					<h2 align="center">Create Group</h2>
+				</div>
 			</section>
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
 					<!-- left column -->
-					<div class="col-md-6">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box">
 
 							<!-- /.box-header -->
 							<!-- form start -->
@@ -69,7 +73,7 @@
 									<div class="form-group">
 										<label>그룹 설명</label>
 										<textarea class="form-control" rows="10"
-											placeholder="Enter ..." name="info"></textarea>
+											placeholder="Enter ..." name="info" style="resize:none;"></textarea>
 									</div>
 
 								</div>
@@ -79,6 +83,8 @@
 								</div>
 							</form>
 						</div>
+					</div>
+					<div class="col-md-2">
 					</div>
 				</div>
 				<!-- /.row -->

@@ -42,7 +42,9 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Group List</h1>
+				<div class="box-body">
+					<h2 align="center">GroupList</h2>
+				</div>
 			</section>
 			<!-- Main content -->
 			<section class="content">
@@ -60,14 +62,14 @@
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
 								<table class="table table-hover">
-									<tr>
+									<tr align="center">
 										<td>순번</td>
 										<td>개설자</td>
 										<td>그룹이름</td>
 										<td>설명</td>
 									</tr>
 									<c:forEach var="gList" items="${list}">
-										<tr>
+										<tr align="center">
 											<td class='gno'>${gList.group_seq}</td>
 											<td>${gList.s_id}</td>
 											<td class="left"><a class="gTitle"
@@ -105,7 +107,7 @@
 							<label>그룹명</label>
 							<input type="text" class="form-control" id="mtitle" name="title" readonly="readonly">
 							<label>그룹 설명</label>
-							<textarea class="form-control" rows="5" id="mexplain" name="info" readonly="readonly"></textarea>
+							<textarea class="form-control" rows="5" id="mexplain" name="info" readonly="readonly" style="resize:none;"></textarea>
 							<label>가입시 필요한 비밀번호를 입력해주세요.</label>
 							<input type="password" class="form-control" id="pw" name="pw" placeholder="password">
 						</div>

@@ -39,7 +39,7 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="box-body">
-					<h1 align="left">Minutes</h1>
+					<h2 align="center">Minutes</h2>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -53,8 +53,8 @@
 											class="btn btn-primary btn-block">Create Minutes</button></a>
 								</div>
 								<div class="box-body table-responsive no-padding">
-									<h4 align="left">[ ${group_title} ] 그룹의 회의록리스트 </h4>
-									<table class="table table-hover">
+									<h4 align="left"><label>[ ${group_title} ] 의 회의록리스트</label></h4>
+									<table class="table table-hover" >
 										<tr align="center">
 											<td>회의주제</td>
 											<td>회의일자</td>

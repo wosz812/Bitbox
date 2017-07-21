@@ -51,9 +51,11 @@
 			<section class="content">
 				<div class="row">
 					<!-- left column -->
-					<div class="col-md-6">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box">
 
 							<!-- /.box-header -->
 							<!-- form start -->
@@ -84,7 +86,7 @@
 										<label>내용</label>
 									<!--  	<textarea class="form-control" rows="10"
 											placeholder="Content ..." name="q_content"></textarea>-->
-											 <textarea id="summernote" name="q_content" ></textarea>
+											 <textarea id="summernote" name="q_content" style="resize:none;"></textarea>
 									</div>
 									<div class="form-group">
 										<label for="exampleInputFile">File Load :</label> 
@@ -97,6 +99,8 @@
 								</div>
 							</form>
 						</div>
+					</div>
+					<div class="col-md-2">
 					</div>
 				</div>
 				<!-- /.row -->
