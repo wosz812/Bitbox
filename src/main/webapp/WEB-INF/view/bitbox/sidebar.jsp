@@ -61,7 +61,7 @@
 		</ul></li>
 	
 	<li><a href="#"><i class="fa fa-commenting-o"></i>
-		<span>Minutes</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i>
+		<span>meeting</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i>
 		</span></a>
 		<ul class="treeview-menu">
 			<c:forEach items="${groupList}" var="group">

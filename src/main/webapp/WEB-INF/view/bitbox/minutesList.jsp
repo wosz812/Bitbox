@@ -39,7 +39,7 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="box-body">
-					<h2 align="center">Minutes</h2>
+					<h2 align="center">Meeting</h2>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -50,7 +50,7 @@
 							<div class="box-header">
 								<div style="width: 150px;float:right;">
 									<a href="/bitbox/registMinutesForm?group_seq=${group_seq}&group_title=${group_title}"><button
-											class="btn btn-primary btn-block">Create Minutes</button></a>
+											class="btn btn-primary btn-block">Create Meeting</button></a>
 								</div>
 								<div class="box-body table-responsive no-padding">
 									<h4 align="left"><label>[ ${group_title} ] 의 회의록리스트</label></h4>
