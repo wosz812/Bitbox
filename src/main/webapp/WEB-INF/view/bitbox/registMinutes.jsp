@@ -87,19 +87,19 @@
 											<br> <label style="padding-top: 10px">회의 주제</label> <input
 												type="text" class="form-control" name="min_subject">
 											<label style="padding-top: 10px">회의 내용</label><br>
-											<textarea class="form-control" rows="9" name="min_content"></textarea>
+											<textarea class="form-control" rows="9" name="min_content" style="resize:none;"></textarea>
 										</div>
 										<div class="col-md-6">
 											<label style="padding-top: 10px">의견 사항</label><br>
-											<textarea class="form-control" rows="5" name="min_opinion"></textarea>
+											<textarea class="form-control" rows="5" name="min_opinion" style="resize:none;"></textarea>
 											<label style="padding-top: 10px">추후일정</label><br>
-											<textarea class="form-control" rows="5" name="min_schedule"></textarea>
+											<textarea class="form-control" rows="5" name="min_schedule" style="resize:none;"></textarea>
 										</div>
 										<div class="col-md-6">
 											<label style="padding-top: 10px">확정 내용</label><br>
-											<textarea class="form-control" rows="5" name="min_decide"></textarea>
+											<textarea class="form-control" rows="5" name="min_decide" style="resize:none;"></textarea>
 											<label style="padding-top: 10px">준비 사항</label><br>
-											<textarea class="form-control" rows="5" name="min_prepare"></textarea>
+											<textarea class="form-control" rows="5" name="min_prepare" style="resize:none;"></textarea>
 											<input type="hidden" name="group_seq" value="${group_seq}">
 										</div>
 									</div>
