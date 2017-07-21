@@ -65,19 +65,19 @@
 											<label style="padding-top: 10px">회의 주제</label> 
 											<input type="text" class="form-control" name="min_subject" value="${minutes.min_subject}">
 											<label style="padding-top: 10px">회의 내용</label><br>
-											<textarea class="form-control" rows="9" name="min_content">${minutes.min_content}</textarea>
+											<textarea class="form-control" rows="9" name="min_content" style="resize:none;">${minutes.min_content}</textarea>
 										</div>
 										<div class="col-md-6">
 											<label style="padding-top: 10px">의견 사항</label><br>
-											<textarea class="form-control" rows="5" name="min_opinion">${minutes.min_opinion}</textarea>
+											<textarea class="form-control" rows="5" name="min_opinion" style="resize:none;">${minutes.min_opinion}</textarea>
 											<label style="padding-top: 10px">추후일정</label><br>
-											<textarea class="form-control" rows="5" name="min_schedule">${minutes.min_schedule}</textarea>
+											<textarea class="form-control" rows="5" name="min_schedule" style="resize:none;">${minutes.min_schedule}</textarea>
 										</div>
 										<div class="col-md-6">
 											<label style="padding-top: 10px">확정 내용</label><br>
-											<textarea class="form-control" rows="5" name="min_decide">${minutes.min_decide}</textarea>
+											<textarea class="form-control" rows="5" name="min_decide" style="resize:none;">${minutes.min_decide}</textarea>
 											<label style="padding-top: 10px">준비 사항</label><br>
-											<textarea class="form-control" rows="5" name="min_prepare">${minutes.min_prepare}</textarea>
+											<textarea class="form-control" rows="5" name="min_prepare" style="resize:none;">${minutes.min_prepare}</textarea>
 											<input type="hidden" name="min_seq" value="${minutes.min_seq}">
 											<input type="hidden" name="group_seq" value="${minutes.group_seq}">
 											<input type="hidden" name="page" value="${page}">
