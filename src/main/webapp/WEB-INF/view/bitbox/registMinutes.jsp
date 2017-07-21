@@ -21,7 +21,7 @@
 <!-- Theme style -->
 <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
 <!-- Select2 -->
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+ <link rel="stylesheet" href="/plugins/select2/select2.min.css">
 <!-- Bootstrap time Picker -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
 <!-- daterange picker -->
@@ -79,7 +79,7 @@
 										<div style="padding-left: 15px; padding-right: 15px;">
 											<label style="padding-top: 10px">회의 참가자</label> <br>
 											<select class="form-control select2" name="member" multiple="multiple" 
-											data-placeholder="Select a State" style="width: 100%;">
+											data-placeholder="회의 참가자를 선택해주세요." style="width: 100%;">
 												<c:forEach var="member" items="${member}">
 													${member.toString()}
 												</c:forEach>
@@ -133,7 +133,7 @@
 	<!-- Slimscroll -->
 	<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 	<!-- Select2 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+	<script src="/plugins/select2/select2.full.min.js"></script>
 	<!-- date-range-picker -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/moment.min.js"></script>
