@@ -25,64 +25,55 @@
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
-
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+</script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 		<%@include file="header.jsp"%>
-		<!-- Left side column. contains the logo and sidebar -->
 		<%@include file="sidebar.jsp"%>
-		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="box-body">
 					<h2 align="center">Personal Project</h2>
 				</div>
 			</section>
-			<!-- Main content -->
 			<section class="content">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
 								<div style="width: 150px;float:right;">
-									<a href="/bitbox/registForm"><button
-											class="btn btn-primary btn-block">Create Project</button></a>
+									<a href="/bitbox/registForm">
+									<button class="btn btn-primary btn-block">Create Project</button></a>
 								</div>
-								<div class="box-body">
-									<table class="table table-striped table-bordered nowrap"
-										id="test">
-										<thead>
-											<tr align="center">
-												<td>순번</td>
-												<td>카테고리</td>
-												<td>제목</td>
-												<td>등록일자</td>
-												<td>파일첨부</td>
-												<td>내용</td>
-											</tr>
-										</thead>
-									</table>
-								</div>
-								<!-- /.box-body -->
 							</div>
-							<!-- /.box -->
+							<div class="box-body">
+								<table class="table table-striped table-bordered nowrap" id="test">
+									<thead>
+										<tr align="center">
+											<td>순번</td>
+											<td>카테고리</td>
+											<td>제목</td>
+											<td>등록일자</td>
+											<td>파일첨부</td>
+											<td>내용</td>
+										</tr>
+									</thead>
+								</table>
+							</div>
 						</div>
 					</div>
+				</div>
 			</section>
-			<!-- /.content -->
 		</div>
-		<!-- /.content-wrapper -->
 		<%@include file="controlSideBar.jsp"%>
 	</div>
-	<!-- ./wrapper -->
 
 	<!-- jQuery 2.2.3 -->
 	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>

@@ -51,7 +51,7 @@
 		<div class="content-wrapper">
 			<section class="content-header">
 				<div class="box-body">
-					<h2 align="center">Create Minutes</h2>
+					<h2 align="center">Create Meeting</h2>
 				</div>
 			</section>
 			<!-- Main content -->

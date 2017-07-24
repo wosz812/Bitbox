@@ -36,7 +36,7 @@
 		<div class="content-wrapper">
 			<section class="content-header">
 				<div class="box-body">
-					<h2 align="center">MinutesView</h2>
+					<h2 align="center">MeetingView</h2>
 				</div>
 			</section>
 			<!-- Main content -->
