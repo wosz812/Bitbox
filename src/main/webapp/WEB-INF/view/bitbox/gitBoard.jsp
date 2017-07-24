@@ -37,7 +37,7 @@ ${username }
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<a href="#"><span id="title"></span></a>
-			<a href="https://api.github.com/repos/${username}/Bitbox/zipball"><button>download</button></a>
+			<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download</button></a>
 			<table class="table table-hover" id="gBlist">
 	
 			</table>
@@ -65,7 +65,7 @@ ${username }
 	<!-- page script -->
 	<script type="text/javascript">
 	$.ajax({ 
-	    url: 'https://api.github.com/repos/${username}/Bitbox',
+	    url: 'https://api.github.com/repos/wosz812/Bitbox',
 	    type: 'GET',
 	    
 	     beforeSend: function(xhr) { 
@@ -79,7 +79,7 @@ ${username }
 	    $("#title").html(response["full_name"]);
 	});
 	$.ajax({ 
-	    url: 'https://api.github.com/repos/${username}/Bitbox/contents',
+	    url: 'https://api.github.com/repos/wosz812/Bitbox/contents',
 	    type: 'GET',
 	    
 	     beforeSend: function(xhr) { 
@@ -103,7 +103,7 @@ ${username }
 	    		var temp=$(this).text();
 	    		//alert(temp);
 	    		$.ajax({ 
-	    		    url: 'https://api.github.com/repos/${username}/Bitbox/contents/'+temp,
+	    		    url: 'https://api.github.com/repos/wosz812/Bitbox/contents/'+temp,
 	    		    type: 'GET',
 	    		    
 	    		     beforeSend: function(xhr) { 
