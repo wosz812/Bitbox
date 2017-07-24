@@ -28,7 +28,7 @@ public class LoginController {
    @Autowired
    private IBitboxService service;
    @Autowired
-   private SecurityService bitboxSecurity;
+   private SecurityService bitboxSecurity = new SecurityService(256);
 
    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 

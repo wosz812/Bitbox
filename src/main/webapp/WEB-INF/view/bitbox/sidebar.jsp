@@ -21,6 +21,9 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
 	<li class="header">BitBox Menu</li>
+	<li><a href="/bitbox/myPage"> <i class="fa fa-child"></i>
+			<span>MY</span> <span class="pull-right-container"> </span>
+	</a></li>
 	<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
 			<span>PROJECT</span> <span class="pull-right-container"> <i
 				class="fa fa-angle-left pull-right"></i>
