@@ -424,7 +424,6 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 			mpageList.add(" <a href='/bitbox/minutesList?page=" + (i) + "&group_seq=" + group_seq + "&group_title="
 					+ group_title + "'><button class=\"btn btn-primary\">" + (i + 1)
 					+ "</button></a> ");
-					+ group_title + "'>" + (i + 1) + "</a> ");
 		}
 		// next
 		if (endPage < pageCount) {

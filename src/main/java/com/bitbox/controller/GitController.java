@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GitController {
-	@RequestMapping(value="/gitBoard", method=RequestMethod.GET)
-	public String gitBoard(@RequestParam("title") String title){
-		System.out.println("gitBoard controller: "+title);
-		String url ="/bitbox/gitBoard";
+	
 	@Autowired
 	private OAuth2RestTemplate oauth2RestTemplate;
 	@RequestMapping(value = "/gitBoard", method = RequestMethod.GET)
