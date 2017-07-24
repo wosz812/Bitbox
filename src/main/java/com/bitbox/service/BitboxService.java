@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +29,7 @@ import com.bitbox.dto.StudentDTO;
 import com.bitbox.dto.mPageDTO;
 
 @Service
-public class BitboxService implements IBitboxService {
+public class BitboxService implements IBitboxService, UserDetailsService {
 
 	@Autowired
 	private IBitboxDAO dao;
@@ -47,6 +50,13 @@ public class BitboxService implements IBitboxService {
 	public boolean studentRegist(StudentDTO student) {
 		boolean flag = dao.studentRegist(student);
 		return flag;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {
+		StudentDTO sdto = login(arg0);
+		sdto.setGroup(getGroupList(sdto.getS_id()));
+		return sdto;
 	}
 
 	@Override
@@ -414,6 +424,7 @@ public class BitboxService implements IBitboxService {
 			mpageList.add(" <a href='/bitbox/minutesList?page=" + (i) + "&group_seq=" + group_seq + "&group_title="
 					+ group_title + "'><button class=\"btn btn-primary\">" + (i + 1)
 					+ "</button></a> ");
+					+ group_title + "'>" + (i + 1) + "</a> ");
 		}
 		// next
 		if (endPage < pageCount) {
@@ -487,5 +498,4 @@ public class BitboxService implements IBitboxService {
 		}
 		return flag;
 	}
-
 }

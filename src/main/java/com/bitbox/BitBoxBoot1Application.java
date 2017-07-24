@@ -15,21 +15,27 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.CompositeFilter;
+
+import com.bitbox.service.SecurityService;
 
 @SpringBootApplication
 @EnableOAuth2Client
@@ -38,16 +44,26 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
+	@Autowired
+	private UserDetailsService userDetailsService;
+	@Autowired
+	private SecurityService securityService;
+	// @Override
+	// protected void configure(AuthenticationManagerBuilder auth) throws
+	// Exception {
+	// auth.userDetailsService(userDetailsService).passwordEncoder(securityService);
+	// }
 
 	@Override
 	// configure(HttpSecurity http) =인터셉터 요청을 안전하게 보호하는 방법설정.
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
-		http.
-		antMatcher("/**").authorizeRequests().antMatchers("/","/git/**","/memo/**","/mail/**","/mappers/**", "/login/**","/bitbox/**", "/webjars/**", "/bootstrap/**", "/dist/**", "/img/**", "/js/**", "/plugins/**").permitAll().anyRequest()
+		// http.formLogin().usernameParameter("").passwordParameter("s_pw").loginPage("/login");
+		// http.requestMatchers().antMatchers("/","/login/**","/bitbox/**","/git/**","/memo/**","/mail/**");
+		http.authorizeRequests().antMatchers("/", "/login/**").permitAll()
+				.antMatchers("/bitbox/**", "/git/**", "/memo/**", "/mail/**").authenticated().anyRequest()
 				.authenticated().and().exceptionHandling()
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
-				.logoutSuccessUrl("/bitbox/home").permitAll().and().csrf()
+				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login/")).and().csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).disable()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 		// @formatter:on
@@ -90,6 +106,11 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 		return filter;
 	}
 
+	@Bean
+	public OAuth2RestTemplate oauth2RestTemplate(OAuth2ProtectedResourceDetails resource, OAuth2ClientContext context) {
+		return new OAuth2RestTemplate(resource, context);
+	}
+
 	private Filter ssoFilter(ClientResources client, String path) {
 		OAuth2ClientAuthenticationProcessingFilter oAuth2ClientAuthenticationFilter = new OAuth2ClientAuthenticationProcessingFilter(
 				path);
@@ -100,6 +121,9 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 		System.out.println();
 		tokenServices.setRestTemplate(oAuth2RestTemplate);
 		oAuth2ClientAuthenticationFilter.setTokenServices(tokenServices);
+		SimpleUrlAuthenticationSuccessHandler ss = new SimpleUrlAuthenticationSuccessHandler("/git/gitBoardView");
+		ss.setAlwaysUseDefaultTargetUrl(true);
+		oAuth2ClientAuthenticationFilter.setAuthenticationSuccessHandler(ss);
 		return oAuth2ClientAuthenticationFilter;
 	}
 

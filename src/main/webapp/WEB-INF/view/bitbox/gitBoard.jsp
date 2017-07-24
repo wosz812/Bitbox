@@ -28,6 +28,8 @@
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+${token }
+${username }
 	<div class="wrapper">
 		<%@include file="header.jsp"%>
 		<!-- Left side column. contains the logo and sidebar -->
@@ -35,7 +37,7 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<a href="#"><span id="title"></span></a>
-			<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download</button></a>
+			<a href="https://api.github.com/repos/${username}/Bitbox/zipball"><button>download</button></a>
 			<table class="table table-hover" id="gBlist">
 	
 			</table>
@@ -63,11 +65,11 @@
 	<!-- page script -->
 	<script type="text/javascript">
 	$.ajax({ 
-	    url: 'https://api.github.com/repos/wosz812/Bitbox',
+	    url: 'https://api.github.com/repos/${username}/Bitbox',
 	    type: 'GET',
 	    
 	     beforeSend: function(xhr) { 
-	        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+// 	        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
 	        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
 	    }  , 
 	    //dataType: 'jsonp',
@@ -77,11 +79,11 @@
 	    $("#title").html(response["full_name"]);
 	});
 	$.ajax({ 
-	    url: 'https://api.github.com/repos/wosz812/Bitbox/contents',
+	    url: 'https://api.github.com/repos/${username}/Bitbox/contents',
 	    type: 'GET',
 	    
 	     beforeSend: function(xhr) { 
-	        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+// 	        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
 	        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
 	    }  , 
 	    //dataType: 'jsonp',
@@ -101,11 +103,11 @@
 	    		var temp=$(this).text();
 	    		//alert(temp);
 	    		$.ajax({ 
-	    		    url: 'https://api.github.com/repos/wosz812/Bitbox/contents/'+temp,
+	    		    url: 'https://api.github.com/repos/${username}/Bitbox/contents/'+temp,
 	    		    type: 'GET',
 	    		    
 	    		     beforeSend: function(xhr) { 
-	    		        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+	    		       // xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
 	    		        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
 	    		    }  , 
 	    		    //dataType: 'jsonp',
