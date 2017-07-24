@@ -10,6 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +61,7 @@ public class LoginController {
           //s_pw 가 받아온 값 --입력값 비교
           boolean flag = bitboxSecurity.matches(s_pw, encodedPw);
           if(flag){
+//        	  StudentDTO ss = (StudentDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         	  //login 성공
         	  //session / groupList
         	  StudentDTO sdto = service.login(s_id);
@@ -66,6 +70,8 @@ public class LoginController {
         	  session.setAttribute("groupList", groupList);
               session.setAttribute("id", sdto.getS_id());
               session.setAttribute("code", sdto.getS_class_code());
+              UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(s_id, "", AuthorityUtils.NO_AUTHORITIES);
+              SecurityContextHolder.getContext().setAuthentication(token);
               url = "redirect:/bitbox/home";
           }else{
         	  //login 실패(pw 오류)

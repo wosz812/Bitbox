@@ -1,13 +1,22 @@
 package com.bitbox.dto;
 
-public class StudentDTO {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class StudentDTO implements UserDetails {
 	private String s_id;
 	private int s_seq;
 	private String s_pw;
 	private String s_email;
 	private String s_name;
 	private int s_phone;
-	private int s_class_code;	
+	private int s_class_code;
+	
+	private List<GroupDTO> group = new ArrayList<GroupDTO>();
 	
 	
 	@Override
@@ -56,6 +65,40 @@ public class StudentDTO {
 	}
 	public void setS_class_code(int s_class_code) {
 		this.s_class_code = s_class_code;
+	}
+	public List<GroupDTO> getGroup() {
+		return group;
+	}
+	public void setGroup(List<GroupDTO> group) {
+		this.group = group;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+	@Override
+	public String getPassword() {
+		return this.s_pw;
+	}
+	@Override
+	public String getUsername() {
+		return this.s_id;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 	
 	

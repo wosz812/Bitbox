@@ -1,13 +1,7 @@
 package com.bitbox.controller;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +20,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.SystemPropertyUtils;
@@ -49,6 +45,7 @@ import com.google.gson.Gson;
 
 @Controller
 public class BitBoxController {
+	
 	//지원
 	//대성
 	//대성1지연이
@@ -62,11 +59,14 @@ public class BitBoxController {
 	private static final Logger logger = LoggerFactory.getLogger(BitBoxController.class);
 
 	@RequestMapping(value = "/home", method = { RequestMethod.POST, RequestMethod.GET })
-	public String index(HttpSession session) {
+	public String index() {
+		//((OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getDetails()
+		//((OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getUserAuthentication();
 		String url = "/bitbox/home";
-		session.setAttribute("id", session.getAttribute("id"));
-		session.setAttribute("code", session.getAttribute("code"));
-		session.setAttribute("groupList", session.getAttribute("groupList"));
+//		session.setAttribute("id", session.getAttribute("id"));
+//		session.setAttribute("code", session.getAttribute("code"));
+//		session.setAttribute("groupList", session.getAttribute("groupList"));
+		
 		return url;
 	}
  
