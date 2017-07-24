@@ -160,7 +160,9 @@
                      </div>
                   </c:forEach>
                   <div align="center">
-                     <h4>${pageList.toString()}</h4>
+                  	 <c:forEach var="page" items="${pageList}">
+                  	 	<h4>${page.toString()}</h4>
+                  	 </c:forEach>
                   </div>
                </div>
             </div>

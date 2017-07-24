@@ -12,7 +12,7 @@ public class GitController {
 	@RequestMapping(value="/gitBoard", method=RequestMethod.GET)
 	public String gitBoard(@RequestParam("title") String title){
 		System.out.println("gitBoard controller: "+title);
-		String url ="index";
+		String url ="/bitbox/gitBoard";
 		return url;
 	}
 }

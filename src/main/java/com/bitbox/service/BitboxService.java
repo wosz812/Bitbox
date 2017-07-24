@@ -25,7 +25,6 @@ import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
 import com.bitbox.dto.mPageDTO;
 
-
 @Service
 public class BitboxService implements IBitboxService {
 
@@ -65,10 +64,12 @@ public class BitboxService implements IBitboxService {
 			format = new CalendarFormat();
 			format.setTitle(calendar.get(i).getP_title());
 			format.setStart(new SimpleDateFormat("yyyy-MM-dd").format(calendar.get(i).getP_date()));
-            format.setUrl("http://localhost:8080/bitbox/detailProject?p_boardseq="+calendar.get(i).getP_boardseq()+"&p_title="+calendar.get(i).getP_title()
-                    +"&p_content="+calendar.get(i).getP_content()+"&p_filename="+calendar.get(i).getP_filename()+"&p_category="+calendar.get(i).getP_category()+"&cal=cal");
+			format.setUrl("http://localhost:8080/bitbox/detailProject?p_boardseq=" + calendar.get(i).getP_boardseq()
+					+ "&p_title=" + calendar.get(i).getP_title() + "&p_content=" + calendar.get(i).getP_content()
+					+ "&p_filename=" + calendar.get(i).getP_filename() + "&p_category="
+					+ calendar.get(i).getP_category() + "&cal=cal");
 
-            //수정
+			// 수정
 			calendars.add(format);
 		}
 		return calendars;
@@ -175,14 +176,14 @@ public class BitboxService implements IBitboxService {
 		endPage = endPage <= pageCount ? endPage : pageCount;
 
 		if (pageUnit != 0) {
-			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + ((pageUnit - 1) * 10) + "'><button class=\"btn btn-primary\">prev</button></a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (i) + "'>" + (i + 1) + "</a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (i) + "'><button class=\"btn btn-primary\">" + (i + 1) + "</button></a> ");
 		}
 		// next
 		if (endPage < pageCount) {
-			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (endPage) + "'> next </a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (endPage) + "'><button class=\"btn btn-primary\">next</button></a> ");
 		}
 
 		return pageList;
@@ -201,14 +202,15 @@ public class BitboxService implements IBitboxService {
 
 		if (pageUnit != 0) {
 			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + ((pageUnit - 1) * 10)
-					+ "'> prev </a> ");
+					+ "'><button class=\"btn btn-default\">prev</button></a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (i) + "'>" + (i + 1) + "</a> ");
+			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (i) + "'><button class=\"btn btn-primary\">" + (i + 1) + "</button></a> ");
 		}
 		// next
 		if (endPage < pageCount) {
-			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (endPage) + "'> next </a> ");
+			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (endPage)
+					+ "'><button class=\"btn btn-default\">next</button></a> ");
 		}
 
 		return pageList;
@@ -265,12 +267,12 @@ public class BitboxService implements IBitboxService {
 
 	@Override
 	public int getCnt() {
-		//System.out.println("service call");
-		int cnt=dao.getCnt();
-		//System.out.println("dao call-service");
+		// System.out.println("service call");
+		int cnt = dao.getCnt();
+		// System.out.println("dao call-service");
 		return cnt;
 	}
-	
+
 	@Override
 	public List<QnaDTO> getQnaList(int page) {
 		int start = (page * 10) + 1;
@@ -288,7 +290,7 @@ public class BitboxService implements IBitboxService {
 	public QnaDTO detailQna(int q_seq) {
 		boolean flag = dao.updateReadCount(q_seq);
 		QnaDTO qna = null;
-		if(flag){
+		if (flag) {
 			qna = dao.detailQna(q_seq);
 		}
 		return qna;
@@ -306,14 +308,17 @@ public class BitboxService implements IBitboxService {
 		endPage = endPage <= pageCount ? endPage : pageCount;
 
 		if (pageUnit != 0) {
-			pageList.add(" <a href='/bitbox/qna?&page=" + ((pageUnit - 1) * 10) + "'> prev </a> ");
+			pageList.add(" <a href='/bitbox/qna?&page=" + ((pageUnit - 1) * 10)
+					+ "'><button class=\"btn btn-default\">prev</button></a>");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/bitbox/qna?page=" + (i) + "'>" + (i + 1) + "</a> ");
+			pageList.add(" <a href='/bitbox/qna?page=" + (i) + "'><button class=\"btn btn-primary\">" + (i + 1)
+					+ "</button></a>");
 		}
 		// next
 		if (endPage < pageCount) {
-			pageList.add(" <a href='/bitbox/qna?page=" + (endPage) + "'> next </a> ");
+			pageList.add(" <a href='/bitbox/qna?page=" + (endPage)
+					+ "'><button class=\"btn btn-default\">next</button></a> ");
 		}
 
 		return pageList;
@@ -345,7 +350,7 @@ public class BitboxService implements IBitboxService {
 
 	@Override
 	public PBoardDTO finduuidname(String p_boardseq) {
-		PBoardDTO board=dao.finduuidname(p_boardseq);
+		PBoardDTO board = dao.finduuidname(p_boardseq);
 		return board;
 	}
 
@@ -355,23 +360,23 @@ public class BitboxService implements IBitboxService {
 		InputStreamReader isr = null;
 		BufferedReader br = null;
 		StringBuffer list = new StringBuffer();
-		
+
 		String line;
-		//System.out.println(fileName);
+		// System.out.println(fileName);
 		try {
-			
+
 			input = file.getInputStream();
-			isr = new InputStreamReader(input,"UTF-8");
+			isr = new InputStreamReader(input, "UTF-8");
 			br = new BufferedReader(isr);
-//			model.addAttribute("list",br.toString());
-			while((line=br.readLine())!=null){
+			// model.addAttribute("list",br.toString());
+			while ((line = br.readLine()) != null) {
 				list.append(line);
 				list.append("\n");
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			try {
 				br.close();
 				isr.close();
@@ -382,7 +387,7 @@ public class BitboxService implements IBitboxService {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<MinutesDTO> minutesList(int group_seq, int page) {
 		int start = (page * 10) + 1;
@@ -403,16 +408,17 @@ public class BitboxService implements IBitboxService {
 
 		if (pageUnit != 0) {
 			mpageList.add(" <a href='/bitbox/minutesList?page=" + ((pageUnit - 1) * 10) + "&group_seq=" + group_seq
-					+ "&group_title=" + group_title + "'> prev </a> ");
+					+ "&group_title=" + group_title + "'><button class=\"btn btn-default\">prev</button></a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			mpageList.add(" <a href='/bitbox/minutesList?page=" + (i) + "&group_seq=" + group_seq
-					+ "&group_title=" + group_title + "'>" + (i + 1) + "</a> ");
+			mpageList.add(" <a href='/bitbox/minutesList?page=" + (i) + "&group_seq=" + group_seq + "&group_title="
+					+ group_title + "'><button class=\"btn btn-primary\">" + (i + 1)
+					+ "</button></a> ");
 		}
 		// next
 		if (endPage < pageCount) {
 			mpageList.add(" <a href='/bitbox/minutesList?page=" + (endPage) + "&group_seq=" + group_seq
-					+ "&group_title=" + group_title + "'> next </a> ");
+					+ "&group_title=" + group_title + "'><button class=\"btn btn-default\">next</button></a> ");
 		}
 
 		return mpageList;
@@ -423,7 +429,7 @@ public class BitboxService implements IBitboxService {
 		ArrayList<String> member = new ArrayList<String>();
 		List<String> nameList = dao.getNameList(group_seq);
 		for (String name : nameList) {
-			member.add("<option>"+name+"</option>");
+			member.add("<option>" + name + "</option>");
 		}
 		return member;
 	}
@@ -451,14 +457,14 @@ public class BitboxService implements IBitboxService {
 		boolean flag = dao.deleteMinutes(min_seq);
 		return flag;
 	}
-	
+
 	@Override
 	public String getReplyUser(String s_id) {
 		StudentDTO student = dao.getReplyUser(s_id);
 		String replyUser = student.getS_id() + " ( " + student.getS_name() + " )";
 		return replyUser;
 	}
-	
+
 	@Override
 	public String enter(String str) {
 		String str2 = str.replace("\r\n", "<br>");
@@ -476,7 +482,7 @@ public class BitboxService implements IBitboxService {
 	public boolean idCheck(String s_id) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		if(dao.idCheck(s_id)!=null){
+		if (dao.idCheck(s_id) != null) {
 			flag = true;
 		}
 		return flag;

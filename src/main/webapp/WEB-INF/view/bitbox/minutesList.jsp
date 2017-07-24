@@ -49,44 +49,38 @@
 						<div class="box">
 							<div class="box-header">
 								<div style="width: 150px;float:right;">
-									<a href="/bitbox/registMinutesForm?group_seq=${group_seq}&group_title=${group_title}"><button
-											class="btn btn-primary btn-block">Create Meeting</button></a>
+									<a href="/bitbox/registMinutesForm?group_seq=${group_seq}&group_title=${group_title}">
+									<button class="btn btn-primary btn-block">Create Meeting</button></a>
 								</div>
-								<div class="box-body table-responsive no-padding">
-									<h4 align="left"><label>[ ${group_title} ] 의 회의록리스트</label></h4>
-									<table class="table table-hover" >
+								<table class="table table-hover" >
+									<tr align="center">
+										<td>회의주제</td>
+										<td>회의일자</td>
+										<td>회의 참석자</td>
+										<td>상세보기</td>
+									</tr>
+									<c:forEach var="mList" items="${list}">
 										<tr align="center">
-											<td>회의주제</td>
-											<td>회의일자</td>
-											<td>회의 참석자</td>
-											<td>상세보기</td>
+											<td>${mList.min_subject}</td>
+											<td>${mList.min_date}</td>
+											<td>${mList.min_attendee}</td>
+											<td><a href="/bitbox/minutesView?seq=${mList.min_seq}&group=${group_title}&page=${page}"><button class="btn btn-primary">상세보기</button></a></td>
 										</tr>
-										<c:forEach var="mList" items="${list}">
-											<tr align="center">
-												<td>${mList.min_subject}</td>
-												<td>${mList.min_date}</td>
-												<td>${mList.min_attendee}</td>
-												<td><a href="/bitbox/minutesView?seq=${mList.min_seq}&group=${group_title}&page=${page}"><button class="btn btn-primary">상세보기</button></a></td>
-											</tr>
-										</c:forEach>
-									</table>
-									<div align="center">
-                     					<h4>${mPageList.toString()}</h4>
-                  					</div>
-								</div>
-								<!-- /.box-body -->
+									</c:forEach>
+								</table>
+								<div align="center">
+									<c:forEach var="mList" items="${mPageList}">
+										<h4>${mList.toString()}</h4>
+									</c:forEach>
+                  				</div>
 							</div>
-							<!-- /.box -->
 						</div>
 					</div>
 				</div>
 			</section>
-			<!-- /.content -->
 		</div>
-		<!-- /.content-wrapper -->
 		<%@include file="controlSideBar.jsp"%>
 	</div>
-	<!-- ./wrapper -->
 
 	<!-- jQuery 2.2.3 -->
 	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -106,7 +100,5 @@
 	<script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/datatable.js"></script>
-
-
 </body>
 </html>

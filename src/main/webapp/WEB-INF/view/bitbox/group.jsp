@@ -52,7 +52,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<div style="float: right;width: 150px;">
+								<div style="float: right;">
 									<a href="/bitbox/groupRegistForm"><button type="button"
 											class="btn btn-primary" onclick="" >Create Group</button></a>
 								</div>

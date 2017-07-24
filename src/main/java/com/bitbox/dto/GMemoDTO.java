@@ -51,8 +51,8 @@ public class GMemoDTO {
 
 	@Override
 	public String toString() {
-		return "GMemoDTO [gm_seq=" + gm_seq + ", m_title=" + m_title + ", m_content=" + m_content + ", group_seq="
-				+ group_seq + "]";
+		return "gm_seq=" + gm_seq + ", m_title=" + m_title + ", m_content=" + m_content + ", group_seq="
+				+ group_seq;
 	}
 
 }

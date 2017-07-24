@@ -46,66 +46,51 @@
 					<h2 align="center">Detail Project</h2>
 				</div>
 			</section>
-
-			<!-- Main content -->
 			<section class="content">
 				<div class="row">
-					<!-- left column -->
-					<div class="col-md-6">
-						<!-- general form elements -->
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
 						<div class="box">
-							<div class="box-header with-border">
-								<h3 class="box-title">Project</h3>
-							</div>
-							<!-- /.box-header -->
-							<!-- form start -->
 							<form role="form" action="" method="post"
 								enctype="multipart/form-data" id="dataset">
 								<input type="hidden" name="p_boardseq"
 									value="${board.p_boardseq}">
 								<div class="box-body">
-									<div class="form-group">
+									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
 										<label for="exampleInputEmail1">제목</label> <input type="text"
-											class="form-control" name="p_title" value="${board.p_title }">
+											class="form-control" name="p_title" value="${board.p_title}">
 									</div>
-									<div class="form-group">
-										<label>카테고리</label> <br> <label>${board.p_category}</label>
+									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
+										<label>카테고리</label><br><label>${board.p_category}</label>
 									</div>
-									<div class="form-group">
+									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
 										<label>내용</label>
-										<textarea class="form-control" rows="10" value=""
-											name="p_content">${board.p_content }</textarea>
+										<textarea class="form-control" rows="10" style="resize:none;"
+											name="p_content">${board.p_content}</textarea>
 									</div>
-									<div class="form-group">
-										<label for="exampleInputFile">File Name:</label> <a
-											href="/bitbox/download?p_boardseq=${board.p_boardseq }"><label>${board.p_filename }</label></a>
+									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
+										<label for="exampleInputFile">File Name:</label>
+										<a href="/bitbox/download?p_boardseq=${board.p_boardseq}">
+										<label>${board.p_filename}</label></a>
 										<p class="help-block"></p>
 									</div>
 								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="button" class="btn btn-primary"
-										onclick="gourl(1)">확인</button>
-									<button type="button" class="btn btn-primary"
-										onclick="gourl(2)">수정</button>
-									<button type="button" class="btn btn-primary"
-										onclick="gourl(3)">삭제</button>
+								<div class="box-footer" align="right" style="padding-left: 15px; padding-right: 15px;">
+									<button type="button" class="btn btn-primary" onclick="gourl(1)">확인</button>
+									<button type="button" class="btn btn-primary" onclick="gourl(2)">수정</button>
+									<button type="button" class="btn btn-primary" onclick="gourl(3)">삭제</button>
 								</div>
 							</form>
 						</div>
 					</div>
+					<div class="col-md-2">
+					</div>
 				</div>
-				<!-- /.row -->
 			</section>
-
-
-			<!-- /.content -->
 		</div>
-		<!-- /.content-wrapper -->
 		<%@include file="controlSideBar.jsp"%>
 	</div>
-	<!-- ./wrapper -->
-
 	<!-- jQuery 2.2.3 -->
 	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->

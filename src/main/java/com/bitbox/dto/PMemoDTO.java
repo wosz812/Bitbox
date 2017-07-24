@@ -42,8 +42,7 @@ public class PMemoDTO {
 
 	@Override
 	public String toString() {
-		return "PMemoDTO [m_seq=" + m_seq + ", m_title=" + m_title + ", m_content=" + m_content + ", s_id=" + s_id
-				+ "]";
+		return "m_seq=" + m_seq + ", m_title=" + m_title + ", m_content=" + m_content + ", s_id=" + s_id;
 	}
 
 }

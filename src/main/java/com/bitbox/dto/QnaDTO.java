@@ -76,9 +76,9 @@ public class QnaDTO {
 
 	@Override
 	public String toString() {
-		return "QnaDTO [q_seq=" + q_seq + ", q_title=" + q_title + ", q_content=" + q_content + ", q_readCount="
+		return "q_seq=" + q_seq + ", q_title=" + q_title + ", q_content=" + q_content + ", q_readCount="
 				+ q_readCount + ", q_upload=" + q_upload + ", q_image=" + q_image + ", q_category=" + q_category
-				+ ", s_id=" + s_id + "]";
+				+ ", s_id=" + s_id;
 	}
 
 

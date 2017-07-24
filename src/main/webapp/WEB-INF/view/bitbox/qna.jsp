@@ -42,10 +42,9 @@
 							<div class="box-header">
 								<div style="float: right;">
 									<a href="/bitbox/createQ"><button type="button"
-											class="btn btn-primary" onclick="" >Create Question</button></a>
+											class="btn btn-primary">Create Question</button></a>
 								</div>
 								<br>
-								
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive" style="padding: 30px">
@@ -68,7 +67,9 @@
 									</c:forEach>
 								</table>
 								<div align="center">
-                     				<h4>${pageList.toString()}</h4>
+									<c:forEach var="page" items="${pageList}">
+										<h4>${page.toString()}</h4>
+									</c:forEach>
                   				</div>
 							</div>
 							<!-- /.box-body -->
