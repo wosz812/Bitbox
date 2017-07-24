@@ -38,6 +38,7 @@ import com.bitbox.dto.MinutesDTO;
 import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
+import com.bitbox.dto.StudentDTO;
 import com.bitbox.service.IBitboxService;
 import com.google.gson.Gson;
 
@@ -549,6 +550,14 @@ public class BitBoxController {
 		System.out.println("gitBoard controller: "+title);
 		String url ="/bitbox/gitBoard";
 		
+		return url;
+	}
+	
+	@RequestMapping(value = "/myPage", method = { RequestMethod.POST, RequestMethod.GET })
+	public String myPage(HttpSession session,Model model) {
+		String url = "/bitbox/myPage";
+		StudentDTO student = service.login((String)session.getAttribute("id"));
+		model.addAttribute("student",student);
 		return url;
 	}
 
