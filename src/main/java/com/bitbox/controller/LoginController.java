@@ -101,8 +101,8 @@ public class LoginController {
       String encodedPw = bitboxSecurity.encode(student.getS_pw());
       student.setS_pw(encodedPw);
       ////////////default img///////////////////
-      student.setS_img("/img/default.png");
-      student.setS_uuid_img("/img/default.png");
+      student.setS_img("default.png");
+      student.setS_uuid_img("default.png");
       /////////////////////////////////////////
       boolean flag = service.studentRegist(student);
       if (flag) {
