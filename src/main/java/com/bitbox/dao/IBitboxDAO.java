@@ -3,6 +3,7 @@ package com.bitbox.dao;
 import java.util.List;
 
 import com.bitbox.dto.GMemoDTO;
+import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.MinutesDTO;
@@ -65,4 +66,6 @@ public interface IBitboxDAO {
 	public String passwordCheck(String s_id);
 	public StudentDTO login(String s_id);
 	public boolean myUpdate(StudentDTO dto);
+	public GanttDTO chart(int group_seq);
+	public boolean saveGantt(GanttDTO gantt);
 }

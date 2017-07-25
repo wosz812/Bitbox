@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GMemoDTO;
+import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.MinutesDTO;
@@ -115,4 +116,8 @@ public interface IBitboxService {
 	public boolean idCheck(String s_id);
 
 	public boolean myUpdate(StudentDTO dto);
+	
+	public GanttDTO chart(int group_seq);
+
+	public boolean saveGantt(GanttDTO gantt);
 }

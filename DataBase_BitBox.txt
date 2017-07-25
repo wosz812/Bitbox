@@ -201,3 +201,14 @@ create table gminutes(
 select * from gminutes;
 
 create SEQUENCE min_seq start with 1;
+
+create table ggantt(
+	gan_seq number primary key,
+	gan_data LONG not null,
+	group_seq number not null
+	CONSTRAINT cgroup_group_seq_fk5 REFERENCES cgroup(group_seq)
+);
+
+create SEQUENCE gan_seq start with 1;
+
+select * from ggantt;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bitbox.dto.GMemoDTO;
+import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.MinutesDTO;
@@ -144,7 +145,10 @@ public class BitboxDAO implements IBitboxDAO {
 		boolean flag = false;
 		int aCnt = session.insert(namespace + ".groupRegist", dto);
 		if (aCnt > 0) {
-			flag = true;
+			int bCnt = session.insert(namespace + ".ganttRegist", new GanttDTO(dto.getGroup_seq()));
+			if (bCnt > 0) {
+				flag = true;
+			}
 		}
 		return flag;
 	}
@@ -439,6 +443,22 @@ public class BitboxDAO implements IBitboxDAO {
 		boolean flag = false;
 		int aCnt = session.update(namespace + ".myUpdate",dto);
 		if(aCnt > 0){
+			flag = true;
+		}
+		return flag;
+	}
+	
+	@Override
+	public GanttDTO chart(int group_seq) {
+		GanttDTO gantt = session.selectOne(namespace + ".chart", group_seq);
+		return gantt;
+	}
+
+	@Override
+	public boolean saveGantt(GanttDTO gantt) {
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".saveGantt", gantt);
+		if (aCnt > 0) {
 			flag = true;
 		}
 		return flag;
