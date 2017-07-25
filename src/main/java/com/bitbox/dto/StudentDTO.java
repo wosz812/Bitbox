@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class StudentDTO implements UserDetails {
 	private String s_id;
+	private String s_img;
+	private String s_uuid_img;
 	private int s_seq;
 	private String s_pw;
 	private String s_email;
@@ -71,6 +73,22 @@ public class StudentDTO implements UserDetails {
 	}
 	public void setGroup(List<GroupDTO> group) {
 		this.group = group;
+	}
+	
+	
+	public String getS_img() {
+		return s_img;
+	}
+	public void setS_img(String s_img) {
+		this.s_img = s_img;
+	}
+	
+	
+	public String getS_uuid_img() {
+		return s_uuid_img;
+	}
+	public void setS_uuid_img(String s_uuid_img) {
+		this.s_uuid_img = s_uuid_img;
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

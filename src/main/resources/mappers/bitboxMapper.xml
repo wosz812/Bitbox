@@ -236,4 +236,8 @@
 	<select id="getReplyUser" resultType="com.bitbox.dto.StudentDTO" parameterType="String">
 		select * from student where s_id = #{s_id}
 	</select>
+	
+	<update id="myUpdate" parameterType="com.bitbox.dto.StudentDTO">
+		update student set s_img=#{s_img}, s_uuid_img=#{s_uuid_img}, s_email = #{s_email}, s_phone = #{s_phone} where s_name = #{s_name}
+	</update>
 </mapper>

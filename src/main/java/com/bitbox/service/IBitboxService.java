@@ -113,4 +113,6 @@ public interface IBitboxService {
 	public String enter(String str);
 
 	public boolean idCheck(String s_id);
+
+	public boolean myUpdate(StudentDTO dto);
 }

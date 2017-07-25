@@ -560,5 +560,32 @@ public class BitBoxController {
 		model.addAttribute("student",student);
 		return url;
 	}
+	
+	@RequestMapping(value = "/myUpdate", method = { RequestMethod.POST, RequestMethod.GET })
+	public String myUpdate(HttpServletRequest req,@RequestParam("profile_img") MultipartFile profile_img, HttpSession session,StudentDTO dto) {
+		System.out.println("controller in");
+		String url = "";
+		String path = "C:\\dev\\image\\";
+		System.out.println("dto  : "+dto.toString());
+		System.out.println("file : "+profile_img.toString());
+		String fileName = profile_img.getOriginalFilename();
+		UUID uuidname = UUID.randomUUID();
+		try {
+			profile_img.transferTo(new File(path + uuidname.toString()+"_"+fileName));
+			dto.setS_img(fileName);
+			dto.setS_uuid_img(uuidname.toString()+"_"+fileName);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean flag = service.myUpdate(dto);
+		if(flag){
+			session.removeAttribute("img");
+			session.setAttribute("img", uuidname.toString()+"_"+fileName);
+			url="redirect:/bitbox/myPage";
+		}
+		
+		return url;
+	}
 
 }

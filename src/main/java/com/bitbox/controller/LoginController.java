@@ -70,6 +70,7 @@ public class LoginController {
         	  session.setAttribute("groupList", groupList);
               session.setAttribute("id", sdto.getS_id());
               session.setAttribute("code", sdto.getS_class_code());
+              session.setAttribute("img", sdto.getS_uuid_img());
               UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(s_id, "", AuthorityUtils.NO_AUTHORITIES);
               SecurityContextHolder.getContext().setAuthentication(token);
               url = "redirect:/bitbox/home";
@@ -99,6 +100,9 @@ public class LoginController {
       bitboxSecurity.setSalt(null);
       String encodedPw = bitboxSecurity.encode(student.getS_pw());
       student.setS_pw(encodedPw);
+      ////////////default img///////////////////
+      student.setS_img("/img/default.png");
+      student.setS_uuid_img("/img/default.png");
       /////////////////////////////////////////
       boolean flag = service.studentRegist(student);
       if (flag) {

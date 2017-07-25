@@ -433,4 +433,15 @@ public class BitboxDAO implements IBitboxDAO {
 		return student;
 	}
 
+	@Override
+	public boolean myUpdate(StudentDTO dto) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".myUpdate",dto);
+		if(aCnt > 0){
+			flag = true;
+		}
+		return flag;
+	}
+
 }

@@ -33,6 +33,7 @@ create sequence c_seq start with 1;
 //�л�
 create table student(
   s_id varchar(100) primary key,
+  s_img varchar(200) ,
   s_seq number not null,
   s_pw varchar(200) not null,
   s_name varchar(100) not null,

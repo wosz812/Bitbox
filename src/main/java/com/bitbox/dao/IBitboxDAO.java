@@ -64,4 +64,5 @@ public interface IBitboxDAO {
 	public StudentDTO getReplyUser(String s_id);
 	public String passwordCheck(String s_id);
 	public StudentDTO login(String s_id);
+	public boolean myUpdate(StudentDTO dto);
 }

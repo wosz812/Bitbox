@@ -32,6 +32,19 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+<script type="text/javascript">
+function readURL(input) {
+    if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+            var imgObj = document.getElementById('imgView');
+            imgObj.src = e.target.result;
+    }
+      reader.readAsDataURL(input.files[0]);
+    }
+}
+
+</script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -50,40 +63,44 @@
 			<section class="content">
 				<div class="row">
 					<!-- left column -->
-					<div class="col-md-2">
-					</div>
+					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<!-- general form elements -->
 						<div class="box">
 
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/bitbox/groupRegist"
-								enctype="multipart/form-data">
+							<form role="form" action="/bitbox/myUpdate"
+								enctype="multipart/form-data" method="post">
 								<div class="box-body">
 									<div class="form-group">
-										<label for="exampleInputEmail1">이름</label> <input
-											type="text" class="form-control" name="title"
-											value="${student.s_name }" readonly="readonly">
+										<label for="exampleInputFile">프로필 이미지</label> <input type="file"
+											class="form-control" name="profile_img" onchange="readURL(this)">
+											<img id="imgView" src="/pngFiles/${student.s_uuid_img}" style="width: 300px; height: 300px">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail1">아이디</label> <input
-											type="text" class="form-control" name="title"
-											value="${student.s_id }" readonly="readonly">
+										<label for="exampleInputEmail1">이름</label> <input type="text"
+											class="form-control" name="s_name" value="${student.s_name }"
+											readonly="readonly">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail1">이메일</label> <input
-											type="text" class="form-control" name="title"
+										<label for="exampleInputEmail1">아이디</label> <input type="text"
+											class="form-control" name="s_id" value="${student.s_id }"
+											readonly="readonly">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputEmail1">이메일</label> <input type="text"
+											class="form-control" name="s_email"
 											value="${student.s_email }">
 									</div>
 									<div class="form-group">
 										<label for="exampleInputEmail1">전화번호</label> <input
-											type="text" class="form-control" name="title"
+											type="text" class="form-control" name="s_phone"
 											value="${student.s_phone }">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail1">반</label> <input
-											type="text" class="form-control" name="title"
+										<label for="exampleInputEmail1">반</label> <input type="text"
+											class="form-control" name="s_class_code"
 											value="${student.s_class_code }" readonly="readonly">
 									</div>
 
@@ -95,8 +112,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="col-md-2">
-					</div>
+					<div class="col-md-2"></div>
 				</div>
 				<!-- /.row -->
 			</section>

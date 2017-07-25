@@ -497,4 +497,12 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		}
 		return flag;
 	}
+
+	@Override
+	public boolean myUpdate(StudentDTO dto) {
+		// TODO Auto-generated method stub
+		boolean flag = dao.myUpdate(dto);
+		
+		return flag;
+	}
 }
