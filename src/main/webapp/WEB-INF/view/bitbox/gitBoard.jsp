@@ -25,24 +25,24 @@
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
-<script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
-<link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 ${token }
 ${username }
+${title }
 	<div class="wrapper">
 		<%@include file="header.jsp"%>
 		<!-- Left side column. contains the logo and sidebar -->
 		<%@include file="sidebar.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<a href="#" class="aaf"><span id="title"></span></a>
+			<a href="#"><span id="title"></span></a>
 			<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download</button></a>
 			<table class="table table-hover" id="gBlist">
 	
 			</table>
-			<div id="myEditor"></div>
+			<div id="readme">
 			</div>
 		</div>
 		<!-- /.content-wrapper -->
@@ -64,132 +64,117 @@ ${username }
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<!-- page script -->
-	<script type="text/javascript">
-	var treeSha;
-	
-	$.ajax({ 
-	
-		 url: 'https://api.github.com/repos/wosz812/Bitbox',
-		 type: 'GET',
-		    
-		  beforeSend: function(xhr) { 
+	<script type="text/javascript">	
+	  $.ajax({ 
+	    url: 'https://api.github.com/user/repos',
+	    type: 'POST',
+	    beforeSend: function(xhr) { 
+	    	  xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+	    },
+	    data: '{"name": "repo test2","description":"repo create from ajax test","homepage": "https://sample.com","auto_init":true}'
+	}).done(function(response) {
+	    console.log(response);
+	}); 
+	/* var createBlob = function(content) {
+	      var filecontent = content;
+	      var filedata = JSON.stringify({"content":""+content+"","encoding":"UTF-8"});
+	      return new Promise(function(resolve, reject) {
+	         $.ajax({ 
+	            url: 'https://api.github.com/repos/wosz812/repo-test/git/blobs',
+	            type: 'POST',
+	            beforeSend: function(xhr) { 
+	            	 xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+	            },
+	            data: filedata
+	            })
+	            .done(function(response) {
+	                console.log(response);
+	                //resolve(response.sha);
+	            });
+	      });
+	   };
+	   createBlob("test ajax"); */
+ /* 
+	 	var filename = "secondfile.txt";
+		var filemessage = "uploading a file";
+		var filecontent = "The data of the file.";
+		var basecontent = btoa(filecontent);
+		//var apiurl = contents_url.replace('{+path}',filename);
+		var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'"}';
+		$.ajax({ 
+			 url: 'https://api.github.com/repos/wosz812/git-ajax-test/contents/secondfile.txt',
+		    type: 'PUT',		    
+		     beforeSend: function(xhr) { 
+		        xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+		     // xhr.setRequestHeader("Accept", "application/json"); 		     
 		    }  , 
-		    data: {}
+		   
+		    //dataType: 'json',
+		    data: filedata///*,"affiliation":"all"
+
+		
 		}).done(function(response) {
 		    console.log(response);
-		    $("#title").html(response["full_name"]);
+		});    */
+	$.ajax({ 
+	    url: 'https://api.github.com/repos/wosz812/Bitbox',
+	    type: 'GET',
+	    
+	     beforeSend: function(xhr) { 
+// 	        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+	        
+	    }  , 
+	    //dataType: 'jsonp',
+	    data: { /* "base":"master","head":"featureB","commit_message":"featureB upload"  */}///*,"affiliation":"all"*/
+	}).done(function(response) {
+	    console.log(response);
+	    $("#title").html(response["full_name"]);
+	});
+	$.ajax({ 
+	    url: 'https://api.github.com/repos/wosz812/Bitbox/contents',
+	    type: 'GET',
+	    
+	     beforeSend: function(xhr) { 
+// 	        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+	        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+	    }  , 
+	    //dataType: 'jsonp',
+	    data: { /* "base":"master","head":"featureB","commit_message":"featureB upload"  */}///*,"affiliation":"all"*/
+	}).done(function(response) {
+	    console.log(response);
+	    console.log(response.length);
+	    var len=response.length;
+	    var trHTML = '';
+	    $.each(response,function(key,object) {
+	    	//console.log()
+	    	//alert(response[key].name);
+	    	var el=$('<tr><td class="fPath"><a >' + response[key].name + '</a></td></tr>');
+	    	//trHTML += '<tr><td class="fPath"><a >' + response[key].name + '</a></td></tr>';
+	    	//trHTML.click(function(){ alert("hi") });
+	    	el.click(function(){
+	    		var temp=$(this).text();
+	    		//alert(temp);
+	    		$.ajax({ 
+	    		    url: 'https://api.github.com/repos/wosz812/Bitbox/contents/'+temp,
+	    		    type: 'GET',
+	    		    
+	    		     beforeSend: function(xhr) { 
+	    		       // xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+	    		        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+	    		    }  , 
+	    		    //dataType: 'jsonp',
+	    		    data: { /* "base":"master","head":"featureB","commit_message":"featureB upload"  */}///*,"affiliation":"all"*/
+	    		}).done(function(response) {
+	    		    console.log(response);
+	    		    console.log(atob(response['content']));
+	    		    $("#readme").html(atob(response['content']));
+	    		});
+	    	})
+	    	$('#gBlist').append(el);
+	    });
+	    
 	});	
 	
-	var initStart = function() {
-		$.ajax({ 
-	
-		url: 'https://api.github.com/repos/wosz812/Bitbox/git/refs/heads/master',
-		type: 'GET',
-		beforeSend: function(xhr) { 
-		    xhr.setRequestHeader("Authorization", "Basic " + btoa("yujiyeon:dbwldus26")); 
-		},
-		data: {}
-		})
-		.done(function(response) {
-		    console.log(response);
-		    var sha=response.object.sha;
-		    getCurrentTreeSHA(sha);
-		});
-	}
-	
-		var getCurrentTreeSHA = function(sha) {
-			api_url = "https://api.github.com/repos/wosz812/Bitbox/git/commits/"+ sha;
-			$.ajax(
-					{
-						url : api_url,
-						type : 'GET',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader("Authorization", "Basic "+ btoa("yujiyeon:dbwldus26"));
-						},
-						data : {}
-					}).done(function(response) {
-				console.log(response);
-				treeSha = response.tree.sha;
-				fgetTree(treeSha);
-			});
-		};
-		var fgetTree = function(sha) {
-			$.ajax(
-					{
-						url : "https://api.github.com/repos/wosz812/Bitbox/git/trees/"+sha,
-						type : 'GET',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader("Authorization", "Basic "+ btoa("yujiyeon:dbwldus26"));
-						},
-						data : {}
-					}).done(function(response) {
-						console.log(response);
-					    getTree(response.tree);
-					});
-				}
-		initStart();
-		 var getTree = function(res) {
-			$('#gBlist').text("");
-			$.each(res,function(key,object) {
-		    	var el=$('<tr><td class="fPath"><a>' + res[key].path+ '</a></td></tr>');
-		    	el.click(function(){
-		    		var temp=res[key].type;
-		    		var url=res[key].url;
-		    		var path=res[key].path;
-		    		if(temp=="blob"){
-		    			getblobContent(path,url);
-		    		}
-		    		else{
-		    			$('#gBlist').text("");
-		    			$.ajax(
-		    					{
-		    						url : url,
-		    						type : 'GET',
-		    						beforeSend : function(xhr) {
-		    							xhr.setRequestHeader("Authorization", "Basic "+ btoa("yujiyeon:dbwldus26"));
-		    						},
-		    						data : {}
-		    					}).done(function(response) {
-		    						console.log(response);
-		    						getTree(response.tree);
-		    					});
-		    		}
-		    	})
-		    	$('#gBlist').append(el);
-		    });
-		} 
-		 var getblobContent= function(path,url){
-			 var strArray=path.split(".");
-			 var mtemp=strArray[strArray.length-1];
-			$.ajax(
-					{
-						url : url,
-						type : 'GET',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader("Authorization", "Basic "+ btoa("yujiyeon:dbwldus26"));
-						},
-						data : {}
-					}).done(function(response) {
-						console.log(response);
-						var temp=atob(response['content']);
-						$('#gBlist').text("");
-						YUI().use(
-		    		    		  'aui-ace-editor',
-		    		    		  function(Y) {
-		    		    		    new Y.AceEditor(
-		    		    		      {
-		    		    		    	  boundingBox: '#myEditor',
-		    		    		          mode: mtemp,
-		    		    		          value:temp
-		    		    		      }
-		    		    		    ).render();
-		    		    		  }
-		    		    );
-					});
-		} 
-		$('.aaf').on("click",function(){
-			
-		})
 	
 	</script>
 
