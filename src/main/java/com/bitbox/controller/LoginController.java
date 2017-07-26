@@ -36,11 +36,12 @@ public class LoginController {
    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
    @RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
-   public String loginView(@RequestParam(value = "check", defaultValue = "0") int check, Model model) {
+   public String loginView(@RequestParam(value = "logID", defaultValue = "") String logID,@RequestParam(value = "check", defaultValue = "0") int check, Model model) {
       String url = "/login/loginForm";
       if (check == 1) {
          String different_pw = "비밀번호가 맞지 않습니다.";
          model.addAttribute("different", different_pw);
+         model.addAttribute("logID",logID);
       }else if(check == 2){
     	 String different_id = "존재하지 않는 아이디입니다.";
     	 model.addAttribute("different", different_id);
@@ -49,7 +50,7 @@ public class LoginController {
    }
 
    @RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-   public String login(HttpSession session, @RequestParam("s_id") String s_id, @RequestParam("s_pw") String s_pw) {
+   public String login(HttpSession session, @RequestParam("s_id") String s_id, @RequestParam("s_pw") String s_pw, Model model) {
       String url = "";
       //StudentDTO student = new StudentDTO();
       List<GroupDTO> groupList = null;
@@ -76,7 +77,7 @@ public class LoginController {
               url = "redirect:/bitbox/home";
           }else{
         	  //login 실패(pw 오류)
-        	  url = "redirect:/login/?check=1";
+        	  url = "redirect:/login/?check=1&logID="+s_id;
           }
       }else{
     	  //login 실패(id 오류)

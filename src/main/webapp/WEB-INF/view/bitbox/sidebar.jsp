@@ -9,15 +9,16 @@
 <aside class="main-sidebar"> <!-- sidebar: style can be found in sidebar.less -->
 <section class="sidebar"> <!-- Sidebar user panel -->
 <div class="user-panel">
-	<div class="pull-left image">
+	<div class="pull-left image" >
 		<img src="/pngFiles/${img}" class="img-circle"
-			alt="User Image">
+			alt="User Image" style="width: 350px; height: 45px;">
 	</div>
 	<div class="pull-left info">
 		<p>${id}</p>
 		<a href="/bitbox/logout"><i class="fa fa-sign-out"></i>Sign out</a>
 	</div>
 </div>
+
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
 	<li class="header">BitBox Menu</li>
