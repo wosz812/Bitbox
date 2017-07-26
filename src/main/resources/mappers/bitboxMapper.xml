@@ -240,4 +240,20 @@
 	<update id="myUpdate" parameterType="com.bitbox.dto.StudentDTO">
 		update student set s_img=#{s_img}, s_uuid_img=#{s_uuid_img}, s_email = #{s_email}, s_phone = #{s_phone} where s_name = #{s_name}
 	</update>
+	
+	<select id="chart" resultType="com.bitbox.dto.GanttDTO" parameterType="Integer">
+		select * from ggantt where group_seq = #{group_seq}
+	</select>
+	
+	<insert id="ganttRegist" parameterType="com.bitbox.dto.GroupDTO">
+		<selectKey keyProperty="gan_seq" order="BEFORE" resultType="Integer">
+			select gan_seq.nextval from dual
+		</selectKey>
+		insert into ggantt(gan_seq, gan_data, group_seq)
+		values(#{gan_seq}, 'default', #{group_seq})
+	</insert>
+	
+	<update id="saveGantt" parameterType="com.bitbox.dto.GanttDTO">
+		update ggantt set gan_data = #{gan_data} where gan_seq = #{gan_seq}
+	</update>
 </mapper>

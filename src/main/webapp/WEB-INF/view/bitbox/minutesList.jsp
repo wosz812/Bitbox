@@ -48,9 +48,14 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<div style="width: 150px;float:right;">
-									<a href="/bitbox/registMinutesForm?group_seq=${group_seq}&group_title=${group_title}">
-									<button class="btn btn-primary btn-block">Create Meeting</button></a>
+								<div class="col-xs-8">
+									<h4 align="left"><label>[ ${group_title} ] 의 회의록리스트</label></h4>
+								</div>
+								<div class="col-xs-4">
+									<div align="right">
+										<a href="/bitbox/registMinutesForm?group_seq=${group_seq}&group_title=${group_title}">
+										<button class="btn btn-primary">Create Meeting</button></a>
+									</div>
 								</div>
 								<table class="table table-hover" >
 									<tr align="center">

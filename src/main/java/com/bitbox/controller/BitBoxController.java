@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitbox.dto.CalendarFormat;
+import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.MinutesDTO;
@@ -585,6 +586,26 @@ public class BitBoxController {
 			url="redirect:/bitbox/myPage";
 		}
 		
+		return url;
+	}
+	
+	@RequestMapping(value = "/ganttForm", method = { RequestMethod.POST, RequestMethod.GET })
+	public String myPage(HttpSession session, @RequestParam("group_seq") int group_seq,
+			@RequestParam("group_title") String group_title, Model model) {
+		String url = "/bitbox/ganttForm";
+		GanttDTO gantt = service.chart(group_seq);
+		model.addAttribute("gantt", gantt);
+		model.addAttribute("group_title", group_title);
+		return url;
+	}
+
+	@RequestMapping(value = "/saveGantt", method = { RequestMethod.POST, RequestMethod.GET })
+	public String saveGantt(HttpSession session, @RequestParam("group_title") String group_title, GanttDTO gantt) {
+		String url = "";
+		boolean flag = service.saveGantt(gantt);
+		if (flag) {
+			url = "redirect:/bitbox/ganttForm?group_title=" + group_title + "&group_seq=" + gantt.getGroup_seq();
+		}
 		return url;
 	}
 

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bitbox.dao.IBitboxDAO;
 import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GMemoDTO;
+import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
 import com.bitbox.dto.MinutesDTO;
@@ -503,6 +504,18 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		// TODO Auto-generated method stub
 		boolean flag = dao.myUpdate(dto);
 		
+		return flag;
+	}
+	
+	@Override
+	public GanttDTO chart(int group_seq) {
+		GanttDTO gantt = dao.chart(group_seq);
+		return gantt;
+	}
+
+	@Override
+	public boolean saveGantt(GanttDTO gantt) {
+		boolean flag = dao.saveGantt(gantt);
 		return flag;
 	}
 }
