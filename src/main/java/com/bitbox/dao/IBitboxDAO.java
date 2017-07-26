@@ -68,4 +68,5 @@ public interface IBitboxDAO {
 	public boolean myUpdate(StudentDTO dto);
 	public GanttDTO chart(int group_seq);
 	public boolean saveGantt(GanttDTO gantt);
+	public String getClassName(int s_class_code);
 }

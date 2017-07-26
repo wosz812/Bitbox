@@ -256,4 +256,8 @@
 	<update id="saveGantt" parameterType="com.bitbox.dto.GanttDTO">
 		update ggantt set gan_data = #{gan_data} where gan_seq = #{gan_seq}
 	</update>
+	
+	<select id="getClassName" resultType="String" parameterType="Integer">
+		select class_name from bitclass where class_code = #{s_class_code}
+	</select>
 </mapper>

@@ -559,6 +559,8 @@ public class BitBoxController {
 		String url = "/bitbox/myPage";
 		StudentDTO student = service.login((String)session.getAttribute("id"));
 		model.addAttribute("student",student);
+		String class_name = service.getClassName(student.getS_class_code());
+		model.addAttribute("class_name",class_name);
 		return url;
 	}
 	

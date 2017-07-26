@@ -464,4 +464,11 @@ public class BitboxDAO implements IBitboxDAO {
 		return flag;
 	}
 
+	@Override
+	public String getClassName(int s_class_code) {
+		// TODO Auto-generated method stub
+		String className = session.selectOne(namespace+".getClassName",s_class_code);
+		return className;
+	}
+
 }

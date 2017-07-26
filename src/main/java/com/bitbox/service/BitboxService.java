@@ -518,4 +518,11 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		boolean flag = dao.saveGantt(gantt);
 		return flag;
 	}
+
+	@Override
+	public String getClassName(int s_class_code) {
+		// TODO Auto-generated method stub
+		String className = dao.getClassName(s_class_code);
+		return className;
+	}
 }

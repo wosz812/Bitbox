@@ -120,4 +120,6 @@ public interface IBitboxService {
 	public GanttDTO chart(int group_seq);
 
 	public boolean saveGantt(GanttDTO gantt);
+
+	public String getClassName(int s_class_code);
 }
