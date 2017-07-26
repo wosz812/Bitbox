@@ -26,17 +26,17 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 <script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
-<link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+<link href="/dist/css/bootstrap.min.css" rel="stylesheet"></link>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-${token }
-${username }
 	<div class="wrapper">
 		<%@include file="header.jsp"%>
 		<!-- Left side column. contains the logo and sidebar -->
 		<%@include file="sidebar.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
+			${token}
+			${username}
 			<a href="#" class="aaf"><span id="title"></span></a>
 			<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download</button></a>
 			<table class="table table-hover" id="gBlist">
