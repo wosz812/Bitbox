@@ -256,4 +256,28 @@
 	<update id="saveGantt" parameterType="com.bitbox.dto.GanttDTO">
 		update ggantt set gan_data = #{gan_data} where gan_seq = #{gan_seq}
 	</update>
+	
+	<insert id="addTodo" parameterType="com.bitbox.dto.TodoDTO">
+		<selectKey keyProperty="todo_seq" order="BEFORE" resultType="Integer">
+			select todo_seq.nextval from dual
+		</selectKey>
+		insert into todo(todo_seq, todo, todo_id)
+		values(#{todo_seq}, #{todo}, #{todo_id})
+	</insert>
+	
+	<select id="todoList" resultType="com.bitbox.dto.TodoDTO" parameterType="com.bitbox.dto.TodoDTO">
+		select * from todo where todo_id = #{todo_id} order by todo_seq desc
+	</select>
+	
+	<select id="getTodoList" resultType="com.bitbox.dto.TodoDTO" parameterType="String">
+		select * from todo where todo_id = #{todo_id} order by todo_seq desc
+	</select>
+	
+	<delete id="deleteLine" parameterType="Integer">
+		delete from todo where todo_seq = #{seq}
+	</delete>
+	
+	<delete id="deleteAll" parameterType="String">
+		delete from todo where todo_id = #{id}
+	</delete>
 </mapper>

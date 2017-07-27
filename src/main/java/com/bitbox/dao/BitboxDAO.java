@@ -19,6 +19,7 @@ import com.bitbox.dto.PageDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.TodoDTO;
 import com.bitbox.dto.gPageDTO;
 import com.bitbox.dto.mPageDTO;
 
@@ -162,7 +163,7 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public boolean registGMemo(GMemoDTO dto) {
 		boolean flag = false;
@@ -174,54 +175,54 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 
 	@Override
-	public List<PMemoDTO> getPMemoList(String id,int start) {
-		PageDTO dto = new PageDTO(id,start);
+	public List<PMemoDTO> getPMemoList(String id, int start) {
+		PageDTO dto = new PageDTO(id, start);
 		List<PMemoDTO> memoList = session.selectList(namespace + ".getPMemoList", dto);
 		return memoList;
 	}
-	
+
 	@Override
-	public List<GMemoDTO> getGMemoList(int group_seq,int start) {
-		gPageDTO dto = new gPageDTO(group_seq,start);
+	public List<GMemoDTO> getGMemoList(int group_seq, int start) {
+		gPageDTO dto = new gPageDTO(group_seq, start);
 		List<GMemoDTO> memoList = session.selectList(namespace + ".getGMemoList", dto);
 		return memoList;
 	}
-	
+
 	@Override
 	public int PMemoCnt(String id) {
 		int cnt = session.selectOne(namespace + ".getPMemoCnt", id);
 		return cnt;
 	}
-	
+
 	@Override
 	public int GMemoCnt(int group_seq) {
 		int cnt = session.selectOne(namespace + ".getGMemoCnt", group_seq);
 		return cnt;
 	}
-	
+
 	@Override
 	public boolean projectDelete(PBoardDTO board) {
-		boolean flag=false;
-		int aCnt=session.delete(namespace+".projectDelete",board);
-		if(aCnt>0){
-			flag=true;
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".projectDelete", board);
+		if (aCnt > 0) {
+			flag = true;
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public List<GroupDTO> getGroupList(String s_id) {
-		List<GroupDTO> groupList = session.selectList(login+".getGroupList", s_id);
+		List<GroupDTO> groupList = session.selectList(login + ".getGroupList", s_id);
 		return groupList;
 	}
-	
+
 	@Override
 	public int getPBoardCnt() {
-		int cnt =session.selectOne(namespace+".getPBoardCnt");
+		int cnt = session.selectOne(namespace + ".getPBoardCnt");
 		System.out.println(cnt);
 		return cnt;
 	}
-	
+
 	public boolean removePMemo(int m_seq) {
 		boolean flag = false;
 		int aCnt = session.delete(namespace + ".removePMemo", m_seq);
@@ -276,12 +277,12 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public int getCnt() {
-		//System.out.println("dao call");
-		int cnt=session.selectOne(namespace + ".getCnt");
-		//System.out.println("dao getCnt: "+cnt);
+		// System.out.println("dao call");
+		int cnt = session.selectOne(namespace + ".getCnt");
+		// System.out.println("dao getCnt: "+cnt);
 		return cnt;
 	}
-	
+
 	@Override
 	public List<QnaDTO> getQnaList(int start) {
 		List<QnaDTO> qnaList = session.selectList(namespace + ".getQnaList", start);
@@ -298,7 +299,7 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public boolean updateReadCount(int q_seq) {
 		boolean flag = false;
@@ -351,7 +352,7 @@ public class BitboxDAO implements IBitboxDAO {
 	public boolean registReply(ReQnaDTO reply) {
 		boolean flag = false;
 		int aCnt = session.insert(namespace + ".registReply", reply);
-		if(aCnt>0){
+		if (aCnt > 0) {
 			flag = true;
 		}
 		return flag;
@@ -359,10 +360,10 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public PBoardDTO finduuidname(String p_boardseq) {
-		PBoardDTO board=session.selectOne(namespace+".finduuidname",p_boardseq);
+		PBoardDTO board = session.selectOne(namespace + ".finduuidname", p_boardseq);
 		return board;
 	}
-	
+
 	@Override
 	public List<MinutesDTO> minutesList(mPageDTO mList) {
 		List<MinutesDTO> list = session.selectList(namespace + ".minutesList", mList);
@@ -416,7 +417,7 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public StudentDTO getReplyUser(String s_id) {
 		StudentDTO student = session.selectOne(namespace + ".getReplyUser", s_id);
@@ -425,7 +426,7 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public String passwordCheck(String s_id) {
-		String encodedPw = session.selectOne(login + ".getEncodedPw", s_id) ;
+		String encodedPw = session.selectOne(login + ".getEncodedPw", s_id);
 		return encodedPw;
 	}
 
@@ -433,7 +434,7 @@ public class BitboxDAO implements IBitboxDAO {
 	public StudentDTO idCheck(String s_id) {
 		// TODO Auto-generated method stub
 		StudentDTO student = session.selectOne(login + ".idCheck", s_id);
-		
+
 		return student;
 	}
 
@@ -441,13 +442,13 @@ public class BitboxDAO implements IBitboxDAO {
 	public boolean myUpdate(StudentDTO dto) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		int aCnt = session.update(namespace + ".myUpdate",dto);
-		if(aCnt > 0){
+		int aCnt = session.update(namespace + ".myUpdate", dto);
+		if (aCnt > 0) {
 			flag = true;
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public GanttDTO chart(int group_seq) {
 		GanttDTO gantt = session.selectOne(namespace + ".chart", group_seq);
@@ -458,6 +459,42 @@ public class BitboxDAO implements IBitboxDAO {
 	public boolean saveGantt(GanttDTO gantt) {
 		boolean flag = false;
 		int aCnt = session.update(namespace + ".saveGantt", gantt);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public List<TodoDTO> todoList(TodoDTO dto) {
+		List<TodoDTO> todoList = null;
+		int aCnt = session.insert(namespace + ".addTodo", dto);
+		if (aCnt > 0) {
+			todoList = session.selectList(namespace + ".todoList", dto);
+		}
+		return todoList;
+	}
+
+	@Override
+	public List<TodoDTO> getTodoList(String todo_id) {
+		List<TodoDTO> todoList = session.selectList(namespace + ".getTodoList", todo_id);
+		return todoList;
+	}
+
+	@Override
+	public boolean deleteAll(String id) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".deleteAll", id);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean deleteLine(int seq) {
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".deleteLine", seq);
 		if (aCnt > 0) {
 			flag = true;
 		}

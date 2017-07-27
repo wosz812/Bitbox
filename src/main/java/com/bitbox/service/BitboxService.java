@@ -27,6 +27,7 @@ import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.TodoDTO;
 import com.bitbox.dto.mPageDTO;
 
 @Service
@@ -516,6 +517,48 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 	@Override
 	public boolean saveGantt(GanttDTO gantt) {
 		boolean flag = dao.saveGantt(gantt);
+		return flag;
+	}
+
+	@Override
+	public ArrayList<String> getTodoList(String id) {
+		List<TodoDTO> todoList = dao.getTodoList(id);
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("<tr><td class=\"inp\"><input class=\"form-control\" id=\"todoText\" placeholder=\"Input TODO\""
+				+ "type=\"text\"></td><td style=\"padding-right: 15px; padding-left: 15px\"><button id=\"todoButton\" class=\"btn btn-primary\">Add</button></td>"
+				+ "<td><button id=\"todoDeleteAll\" class=\"btn btn-danger\">Delete all</button></td></tr>");
+		for (TodoDTO todo : todoList) {
+			list.add("<tr><td colspan=\"2\" style=\"padding-left: 15px\">" + todo.getTodo()
+					+ "</td><td class=\"btn\"><button class=\"btn btn-warning\" id=\"deleteLine\" seq=\"" + todo.getTodo_seq()
+					+ "\">Delete</button></td></tr>");
+		}
+		return list;
+	}
+
+	@Override
+	public ArrayList<String> todoList(TodoDTO dto) {
+		List<TodoDTO> todoList = dao.todoList(dto);
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("<tr><td class=\"inp\"><input class=\"form-control\" id=\"todoText\" placeholder=\"Input TODO\""
+				+ "type=\"text\"></td><td style=\"padding-right: 15px; padding-left: 15px\"><button id=\"todoButton\" class=\"btn btn-primary\">Add</button></td>"
+				+ "<td><button id=\"todoDeleteAll\" class=\"btn btn-danger\">Delete all</button></td></tr>");
+		for (TodoDTO todo : todoList) {
+			list.add("<tr><td colspan=\"2\"  style=\"padding-left: 15px\">" + todo.getTodo()
+					+ "</td><td class=\"btn\"><button class=\"btn btn-warning\" id=\"deleteLine\" seq=\"" + todo.getTodo_seq()
+					+ "\">Delete</button></td></tr>");
+		}
+		return list;
+	}
+
+	@Override
+	public boolean deleteAll(String id) {
+		boolean flag = dao.deleteAll(id);
+		return flag;
+	}
+
+	@Override
+	public boolean deleteLine(int seq) {
+		boolean flag = dao.deleteLine(seq);
 		return flag;
 	}
 }

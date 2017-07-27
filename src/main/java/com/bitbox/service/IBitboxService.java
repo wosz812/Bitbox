@@ -16,6 +16,7 @@ import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.TodoDTO;
 
 public interface IBitboxService {
 
@@ -26,7 +27,7 @@ public interface IBitboxService {
 	public boolean studentRegist(StudentDTO student);
 
 	public StudentDTO login(String s_id);
-	
+
 	public String passwordCheck(String s_id);
 
 	public List<CalendarFormat> getCalendar(String id);
@@ -46,17 +47,17 @@ public interface IBitboxService {
 	public boolean groupRegist(GroupDTO dto);
 
 	public boolean registPMemo(PMemoDTO dto);
-	
+
 	public boolean registGMemo(GMemoDTO dto);
 
-	public List<PMemoDTO> getPMemoList(String id,int page);
-	
+	public List<PMemoDTO> getPMemoList(String id, int page);
+
 	public List<GMemoDTO> getGMemoList(int group_seq, int page);
 
 	public ArrayList<String> getPageList(int page, String id);
 
 	public boolean projectDelete(PBoardDTO board);
-	
+
 	public List<GroupDTO> getGroupList(String s_id);
 
 	public ArrayList<String> getGPageList(int page, int group_seq);
@@ -64,7 +65,7 @@ public interface IBitboxService {
 	public boolean removePMemo(int m_seq);
 
 	public boolean updatePMemo(PMemoDTO pmemo);
-	
+
 	public PMemoDTO getPMemoModal(int seq);
 
 	public boolean updateGMemo(GMemoDTO gmemo);
@@ -72,9 +73,9 @@ public interface IBitboxService {
 	public boolean removeGMemo(int seq);
 
 	public GMemoDTO getGMemoModal(int seq);
-	
+
 	public int getCnt();
-	
+
 	public List<QnaDTO> getQnaList(int page);
 
 	public boolean registQna(QnaDTO qna);
@@ -94,7 +95,7 @@ public interface IBitboxService {
 	public PBoardDTO finduuidname(String p_boardseq);
 
 	public StringBuffer readFile(MultipartFile file);
-	
+
 	public List<MinutesDTO> minutesList(int group_seq, int page);
 
 	public ArrayList<String> getMember(int group_seq);
@@ -108,16 +109,24 @@ public interface IBitboxService {
 	public boolean updateMinutes(MinutesDTO minutes);
 
 	public boolean deleteMinutes(int min_seq);
-	
+
 	public String getReplyUser(String s_id);
-	
+
 	public String enter(String str);
 
 	public boolean idCheck(String s_id);
 
 	public boolean myUpdate(StudentDTO dto);
-	
+
 	public GanttDTO chart(int group_seq);
 
 	public boolean saveGantt(GanttDTO gantt);
+
+	public ArrayList<String> todoList(TodoDTO dto);
+
+	public ArrayList<String> getTodoList(String id);
+
+	public boolean deleteAll(String id);
+
+	public boolean deleteLine(int seq);
 }
