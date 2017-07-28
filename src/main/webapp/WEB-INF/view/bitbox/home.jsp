@@ -160,38 +160,22 @@
 					</div>
 					<!-- /.box -->
 				</div>
-			
-
 				<div class="col-md-4">
-					
 					<div class="box">
 						<div class="box-header with-border">
 							<h3 class="box-title font">TO DO</h3>
 						</div>
-						<div class="box-body chart-responsive"  style="overflow: scroll; height:220px;">
+						<div class="box-body chart-responsive"  style="overflow: scroll; height:250px;">
 							<div id="todo-list">
-							<table class="table table-hover" style="width:422.33px;">
-								<tr><td class="inp">
-									<input class="form-control" id="todoText" placeholder="Input TODO"  type="text">
-									</td>
-									<td><button @click="add" class="btn btn-primary">Add</button></td>
-									<td><button @click="deleteAll(items)" class="btn btn-danger">Delete all</button></td>
-								</tr>
-								<div id="items">
-									
-										<tr v-for="(item,key) in items">
-											<td colspan="2">{{ item }}</td>
-											<td class="btn"><button @click="deletedd(key)" class="btn btn-warning">Delete</button></td>
-										</tr>		
-								</div>
-							</table>
+								<table class="table table-hover" style="width:422.33px;">
+									<div id="todo">	
+									</div>
+								</table>
 							</div>
 						</div>
 						<!-- /.box-body -->
 					</div>
 				</div>
-				
-				
 					<div class="col-md-8" id="slide">
 						<div class="box box-solid">
 							<!-- /.box-header -->
@@ -276,41 +260,66 @@
 	<!-- page script -->
 	<script type="text/javascript" src="/js/chart.js"></script>
 	<script type="text/javascript">
-		var STORAGE_KEY = 'vue-js-todo-P7oZi9sL';
-		var app = new Vue({
-			el : '#todo-list',
-			data : {
-				items : JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'),
-				todoText : ''
-			},
-			watch: {
-				  items: function (items) {
-					  //todoStorage.save(todos);
-					  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-				  }
-			},
-			methods : {
-				add : function() {
-					var txt = document.getElementById("todoText").value;
-					//alert(txt);
-					//this.$set('todo-list.items', txt);
-					this.items.push(txt);
-					//localStorage.setItem('items');
-					//console.log(this.items[0]);
-					document.getElementById("todoText").value = "";
-				},
-				deletedd : function(ev) {
-					//console.log(this.items); 
-					//alert(ev);
-					this.items.splice(ev, 1);
-				},
-				deleteAll : function(ev){
-					this.items.splice(ev);
-				}
-
-			}
+		$(document).ready(function(){
+			$.ajax({
+		        url : '/bitbox/getTodoList',
+		        type : 'POST',
+		        success : function(data) {
+		           $('#todo').html(data);
+		        }
+		     });
 		});
-	</script>
+		
+		$(document).on("click", "#todoButton", addTodo);
+		function addTodo() {
+			 var todoText = document.getElementById("todoText").value;
+	         var controller = '/bitbox/addTodo'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
+	         //var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
+	         var url = controller + '?text=' + todoText;
+	         $.ajax({
+	            url : url,
+	            type : 'POST',
+	            //data: { "gno": JSON.stringify(gno)},
+	            //data: { "gno": gno},
+	            success : function(data) {
+	               $('#todo').html(data.toString());
+	            }
+	         });
+	      }
+		
+		$(document).on("click", "#todoDeleteAll", deleteAll);
+		function deleteAll() {
+	         var controller = '/bitbox/deleteAll'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
+	         //var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
+	         var url = controller
+	         $.ajax({
+	            url : url,
+	            type : 'POST',
+	            //data: { "gno": JSON.stringify(gno)},
+	            //data: { "gno": gno},
+	            success : function(data) {
+	               $('#todo').html(data.toString());
+	            }
+	         });
+	      }
+		
+		$(document).on("click", "#deleteLine", deleteLine);
+		function deleteLine() {
+			 var seq = $(this).attr("seq");
+	         var controller = '/bitbox/deleteLine'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
+	         //var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
+	         var url = controller + '?seq=' + seq;
+	         $.ajax({
+	            url : url,
+	            type : 'POST',
+	            //data: { "gno": JSON.stringify(gno)},
+	            //data: { "gno": gno},
+	            success : function(data) {
+	               $('#todo').html(data.toString());
+	            }
+	         });
+	      }
+   </script>
 
 </body>
 </html>

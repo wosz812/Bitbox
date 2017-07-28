@@ -12,6 +12,7 @@ import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.TodoDTO;
 import com.bitbox.dto.mPageDTO;
 
 public interface IBitboxDAO {
@@ -69,4 +70,8 @@ public interface IBitboxDAO {
 	public GanttDTO chart(int group_seq);
 	public boolean saveGantt(GanttDTO gantt);
 	public String getClassName(int s_class_code);
+	public List<TodoDTO> todoList(TodoDTO dto);
+	public List<TodoDTO> getTodoList(String id);
+	public boolean deleteAll(String id);
+	public boolean deleteLine(int seq);
 }

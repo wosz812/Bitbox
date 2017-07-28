@@ -213,3 +213,12 @@ create table ggantt(
 create SEQUENCE gan_seq start with 1;
 
 select * from ggantt;
+
+create table todo(
+   todo_seq number primary key,
+   todo varchar2(200),
+   todo_id varchar2(20)
+   CONSTRAINT student_s_id_fk5 REFERENCES student(s_id)
+);
+
+create SEQUENCE todo_seq start with 1;
