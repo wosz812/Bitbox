@@ -51,9 +51,12 @@ window.onload = function() {
 	
 	// 간트차트를 생성합니다.
 	createAUIGanttChart();
-	
+
 	// 최초 50행을 갖는 새문서 모드 만들기
 	AUIGantt.createNewDocument(myGanttID, 50);
+	
+	// 간트 데이터 삽입
+	AUIGantt.setGanttData(myGanttID, myGanttData);
 };
 
 // AUIGantt 를 생성합니다.
@@ -78,7 +81,11 @@ function createAUIGanttChart() {
 			// 편집 가능 여부
 			editable : true, 
 			
-			gridWidth : "45%",
+			// 엑셀 저장 URL
+			exportURL : "/",
+			
+			
+			gridWidth : "43%",
 			
 			// 인덱스 1에 트리 칼럼을 만듬. 즉, 설정한 columnLayout 기준임.
 			treeColumnIndex: 1, 
@@ -128,6 +135,40 @@ function getGanttData() {
 	ds.submit();
 };
 
+//엑셀로 저장하기
+function saveAsExcel( timeUnit ) {
+	var exportProps = {
+		fileName : "BITBIX_Gantt", // 파일 명 지정
+		sheetName : "일정 관리표", // 엑셀 시트명 지정
+		//fontFamily : "Calibri", // 폰트명 지정
+		timeLabelWidth : 30, // 타임 1유닛의 크기
+		includeGantt : true,  // 간트 차트 엑셀 포함 여부
+		displayTimeUnit : timeUnit, // 시간 단위
+		headers : [ {
+			text : "", height:5, style : { background:"#555555"} // 빈줄 색깔 경계 만듬
+		}, {
+			text : "BITBOX 간트차트 엑셀 저장", height:24, style : { fontSize:14, textAlign:"left", fontWeight:"bold", underline:true, background:"#DAD9FF"}
+		}, {
+			text : "작성자 : BITBOX"
+		}, {
+			text : "작성일 : 작성일을 입력해 주세요."
+		}, {
+			text : "추가 정보 : 원하는 문구를 헤더에 넣을 수 있습니다."
+		}, {
+			text : "", height:5, style : { background:"#555555"} // 빈줄 색깔 경계 만듬
+		}],
+	footers : [ {
+			text : "", height:5, style : { background:"#555555"} // 빈줄 색깔 경계 만듬
+		}, {
+			text : "원하는 행 만큼", height:24, style : { color: "#0000aa" }
+		}, {
+			text : "푸터에도 뭔가를 넣을 수 있습니다.", height:24, style : { textAlign:"left", fontSize:14, fontWeight:"bold", color:"#ffffff", background:"#222222"}
+		}]
+	};
+
+	AUIGantt.exportToXlsx(myGanttID, exportProps);
+};
+
 </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -163,7 +204,7 @@ function getGanttData() {
 							<div class="box-body">
 								<div id="main">
 									<!-- 에이유아이간트가 이곳에 생성됩니다. -->
-									<div id="gantt_wrap" style="width:100%; height:600px;"></div>
+									<div id="gantt_wrap" style="width:100%; height:700px;"></div>
 									<form id="dataset" action="/bitbox/saveGantt" method="post">
 										<input type="hidden" name="gan_seq" value="${gantt.gan_seq}">
 										<input type="hidden" id="gan_data" name="gan_data" value="${gantt.gan_data}">
@@ -171,6 +212,10 @@ function getGanttData() {
 										<input type="hidden" name="group_title" value="${group_title}">
 									</form>
 								</div>
+							</div>
+							<div align="right">
+								<button class="btn btn-primary" onclick="saveAsExcel('day')">일(day) 단위 엑셀로 저장하기</button>
+								<button class="btn btn-primary" onclick="saveAsExcel('week')">주(week) 단위 엑셀로 저장하기</button>
 							</div>
 						</div>
 					</div>
@@ -193,9 +238,5 @@ function getGanttData() {
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
-	<!-- modal -->
-	<script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
-	<script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
-	<script type="text/javascript" src="/js/datatable.js"></script>
 </body>
 </html>

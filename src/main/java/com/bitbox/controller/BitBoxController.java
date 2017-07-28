@@ -47,12 +47,12 @@ import com.google.gson.Gson;
 
 @Controller
 public class BitBoxController {
-	
-	//지원
-	//대성
-	//대성1지연이
-	//대성1
-	//대성 test
+
+	// 지원
+	// 대성
+	// 대성1지연이
+	// 대성1
+	// 대성 test
 	String path = "c:\\dev\\";
 
 	@Autowired
@@ -62,16 +62,16 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/home", method = { RequestMethod.POST, RequestMethod.GET })
 	public String index() {
-		//((OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getDetails()
-		//((OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getUserAuthentication();
+		// ((OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getDetails()
+		// ((OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getUserAuthentication();
 		String url = "/bitbox/home";
-//		session.setAttribute("id", session.getAttribute("id"));
-//		session.setAttribute("code", session.getAttribute("code"));
-//		session.setAttribute("groupList", session.getAttribute("groupList"));
-		
+		// session.setAttribute("id", session.getAttribute("id"));
+		// session.setAttribute("code", session.getAttribute("code"));
+		// session.setAttribute("groupList", session.getAttribute("groupList"));
+
 		return url;
 	}
- 
+
 	@RequestMapping(value = "/listAll", method = { RequestMethod.POST, RequestMethod.GET })
 	public String listAll(HttpSession session, Model model) {
 		String url = "";
@@ -96,14 +96,14 @@ public class BitBoxController {
 		String path = this.path;
 		boolean flag = false;
 		String fileNames = p_filename.getOriginalFilename();
-		UUID uuidname=UUID.randomUUID();
+		UUID uuidname = UUID.randomUUID();
 		try {
-			p_filename.transferTo(new File(path + uuidname.toString()+"_"+fileNames));
+			p_filename.transferTo(new File(path + uuidname.toString() + "_" + fileNames));
 			board.setP_title(p_title);
 			board.setP_content(p_content);
 			board.setP_category(p_category);
 			board.setP_filename(fileNames);
-			board.setP_uuidname(uuidname.toString()+"_"+fileNames);
+			board.setP_uuidname(uuidname.toString() + "_" + fileNames);
 			board.setS_id(session.getAttribute("id").toString());
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
@@ -119,35 +119,37 @@ public class BitBoxController {
 	public HttpEntity<?> downloadtest(@RequestParam("p_boardseq") String p_boardseq, HttpServletRequest req) {
 		String path = SystemPropertyUtils.resolvePlaceholders("${storage.path:" + this.path + "}");
 		HttpHeaders header = new HttpHeaders();
-		PBoardDTO board=service.finduuidname(p_boardseq);
-		logger.info("file seq or uuidname is {}",p_boardseq +","+board.getP_uuidname());
-		String filename=board.getP_uuidname();
+		PBoardDTO board = service.finduuidname(p_boardseq);
+		logger.info("file seq or uuidname is {}", p_boardseq + "," + board.getP_uuidname());
+		String filename = board.getP_uuidname();
 		header.setContentDispositionFormData("name", filename);
 		header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		
+
 		return ResponseEntity.ok().headers(header).body(new FileSystemResource(new File(path + filename)));
 	}
-	@RequestMapping(value="/uploadImage", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody String uploadImage(HttpServletRequest  req,HttpServletResponse res,MultipartFile image){
-		//String path="C:\\dev\\image\\";
-		String path=req.getSession().getServletContext().getRealPath("/")+"image\\";
+
+	@RequestMapping(value = "/uploadImage", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody String uploadImage(HttpServletRequest req, HttpServletResponse res, MultipartFile image) {
+		// String path="C:\\dev\\image\\";
+		String path = req.getSession().getServletContext().getRealPath("/") + "image\\";
 		System.out.println(path);
-		UUID uuidname=UUID.randomUUID();
-		String imageName=uuidname.toString()+image.getOriginalFilename();
+		UUID uuidname = UUID.randomUUID();
+		String imageName = uuidname.toString() + image.getOriginalFilename();
 		try {
-			image.transferTo(new File(path+imageName));
+			image.transferTo(new File(path + imageName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-		
-		String url="http://localhost:8080/image/"+imageName;
+
+		String url = "http://localhost:8080/image/" + imageName;
 		res.setCharacterEncoding("UTF-8");
 		return url;
 	}
 
 	@RequestMapping(value = "/projectUpdate", method = { RequestMethod.POST, RequestMethod.GET })
 	public String projectUpdate(HttpSession session, @RequestParam("p_title") String p_title,
-			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,@RequestParam(value="cal",defaultValue="")String cal) {
+			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
+			@RequestParam(value = "cal", defaultValue = "") String cal) {
 		String url = "";
 		boolean flag = false;
 		PBoardDTO board = new PBoardDTO();
@@ -158,47 +160,49 @@ public class BitBoxController {
 		logger.info(p_title + "," + cal);
 		flag = service.projectUpdate(board);
 		if (flag) {
-			if(cal.equals("cal")){
+			if (cal.equals("cal")) {
 				url = "redirect:/bitbox/calendar";
-			}else{
-			url = "redirect:/bitbox/listAll";
+			} else {
+				url = "redirect:/bitbox/listAll";
 			}
 		}
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/projectDelete", method = { RequestMethod.POST, RequestMethod.GET })
 	public String projectDelete(HttpSession session, @RequestParam("p_title") String p_title,
-			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,@RequestParam(value="cal",defaultValue="")String cal) {
+			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
+			@RequestParam(value = "cal", defaultValue = "") String cal) {
 		String url = "";
 		boolean flag = false;
 		PBoardDTO board = new PBoardDTO();
-		board.setP_boardseq(p_boardseq);		
+		board.setP_boardseq(p_boardseq);
 		board.setS_id(session.getAttribute("id").toString());
 		logger.info(p_boardseq + "," + session.getAttribute("id").toString());
 		flag = service.projectDelete(board);
 		if (flag) {
-			if(cal.equals("cal")){
+			if (cal.equals("cal")) {
 				url = "redirect:/bitbox/calendar";
-			}else{
-			url = "redirect:/bitbox/listAll";
+			} else {
+				url = "redirect:/bitbox/listAll";
 			}
 		}
 		return url;
 	}
+
 	@RequestMapping(value = "/detailProject", method = { RequestMethod.POST, RequestMethod.GET })
-	public String detailProject(Model model,HttpSession session,@RequestParam("p_title") String p_title,
+	public String detailProject(Model model, HttpSession session, @RequestParam("p_title") String p_title,
 			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
-			@RequestParam("p_filename") String p_filename,@RequestParam("p_category") String p_category){
-		String url="/bitbox/projectView";	
-		PBoardDTO board=new PBoardDTO();
+			@RequestParam("p_filename") String p_filename, @RequestParam("p_category") String p_category) {
+		String url = "/bitbox/projectView";
+		PBoardDTO board = new PBoardDTO();
 		board.setP_boardseq(p_boardseq);
 		board.setP_title(p_title);
 		board.setP_content(p_content);
 		board.setP_filename(p_filename);
-		board.setP_category(p_category);	
+		board.setP_category(p_category);
 		board.setS_id(session.getAttribute("id").toString());
-		model.addAttribute("board",board);
+		model.addAttribute("board", board);
 		return url;
 	}
 
@@ -264,11 +268,11 @@ public class BitBoxController {
 		dto.setS_id(id);
 		boolean flag = service.groupRegist(dto);
 		if (flag) {
-			//url = "redirect:/bitbox/group";
+			// url = "redirect:/bitbox/group";
 			session.removeAttribute("groupList");
 			List<GroupDTO> groupList = service.getGroupList(session_id);
 			session.setAttribute("groupList", groupList);
-			
+
 			url = "redirect:/bitbox/group";
 		}
 
@@ -296,45 +300,46 @@ public class BitBoxController {
 	}
 
 	@RequestMapping(value = "/groupJoin", method = { RequestMethod.POST, RequestMethod.GET })
-	   public String groupJoin(HttpSession session, GroupDTO group, Model model) {
-	      //System.out.println("groupJoin Controller: "+group);
-	      String url = "";
-	      String id = (String) session.getAttribute("id");
-	      group.setS_id(id);// 가입하려는 사람의 groupDTO
- 
-	      GinDTO gIn = new GinDTO(group.getGroup_seq(), id);
-	      //System.out.println(gIn);
+	public String groupJoin(HttpSession session, GroupDTO group, Model model) {
+		// System.out.println("groupJoin Controller: "+group);
+		String url = "";
+		String id = (String) session.getAttribute("id");
+		group.setS_id(id);// 가입하려는 사람의 groupDTO
 
-	      int state = service.groupJoin(group, gIn);
-	      
-	      if(state==0){
-	    	  session.removeAttribute("groupList");
-	    	  List<GroupDTO> groupList = service.getGroupList(id);
-	    	  session.setAttribute("groupList", groupList);
-	      }
-	      
-	      //System.out.println(state);
-	      /*
-	       * if(state==0){ url="redirect:/bitbox/group"; }else if(state==1){
-	       * System.out.println("중복된 가입입니다."); url="redirect:/bitbox/group";
-	       * }else{ //state==2 System.out.println("비밀번호 오류입니다.");
-	       * url="redirect:/bitbox/group"; }
-	       */
-	      model.addAttribute("state", state);
-	      url = "redirect:/bitbox/group?state="+state;
-	      // System.out.println("groupJoin: "+id);
-	      return url;
-	   }
+		GinDTO gIn = new GinDTO(group.getGroup_seq(), id);
+		// System.out.println(gIn);
+
+		int state = service.groupJoin(group, gIn);
+
+		if (state == 0) {
+			session.removeAttribute("groupList");
+			List<GroupDTO> groupList = service.getGroupList(id);
+			session.setAttribute("groupList", groupList);
+		}
+
+		// System.out.println(state);
+		/*
+		 * if(state==0){ url="redirect:/bitbox/group"; }else if(state==1){
+		 * System.out.println("중복된 가입입니다."); url="redirect:/bitbox/group";
+		 * }else{ //state==2 System.out.println("비밀번호 오류입니다.");
+		 * url="redirect:/bitbox/group"; }
+		 */
+		model.addAttribute("state", state);
+		url = "redirect:/bitbox/group?state=" + state;
+		// System.out.println("groupJoin: "+id);
+		return url;
+	}
+
 	@RequestMapping(value = "/alarm", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody int alarm() {
-		//System.out.println("alarm call");
+		// System.out.println("alarm call");
 		// System.out.println("modal: "+gNo);
-		int cnt=service.getCnt();
+		int cnt = service.getCnt();
 		// System.out.println("controller: "+modal);
 
 		return cnt;
 	}
-	
+
 	@RequestMapping(value = "/qna", method = { RequestMethod.POST, RequestMethod.GET })
 	public String qna(HttpSession session, Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 		String url = "/bitbox/qna";
@@ -428,29 +433,29 @@ public class BitBoxController {
 		}
 		return url;
 	}
-	
-	@RequestMapping(value="/diff", method=RequestMethod.GET)
-	public String diff(){
-		String url ="/bitbox/diff";
+
+	@RequestMapping(value = "/diff", method = RequestMethod.GET)
+	public String diff() {
+		String url = "/bitbox/diff";
 		return url;
 	}
-	
-	@RequestMapping(value="/read", method=RequestMethod.POST)
-	public @ResponseBody String read(@RequestParam("file") MultipartFile file,Model model){
-//		String url ="";
-		//MultipartFile file = (MultipartFile) uploadfile;
+
+	@RequestMapping(value = "/read", method = RequestMethod.POST)
+	public @ResponseBody String read(@RequestParam("file") MultipartFile file, Model model) {
+		// String url ="";
+		// MultipartFile file = (MultipartFile) uploadfile;
 		StringBuffer temp = service.readFile(file);
 		String list = null;
-		if(temp!=null){
+		if (temp != null) {
 			model.addAttribute("list", list);
-		}else{
+		} else {
 			temp.append("no Text");
 		}
 		list = temp.toString();
-//		url="/bitbox/test2";
+		// url="/bitbox/test2";
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/registMinutesForm", method = { RequestMethod.POST, RequestMethod.GET })
 	public String minutes(HttpSession session, @RequestParam("group_seq") int group_seq,
 			@RequestParam("group_title") String group_title, Model model) {
@@ -530,67 +535,70 @@ public class BitBoxController {
 		}
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/minutesDownload", method = { RequestMethod.POST, RequestMethod.GET })
 	public String minutesDownload(MinutesDTO minutes, @RequestParam("group_title") String group_title, Model model) {
 		String url = "/bitbox/download";
-		//줄바꿈처리
+		// 줄바꿈처리
 		minutes.setMin_content(service.enter(minutes.getMin_content()));
 		minutes.setMin_opinion(service.enter(minutes.getMin_opinion()));
 		minutes.setMin_schedule(service.enter(minutes.getMin_schedule()));
 		minutes.setMin_decide(service.enter(minutes.getMin_decide()));
 		minutes.setMin_prepare(service.enter(minutes.getMin_prepare()));
-		
+
 		model.addAttribute("data", minutes);
 		model.addAttribute("title", group_title);
 		return url;
 	}
-	
-	@RequestMapping(value="/gitBoard", method=RequestMethod.GET)
-	public String gitBoard(@RequestParam("title") String title){
-		System.out.println("gitBoard controller: "+title);
-		String url ="/bitbox/gitBoard";
-		
+
+	@RequestMapping(value = "/gitBoard", method = RequestMethod.GET)
+	public String gitBoard(@RequestParam("title") String title) {
+		System.out.println("gitBoard controller: " + title);
+		String url = "/bitbox/gitBoard";
+
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/myPage", method = { RequestMethod.POST, RequestMethod.GET })
-	public String myPage(HttpSession session,Model model) {
+	public String myPage(HttpSession session, Model model) {
 		String url = "/bitbox/myPage";
 		StudentDTO student = service.login((String)session.getAttribute("id"));
 		model.addAttribute("student",student);
 		String class_name = service.getClassName(student.getS_class_code());
 		model.addAttribute("class_name",class_name);
+		StudentDTO student = service.login((String) session.getAttribute("id"));
+		model.addAttribute("student", student);
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/myUpdate", method = { RequestMethod.POST, RequestMethod.GET })
-	public String myUpdate(HttpServletRequest req,@RequestParam("profile_img") MultipartFile profile_img, HttpSession session,StudentDTO dto) {
+	public String myUpdate(HttpServletRequest req, @RequestParam("profile_img") MultipartFile profile_img,
+			HttpSession session, StudentDTO dto) {
 		System.out.println("controller in");
 		String url = "";
 		String path = "C:\\dev\\image\\";
-		System.out.println("dto  : "+dto.toString());
-		System.out.println("file : "+profile_img.toString());
+		System.out.println("dto  : " + dto.toString());
+		System.out.println("file : " + profile_img.toString());
 		String fileName = profile_img.getOriginalFilename();
 		UUID uuidname = UUID.randomUUID();
 		try {
-			profile_img.transferTo(new File(path + uuidname.toString()+"_"+fileName));
+			profile_img.transferTo(new File(path + uuidname.toString() + "_" + fileName));
 			dto.setS_img(fileName);
-			dto.setS_uuid_img(uuidname.toString()+"_"+fileName);
+			dto.setS_uuid_img(uuidname.toString() + "_" + fileName);
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		boolean flag = service.myUpdate(dto);
-		if(flag){
+		if (flag) {
 			session.removeAttribute("img");
-			session.setAttribute("img", uuidname.toString()+"_"+fileName);
-			url="redirect:/bitbox/myPage";
+			session.setAttribute("img", uuidname.toString() + "_" + fileName);
+			url = "redirect:/bitbox/myPage";
 		}
-		
+
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/ganttForm", method = { RequestMethod.POST, RequestMethod.GET })
 	public String myPage(HttpSession session, @RequestParam("group_seq") int group_seq,
 			@RequestParam("group_title") String group_title, Model model) {
@@ -608,6 +616,15 @@ public class BitBoxController {
 		if (flag) {
 			url = "redirect:/bitbox/ganttForm?group_title=" + group_title + "&group_seq=" + gantt.getGroup_seq();
 		}
+		return url;
+	}
+
+	@RequestMapping(value = "/exportExcel", method = { RequestMethod.POST, RequestMethod.GET })
+	public String exportExcel(Model model, @RequestParam("data") String data,
+			@RequestParam("extension") String extension) {
+		String url = "/bitbox/export";
+		model.addAttribute("data", data);
+		model.addAttribute("extension", extension);
 		return url;
 	}
 
