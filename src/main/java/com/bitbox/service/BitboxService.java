@@ -525,6 +525,7 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		// TODO Auto-generated method stub
 		String className = dao.getClassName(s_class_code);
 		return className;
+	}
 	public ArrayList<String> getTodoList(String id) {
 		List<TodoDTO> todoList = dao.getTodoList(id);
 		ArrayList<String> list = new ArrayList<String>();

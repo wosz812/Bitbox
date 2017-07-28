@@ -470,6 +470,7 @@ public class BitboxDAO implements IBitboxDAO {
 		// TODO Auto-generated method stub
 		String className = session.selectOne(namespace+".getClassName",s_class_code);
 		return className;
+	}
 	public List<TodoDTO> todoList(TodoDTO dto) {
 		List<TodoDTO> todoList = null;
 		int aCnt = session.insert(namespace + ".addTodo", dto);
