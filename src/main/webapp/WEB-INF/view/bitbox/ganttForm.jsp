@@ -82,7 +82,7 @@ function createAUIGanttChart() {
 			editable : true, 
 			
 			// 엑셀 저장 URL
-			exportURL : "/",
+			exportURL : "/bitbox/exportExcel",
 			
 			
 			gridWidth : "43%",
