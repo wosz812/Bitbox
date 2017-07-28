@@ -114,15 +114,37 @@ margin-right:5px;
 			${username}
 			${status}
 			<a href="#" class="aaf"><span id="title"></span></a>
-
-			<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download</button></a>
-			<table class="table table-hover" id="gBlist">
-	
-			</table>
+			<div class="dropdown">
+			  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">clone or download
+			  <span class="caret"></span></button>
+			  <div class="dropdown-menu">
+				  Clone with HTTPS
+				  Use Git or checkout with SVN using the web URL.
+				  <input type="text" class="form-control" placeholder="Text input">
+				  <a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download zip</button></a>
+			  </div>
+			</div>
+			<section class="content" id="sectiongB">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+				            <div class="box-header with-border">
+				              <h3 class="box-title">${title} repository</h3>
+				            </div>
+				            <!-- /.box-header -->
+				            <div class="box-body">
+				              <table class="table table-bordered"  id="gBlist"></table>
+				            </div>
+				            <!-- /.box-body -->
+			           </div>
+		           </div>
+	           </div>
+           </section>
+          <!-- /.box -->
+          
 			<div id="myEditor"></div>
 			<div id="dragandrophandler">Drag & Drop Files Here</div>
 			<table id="status1"></table>
-			</div>
 		</div>
 		<!-- /.content-wrapper -->
 		<%@include file="controlSideBar.jsp"%> 
@@ -175,7 +197,6 @@ margin-right:5px;
 			    var items=e.originalEvent.dataTransfer.items;
 			    
 			    var p = Promise.resolve().then(function() {
-			    	//alert("pro1");
 			    	for(var i=0;i<items.length;i++){
 				    	 var item=items[i].webkitGetAsEntry();
 				    	 if(item){
@@ -183,11 +204,9 @@ margin-right:5px;
 				    	 }
 				     }
 			    }).then(function() {
-					//alert("pro2");
 					for(var pro=0;pro<promises.length;pro++){
 			    		traversefileTree(promises[pro]);
 			    		if(pro==promises.length-1){
-			    			//console.log(uploadDirs);
 							if(uploadFiles.length==0){
 								$('#status1').text("");
 								for(var d=0;d<uploadDirs.length;d++){
@@ -241,40 +260,20 @@ margin-right:5px;
 			});
 			$(document).on('click','#appendbtn',function() {
 				$('#status1').text("");
-				//console.log(treeSha);
-				//console.log(fileList);
+				
 				var fl=0;
-				 //for(var fl=0;fl<fileList.length;fl++){
-				var path=fileList[fl].fpath;
-				var content=fileList[fl].fcontent;
-				promises.push(createBlob(content,path));
-				if(fl==fileList.length-1){
-					Promise.all(promises).then(function() {
-						createFileList();
-					//clearInterval(testInterval);
-					});
-				}
-				fl++;
-					//setTimeout(createBlob(content,path), 1000);
-					//promises.push(createFileList(path,content));
-					//if(fl==fileList.length-1){
-						//Promise.all(promises).then(function() {
-							//createFileList();
-						//});
-					//}
-				//} 
-				/* var testInterval=setInterval(function() {
+				 var testInterval=setInterval(function() {
 					var path=fileList[fl].fpath;
 					var content=fileList[fl].fcontent;
-					createBlob(content,path);
+					promises.push(createBlob(content,path));
 					if(fl==fileList.length-1){
-						//Promise.all(promises).then(function() {
+						Promise.all(promises).then(function() {
 							createFileList();
 							clearInterval(testInterval);
-						//});
+						});
 					}
 					fl++;
-				},1000); */
+				},1000); 
 			}); 
 	});
 	
@@ -325,6 +324,8 @@ margin-right:5px;
 				fgetTree(treeSha);
 			});
 		};
+		
+		//github repository file Tree 얻어오기
 		var fgetTree = function(sha) {
 			$.ajax(
 					{
@@ -340,10 +341,17 @@ margin-right:5px;
 					});
 				}
 		initStart();
+		
+		//tree를 얻어온 것 테이블에 뿌려주기
 		 var getTree = function(res) {
 			$('#gBlist').text("");
 			$.each(res,function(key,object) {
-		    	var el=$('<tr><td class="fPath"><a>' + res[key].path+ '</a></td></tr>');
+				var el;
+				if(res[key].type=="tree"){
+					el=$('<tr><td  class="col-md-1"><img src="/img/directory.png"></td><td class="fPath text-left"><a>' + res[key].path+ '</a></td></tr>');
+				}else{
+					el=$('<tr><td  class="col-md-1"><img src="/img/file.png"></td><td class="fPath text-left"><a>' + res[key].path+ '</a></td></tr>');
+				}
 		    	el.click(function(){
 		    		var temp=res[key].type;
 		    		var url=res[key].url;
@@ -384,7 +392,7 @@ margin-right:5px;
 					}).done(function(response) {
 						console.log(response);
 						var temp=atob(response['content']);
-						$('#gBlist').text("");
+						//$('#sectiongB').text("");
 						YUI().use(
 		    		    		  'aui-ace-editor',
 		    		    		  function(Y) {
@@ -451,7 +459,8 @@ margin-right:5px;
 							    cnt++;
 							    //resolve(response.sha);
 							    blobList.push(response.sha);
-							    setTimeout(resolve, 3000); 
+							    //setTimeout(resolve(),1000);
+							    resolve();
 							});
 					});
 				};
