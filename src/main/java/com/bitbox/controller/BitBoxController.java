@@ -269,6 +269,8 @@ public class BitBoxController {
 			session.setAttribute("groupList", groupList);
 
 			url = "redirect:/bitbox/group";
+			String title=dto.getTitle();
+			url = "redirect:/git/gitBoard?title="+title+"&status=1";
 		}
 
 		return url;

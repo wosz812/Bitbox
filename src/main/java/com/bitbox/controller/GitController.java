@@ -23,9 +23,10 @@ public class GitController {
 	@Autowired
 	private OAuth2RestTemplate oauth2RestTemplate;
 	@RequestMapping(value = "/gitBoard", method = RequestMethod.GET)
-	public String gitBoard(@RequestParam("title") String title,HttpSession session) {
+	public String gitBoard(@RequestParam("title") String title,HttpSession session,@RequestParam(value="status",defaultValue="0") String val) {
 		System.out.println("gitBoard controller: " + title);
 		session.setAttribute("title",title);
+		session.setAttribute("status",val);
 		String url = "redirect:http://localhost:8080/login/github";
 		return url;
 	}
@@ -43,7 +44,8 @@ public class GitController {
 			model.addAttribute("token", accessToken.getValue());
 		}
 		model.addAttribute("title",session.getAttribute("title"));
-		System.out.println("gitBoard controller: " + title);
+		System.out.println("gitBoard controller: " + session.getAttribute("title"));
+		System.out.println("gitBoard controller: " + session.getAttribute("status"));
 		String url = "bitbox/gitBoard";
 		model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
 		return url;

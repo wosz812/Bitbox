@@ -112,6 +112,7 @@ margin-right:5px;
 
 			${token}
 			${username}
+			${status}
 			<a href="#" class="aaf"><span id="title"></span></a>
 
 			<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download</button></a>
@@ -145,11 +146,12 @@ margin-right:5px;
 	<script type="text/javascript">
 	var treeSha;
 	var fileList=new Array();
+	var blobList=new Array();
 	var uploadList=new Array();
 	var promises=new Array();
 	var uploadDirs=new Array();
 	var uploadFiles=new Array();
-	
+	var cnt=1;
 	$(document).ready(function()
 			{
 			var obj = $("#dragandrophandler");
@@ -238,18 +240,41 @@ margin-right:5px;
 				console.log("remove: "+uploadDirs);
 			});
 			$(document).on('click','#appendbtn',function() {
+				$('#status1').text("");
 				//console.log(treeSha);
 				//console.log(fileList);
-				for(var fl=0;fl<fileList.length;fl++){
+				var fl=0;
+				 //for(var fl=0;fl<fileList.length;fl++){
+				var path=fileList[fl].fpath;
+				var content=fileList[fl].fcontent;
+				promises.push(createBlob(content,path));
+				if(fl==fileList.length-1){
+					Promise.all(promises).then(function() {
+						createFileList();
+					//clearInterval(testInterval);
+					});
+				}
+				fl++;
+					//setTimeout(createBlob(content,path), 1000);
+					//promises.push(createFileList(path,content));
+					//if(fl==fileList.length-1){
+						//Promise.all(promises).then(function() {
+							//createFileList();
+						//});
+					//}
+				//} 
+				/* var testInterval=setInterval(function() {
 					var path=fileList[fl].fpath;
 					var content=fileList[fl].fcontent;
-					promises.push(createFileList(path,content));
+					createBlob(content,path);
 					if(fl==fileList.length-1){
-						Promise.all(promises).then(function() {
-							createTree();
-						});
+						//Promise.all(promises).then(function() {
+							createFileList();
+							clearInterval(testInterval);
+						//});
 					}
-				}
+					fl++;
+				},1000); */
 			}); 
 	});
 	
@@ -306,7 +331,7 @@ margin-right:5px;
 						url : "https://api.github.com/repos/yujiyeon/repo-test2/git/trees/"+sha,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+							xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
 						},
 						data : {}
 					}).done(function(response) {
@@ -333,7 +358,7 @@ margin-right:5px;
 		    						url : url,
 		    						type : 'GET',
 		    						beforeSend : function(xhr) {
-		    							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+		    							xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
 		    						},
 		    						data : {}
 		    					}).done(function(response) {
@@ -353,7 +378,7 @@ margin-right:5px;
 						url : url,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+							xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
 						},
 						data : {}
 					}).done(function(response) {
@@ -374,38 +399,6 @@ margin-right:5px;
 		    		    );
 					});
 		}  
-		
-		 //commit tree
-		 /* $.ajax({ 
-				url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/refs/heads/master',
-				type: 'GET',
-				beforeSend: function(xhr) { 
-					xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-				},
-				data: {}
-				})
-				.done(function(response) {
-				    console.log(response);
-				    var sha=response.object.sha;
-				    getCurrentTreeSHA(sha);
-				});
-				
-
-				var getCurrentTreeSHA = function(sha) {
-					api_url = "https://api.github.com/repos/yujiyeon/repo-test2/git/commits/"+ sha;
-					$.ajax(
-							{
-								url : api_url,
-								type : 'GET',
-								beforeSend : function(xhr) {
-									xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-								},
-								data : {}
-							}).done(function(response) {
-						console.log(response);
-						treeSha = response.tree.sha;
-					});
-				}; */
 				var traversefileTree = function(item, path) {
 					path = path || "";
 					if (item.isFile) {
@@ -439,8 +432,8 @@ margin-right:5px;
 						})
 					}
 				};
-
-				var createBlob = function(content) {
+				
+				var createBlob = function(content,path) {
 					var filecontent = content;
 					var filedata = JSON.stringify({"content":""+filecontent+"","encoding":"UTF-8"});
 					return new Promise(function(resolve, reject) {
@@ -453,34 +446,53 @@ margin-right:5px;
 							data: filedata
 							})
 							.done(function(response) {
+								console.log("cnt: "+cnt+"+ "+path);
 							    console.log(response);
-							    resolve(response.sha);
+							    cnt++;
+							    //resolve(response.sha);
+							    blobList.push(response.sha);
+							    setTimeout(resolve, 3000); 
 							});
 					});
 				};
 
-				var createFileList = function(path,content) {
+				var createFile = function(path,bsha) {
 					return new Promise(function(resolve, reject) {
 						var blob_sha;
-						createBlob(content)
-						.then(function (text) {
+						//createBlob(content)
+						//.then(function (text) {
 							//console.log(text);
 							uploadList.push({
-								sha:text,
+								sha:bsha,
 								path:path,
 								mode:"100644",
 								type:"blob"
 							});
-							resolve(uploadList);
-						});
+							resolve();
+						//});
 					});
+				};
+				
+				var createFileList = function() {
+					//return new Promise(function(resolve, reject) {
+						for(var fl=0;fl<fileList.length;fl++){
+							var path=fileList[fl].fpath;
+							var blob=blobList[fl];
+							promises.push(createFile(path,blob));
+							if(fl==fileList.length-1){
+								Promise.all(promises).then(function() {
+									createTree();
+								});
+							}
+						}
+					//});
 				};
 				function createTree(){
 					return $.ajax({ 
 						   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/trees',
 						   type: 'POST',
 						   beforeSend: function(xhr) { 
-							   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+							   xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
 						   },
 						   data: JSON.stringify({"tree":uploadList,"base_tree":treeSha})
 						}).done(function(response) {
