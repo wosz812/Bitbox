@@ -31,6 +31,7 @@ public class BitboxDAO implements IBitboxDAO {
 
 	private static final String namespace = "com.bitbox.bitboxMapper";
 	private static final String login = "com.bitbox.loginMapper";
+	private static final String git = "com.bitbox.gitMapper";
 	private static final Logger logger = LoggerFactory.getLogger(BitboxDAO.class);
 
 	@Override
@@ -504,6 +505,23 @@ public class BitboxDAO implements IBitboxDAO {
 			flag = true;
 		}
 		return flag;
+	}
+
+	@Override
+	public boolean gitMasterUpdate(GroupDTO dto) {
+		// TODO Auto-generated method stub
+		boolean flag=false;
+		int aCnt = session.update(git + ".masterId", dto);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public GroupDTO selectMasId(GroupDTO dto) {
+		GroupDTO sdto=session.selectOne(git+".selectMasId",dto);
+		return sdto;
 	}
 
 }

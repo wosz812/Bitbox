@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitbox.dto.GroupDTO;
+import com.bitbox.service.IBitboxService;
+
 @RequestMapping(value = "/git")
 
 @Controller
@@ -22,6 +25,10 @@ public class GitController {
 	
 	@Autowired
 	private OAuth2RestTemplate oauth2RestTemplate;
+	
+	@Autowired
+	private IBitboxService service;
+	
 	@RequestMapping(value = "/gitBoard", method = RequestMethod.GET)
 	public String gitBoard(@RequestParam("title") String title,HttpSession session,@RequestParam(value="status",defaultValue="0") String val) {
 		System.out.println("gitBoard controller: " + title);
@@ -43,10 +50,28 @@ public class GitController {
 //			model.addAttribute("token", details.getTokenValue());
 			model.addAttribute("token", accessToken.getValue());
 		}
+		int status=Integer.parseInt((String) session.getAttribute("status"));
+		String url="";
+		String gtitle=(String) session.getAttribute("title");
+		//master id 삽입 => repository 생성하기 위한 masterid
+		if(status==1){
+			String masId=SecurityContextHolder.getContext().getAuthentication().getName();
+			GroupDTO gdto=new GroupDTO();
+			gdto.setTitle(gtitle);
+			gdto.setMaster_id(masId);
+			boolean flag=service.gitMasterUpdate(gdto);
+			if(flag){
+				url = "bitbox/gitBoard";
+			}
+		}else if(status==0){ //생성된 repos에 member 초대하기
+			GroupDTO gdto=new GroupDTO();
+			gdto.setTitle(gtitle);
+			GroupDTO sdto=service.selectMasId(gdto);
+			String masId=sdto.getMaster_id();
+			model.addAttribute("masId",masId);
+			url = "bitbox/gitBoard";
+		}
 		model.addAttribute("title",session.getAttribute("title"));
-		System.out.println("gitBoard controller: " + session.getAttribute("title"));
-		System.out.println("gitBoard controller: " + session.getAttribute("status"));
-		String url = "bitbox/gitBoard";
 		model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
 		return url;
 	}

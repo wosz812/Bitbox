@@ -78,7 +78,8 @@ create table cgroup(
   pw varchar(200) not null,
   title varchar(100)not null,
   info varchar(100),
-  s_id varchar(100)not null
+  s_id varchar(100)not null,
+  master_id varchar(100)
   CONSTRAINT student_s_id_fk1 REFERENCES student(s_id)
 );
 

@@ -312,6 +312,12 @@ public class BitBoxController {
 			session.removeAttribute("groupList");
 			List<GroupDTO> groupList = service.getGroupList(id);
 			session.setAttribute("groupList", groupList);
+			String title=group.getTitle();
+			System.out.println("group in title: "+title);
+			url = "redirect:/git/gitBoard?title="+title;
+		}else{
+			model.addAttribute("state", state);
+			url = "redirect:/bitbox/group?state=" + state;
 		}
 
 		// System.out.println(state);
@@ -321,8 +327,7 @@ public class BitBoxController {
 		 * }else{ //state==2 System.out.println("비밀번호 오류입니다.");
 		 * url="redirect:/bitbox/group"; }
 		 */
-		model.addAttribute("state", state);
-		url = "redirect:/bitbox/group?state=" + state;
+		
 		// System.out.println("groupJoin: "+id);
 		return url;
 	}

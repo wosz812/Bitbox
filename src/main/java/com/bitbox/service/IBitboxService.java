@@ -130,4 +130,8 @@ public interface IBitboxService {
 	public boolean deleteAll(String id);
 
 	public boolean deleteLine(int seq);
+	
+	public boolean gitMasterUpdate(GroupDTO dto);
+	
+	public GroupDTO selectMasId(GroupDTO dto);
 }

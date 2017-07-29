@@ -566,4 +566,16 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		boolean flag = dao.deleteLine(seq);
 		return flag;
 	}
+
+	@Override
+	public boolean gitMasterUpdate(GroupDTO dto) {
+		boolean flag=dao.gitMasterUpdate(dto);
+		return flag;
+	}
+
+	@Override
+	public GroupDTO selectMasId(GroupDTO dto) {
+		GroupDTO sdto=dao.selectMasId(dto);
+		return sdto;
+	}
 }

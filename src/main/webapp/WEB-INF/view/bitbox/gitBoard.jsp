@@ -174,6 +174,44 @@ margin-right:5px;
 	var uploadDirs=new Array();
 	var uploadFiles=new Array();
 	var cnt=1;
+	
+	//create repository
+	var createRepos = function() {
+		var reposdata = '{"name":"${title}","description":"repo create from ajax test","homepage": "https://sample.com","auto_init":true}';
+		console.log(reposdata);
+		 $.ajax({ 
+		    url: 'https://api.github.com/user/repos',
+		    type: 'POST',
+		    beforeSend: function(xhr) { 
+		    	xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
+		    },
+		    data: reposdata
+		}).done(function(response) {
+		    console.log(response);
+		});
+	}
+	
+	//Add Collaborators ==> ** 여기서 member githubid를 받아와야 하는데 그러려면 처음부터 초대하려는 멤버들의 깃허브 id 있어야함.
+	var addCollaborator = function() {
+		apiUrl="https://api.github.com/repos/${masId}/${title}/collaborators/${username}";
+		$.ajax({ 
+		    url: apiUrl,
+		    type: 'PUT',
+		    
+		     beforeSend: function(xhr) { 
+		    	 xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
+		        xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+		    }  , 
+		    data: {}
+		}).done(function(response) {
+		    console.log(response);
+		});
+	}
+	if(${status}==1){
+		createRepos();
+	}else if(${status}==0){
+		addCollaborator();
+	}
 	$(document).ready(function()
 			{
 			var obj = $("#dragandrophandler");
@@ -278,7 +316,7 @@ margin-right:5px;
 	});
 	
 	//title 얻어오기
- 	$.ajax({ 
+ 	/* $.ajax({ 
 	
 		 url: 'https://api.github.com/repos/wosz812/Bitbox',
 		 type: 'GET',
@@ -289,7 +327,7 @@ margin-right:5px;
 		}).done(function(response) {
 		    console.log(response);
 		    $("#title").html(response["full_name"]);
-	});	
+	});	 */
 	
 	var initStart = function() {
 		$.ajax({ 
@@ -340,7 +378,7 @@ margin-right:5px;
 					    getTree(response.tree);
 					});
 				}
-		initStart();
+		//initStart();
 		
 		//tree를 얻어온 것 테이블에 뿌려주기
 		 var getTree = function(res) {

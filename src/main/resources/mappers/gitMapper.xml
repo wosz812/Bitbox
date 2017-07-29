@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitbox.gitMapper">
+	<update id="masterId" parameterType="com.bitbox.dto.GroupDTO">
+		update cgroup set
+		master_id = #{master_id} where
+		title=#{title}
+	</update>
+	
+	<select id="selectMasId" parameterType="com.bitbox.dto.GroupDTO" resultType="com.bitbox.dto.GroupDTO">
+		select master_id from cgroup where
+		title=#{title}
+	</select>
+</mapper>

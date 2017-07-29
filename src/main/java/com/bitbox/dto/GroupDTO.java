@@ -6,6 +6,9 @@ public class GroupDTO {
 	private String title;
 	private String info;
 	private String s_id;
+	private String master_id;
+	
+	
 
 	public int getGroup_seq() {
 		return group_seq;
@@ -46,10 +49,18 @@ public class GroupDTO {
 	public void setS_id(String s_id) {
 		this.s_id = s_id;
 	}
+	public String getMaster_id() {
+		return master_id;
+	}
+
+	public void setMaster_id(String master_id) {
+		this.master_id = master_id;
+	}
 
 	@Override
 	public String toString() {
-		return "group_seq=" + group_seq + ", pw=" + pw + ", title=" + title + ", info=" + info + ", s_id=" + s_id;
+		return "GroupDTO [group_seq=" + group_seq + ", pw=" + pw + ", title=" + title + ", info=" + info + ", s_id="
+				+ s_id + ", master_id=" + master_id + "]";
 	}
 
 }
