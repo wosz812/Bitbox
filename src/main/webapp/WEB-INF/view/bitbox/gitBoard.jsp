@@ -118,17 +118,20 @@ margin-right:5px;
 		    	<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 		    </div>
 		    <div v-show="!currentComponent">
+		    <div class="dropdown">
+		    <div class="btn-group" style="float:right; margin-right:20px;">
 		       <button class="btn btn-primary" @click="swapComponent(component)"  id="upfile">{{component}}</button>
-		       <div class="dropdown">
-			  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">clone or download
-			  <span class="caret"></span></button>
+		       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">clone or download
+			  <span class="caret"></span></button>  
 			  <div class="dropdown-menu">
 				  Clone with HTTPS
 				  Use Git or checkout with SVN using the web URL.
 				  <input type="text" class="form-control" placeholder="Text input">
 				  <a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download zip</button></a>
 			  </div>
+			  </div>
 			</div>
+			
 		      <section class="content" id="sectiongB">
 				<div class="row">
 					<div class="col-xs-12">
