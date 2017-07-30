@@ -107,14 +107,19 @@ margin-right:5px;
 		<%@include file="sidebar.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-
 			<a href="/git/gitBoardView" class="aaf"><span id="title"></span></a>
-
 			${token}
 			${username}
 			${status}
-			<a href="#" class="aaf"><span id="title"></span></a>
-			<div class="dropdown">
+			<div id="toReplace">
+		    <div :is="currentComponent">
+		    	<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
+		    	<table id="status1"></table>
+		    	<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
+		    </div>
+		    <div v-show="!currentComponent">
+		       <button class="btn btn-primary" @click="swapComponent(component)"  id="upfile">{{component}}</button>
+		       <div class="dropdown">
 			  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">clone or download
 			  <span class="caret"></span></button>
 			  <div class="dropdown-menu">
@@ -124,7 +129,7 @@ margin-right:5px;
 				  <a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download zip</button></a>
 			  </div>
 			</div>
-			<section class="content" id="sectiongB">
+		      <section class="content" id="sectiongB">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -133,18 +138,22 @@ margin-right:5px;
 				            </div>
 				            <!-- /.box-header -->
 				            <div class="box-body">
-				              <table class="table table-bordered"  id="gBlist"></table>
+				              <table class="table table-bordered">
+						      	<tr v-for="row in rows">
+						      		<td><img v-bind:src=row.src></td>
+						      		<td><a v-on:click="gitClick(row.type,row.path,row.url)">{{row.path}}</a></td>
+						    	</tr>
+						      </table>
 				            </div>
 				            <!-- /.box-body -->
 			           </div>
 		           </div>
 	           </div>
            </section>
-          <!-- /.box -->
-          
-			<div id="myEditor"></div>
-			<div id="dragandrophandler">Drag & Drop Files Here</div>
-			<table id="status1"></table>
+		      <div id="myEditor"></div>
+		    </div>
+		  </div>
+			
 		</div>
 		<!-- /.content-wrapper -->
 		<%@include file="controlSideBar.jsp"%> 
@@ -165,177 +174,74 @@ margin-right:5px;
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<!-- page script -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js"></script>
 	<script type="text/javascript">
-	var treeSha;
-	var fileList=new Array();
-	var blobList=new Array();
-	var uploadList=new Array();
-	var promises=new Array();
-	var uploadDirs=new Array();
-	var uploadFiles=new Array();
-	var cnt=1;
-	
-	//create repository
-	var createRepos = function() {
-		var reposdata = '{"name":"${title}","description":"repo create from ajax test","homepage": "https://sample.com","auto_init":true}';
-		console.log(reposdata);
-		 $.ajax({ 
-		    url: 'https://api.github.com/user/repos',
-		    type: 'POST',
-		    beforeSend: function(xhr) { 
-		    	xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
-		    },
-		    data: reposdata
-		}).done(function(response) {
-		    console.log(response);
+var treeSha;
+var fileList=new Array();
+var blobList=new Array();
+var uploadList=new Array();
+var promises=new Array();
+var uploadDirs=new Array();
+var uploadFiles=new Array();
+var cnt=1;
+ $(document).ready(function()
+		{
+		var obj = $("#dragandrophandler");
+		
+		obj.on('dragover', function (e) 
+		{
+		     e.stopPropagation();
+		     e.preventDefault();
 		});
-	}
-	
-	//Add Collaborators ==> ** 여기서 member githubid를 받아와야 하는데 그러려면 처음부터 초대하려는 멤버들의 깃허브 id 있어야함.
-	var addCollaborator = function() {
-		apiUrl="https://api.github.com/repos/${masId}/${title}/collaborators/${username}";
-		$.ajax({ 
-		    url: apiUrl,
-		    type: 'PUT',
-		    
-		     beforeSend: function(xhr) { 
-		    	 xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
-		        xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
-		    }  , 
-		    data: {}
-		}).done(function(response) {
-		    console.log(response);
+		$(document).on('dragover', function (e) 
+		{
+		  e.stopPropagation();
+		  e.preventDefault();
+		  obj.css('border', '2px dotted #0B85A1');
 		});
-	}
-	if(${status}==1){
-		createRepos();
-	}else if(${status}==0){
-		addCollaborator();
-	}
-	$(document).ready(function()
-			{
-			var obj = $("#dragandrophandler");
-			obj.on('dragenter', function (e) 
-			{
-			    e.stopPropagation();
-			    e.preventDefault();
-			    $(this).css('border', '2px solid #0B85A1');
-			});
-			obj.on('dragover', function (e) 
-			{
-			     e.stopPropagation();
-			     e.preventDefault();
-			});
-			obj.on('drop', function (e) 
-			{
-			 
-			     $(this).css('border', '2px dotted #0B85A1');
-			     e.preventDefault();
-			    
-			    var items=e.originalEvent.dataTransfer.items;
-			    
-			    var p = Promise.resolve().then(function() {
-			    	for(var i=0;i<items.length;i++){
-				    	 var item=items[i].webkitGetAsEntry();
-				    	 if(item){
-				    		 promises.push(item);
-				    	 }
-				     }
-			    }).then(function() {
-					for(var pro=0;pro<promises.length;pro++){
-			    		traversefileTree(promises[pro]);
-			    		if(pro==promises.length-1){
-							if(uploadFiles.length==0){
-								$('#status1').text("");
-								for(var d=0;d<uploadDirs.length;d++){
-									$('#status1').append('<tr><td>' + uploadDirs[d]+ '</a></td><td class="rDid" data-val="'+uploadDirs[d]+'"><span class="glyphicon glyphicon-remove"></td></tr>');
-								}
-							}
-							else{
-								$('#status1').text("");
-								for(var d=0;d<uploadFiles.length;d++){
-									$('#status1').append('<tr><td>' + uploadFiles[d]+ '</a></td><td class="rid" data-val="'+uploadFiles[d]+'"><span class="glyphicon glyphicon-remove"></td></tr>');
-								}
-							}
-							$('#status1').append('<input type="button" id="appendbtn" class="btn btn-primary" value="Commit" />');
-			    		}
-					}
-			    });
-			});
-			$(document).on('dragenter', function (e) 
-			{
-			    e.stopPropagation();
-			    e.preventDefault();
-			});
-			$(document).on('dragover', function (e) 
-			{
-			  e.stopPropagation();
-			  e.preventDefault();
-			  obj.css('border', '2px dotted #0B85A1');
-			});
-			$(document).on('drop', function (e) 
-			{
-			    e.stopPropagation();
-			    e.preventDefault();
-			});
-			$(document).on('click','.rid',function() {
-				var value=$(this).attr("data-val");
-				 $(this).parent().remove();
-				var index = uploadFiles.indexOf(value);
-				if (index > -1) {
-					uploadFiles.splice(index, 1);
+		$(document).on('click','.rid',function() {
+			var value=$(this).attr("data-val");
+			 $(this).parent().remove();
+			var index = uploadFiles.indexOf(value);
+			if (index > -1) {
+				uploadFiles.splice(index, 1);
+			}
+			console.log("remove: "+uploadFiles);
+		});
+		$(document).on('click','.rDid',function() {
+			var value=$(this).attr("data-val");
+			 $(this).parent().remove();
+			var index = uploadDirs.indexOf(value);
+			if (index > -1) {
+				uploadDirs.splice(index, 1);
+			}
+			console.log("remove: "+uploadDirs);
+		});
+		$(document).on('click','#appendbtn',function() {
+			$('#status1').text("");
+			
+			var fl=0;
+			 var testInterval=setInterval(function() {
+				var path=fileList[fl].fpath;
+				var content=fileList[fl].fcontent;
+				promises.push(createBlob(content,path));
+				if(fl==fileList.length-1){
+					Promise.all(promises).then(function() {
+						createFileList();
+						clearInterval(testInterval);
+					});
 				}
-				console.log("remove: "+uploadFiles);
-			});
-			$(document).on('click','.rDid',function() {
-				var value=$(this).attr("data-val");
-				 $(this).parent().remove();
-				var index = uploadDirs.indexOf(value);
-				if (index > -1) {
-					uploadDirs.splice(index, 1);
-				}
-				console.log("remove: "+uploadDirs);
-			});
-			$(document).on('click','#appendbtn',function() {
-				$('#status1').text("");
-				
-				var fl=0;
-				 var testInterval=setInterval(function() {
-					var path=fileList[fl].fpath;
-					var content=fileList[fl].fcontent;
-					promises.push(createBlob(content,path));
-					if(fl==fileList.length-1){
-						Promise.all(promises).then(function() {
-							createFileList();
-							clearInterval(testInterval);
-						});
-					}
-					fl++;
-				},1000); 
-			}); 
-	});
-	
-	//title 얻어오기
- 	/* $.ajax({ 
-	
-		 url: 'https://api.github.com/repos/wosz812/Bitbox',
-		 type: 'GET',
-		    
-		  beforeSend: function(xhr) { 
-		    }  , 
-		    data: {}
-		}).done(function(response) {
-		    console.log(response);
-		    $("#title").html(response["full_name"]);
-	});	 */
-	
-	var initStart = function() {
+				fl++;
+			},1000); 
+		}); 
+}); 
+ var initStart = function() {
 		$.ajax({ 
 	
 		url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/refs/heads/master',
 		type: 'GET',
 		beforeSend: function(xhr) { 
-			xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
+			xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26")); 
 		},
 		data: {}
 		})
@@ -353,7 +259,7 @@ margin-right:5px;
 						url : api_url,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
 						},
 						data : {}
 					}).done(function(response) {
@@ -370,7 +276,7 @@ margin-right:5px;
 						url : "https://api.github.com/repos/yujiyeon/repo-test2/git/trees/"+sha,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
+							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
 						},
 						data : {}
 					}).done(function(response) {
@@ -378,42 +284,29 @@ margin-right:5px;
 					    getTree(response.tree);
 					});
 				}
-		//initStart();
+		
 		
 		//tree를 얻어온 것 테이블에 뿌려주기
 		 var getTree = function(res) {
 			$('#gBlist').text("");
 			$.each(res,function(key,object) {
-				var el;
+				var el=new Object();
 				if(res[key].type=="tree"){
-					el=$('<tr><td  class="col-md-1"><img src="/img/directory.png"></td><td class="fPath text-left"><a>' + res[key].path+ '</a></td></tr>');
+					el={
+							src:"/img/directory.png",
+							path:res[key].path,
+							type:res[key].type,
+							url:res[key].url
+					}
 				}else{
-					el=$('<tr><td  class="col-md-1"><img src="/img/file.png"></td><td class="fPath text-left"><a>' + res[key].path+ '</a></td></tr>');
+					el={
+							src:"/img/file.png",
+							path:res[key].path,
+							type:res[key].type,
+							url:res[key].url
+					}
 				}
-		    	el.click(function(){
-		    		var temp=res[key].type;
-		    		var url=res[key].url;
-		    		var path=res[key].path;
-		    		if(temp=="blob"){
-		    			getblobContent(path,url);
-		    		}
-		    		else{
-		    			$('#gBlist').text("");
-		    			$.ajax(
-		    					{
-		    						url : url,
-		    						type : 'GET',
-		    						beforeSend : function(xhr) {
-		    							xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
-		    						},
-		    						data : {}
-		    					}).done(function(response) {
-		    						console.log(response);
-		    						getTree(response.tree);
-		    					});
-		    		}
-		    	})
-		    	$('#gBlist').append(el);
+				toReplace.rows.push(el);
 		    });
 		} 
 		 var getblobContent= function(path,url){
@@ -424,13 +317,12 @@ margin-right:5px;
 						url : url,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
+							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
 						},
 						data : {}
 					}).done(function(response) {
 						console.log(response);
 						var temp=atob(response['content']);
-						//$('#sectiongB').text("");
 						YUI().use(
 		    		    		  'aui-ace-editor',
 		    		    		  function(Y) {
@@ -445,141 +337,222 @@ margin-right:5px;
 		    		    );
 					});
 		}  
-				var traversefileTree = function(item, path) {
-					path = path || "";
-					if (item.isFile) {
-						uploadFiles.push(path + item.name);
-						item.file(function(file) {
-							var r = new FileReader();
-							r.onload = function(e) {
-								var contents = e.target.result;
-								var tpath = path + item.name;
-								fileList.push({
-									fpath : tpath,
-									fcontent : contents
-								});
-							}
-							r.readAsText(file);
-						});
+		
+  var toReplace =  new Vue({
+	  el: '#toReplace',
+	  data: {
+	    currentComponent: null,
+	    component: 'upload files',
+	    rows: [{src:"",path:"",type:"",url:""}]
+	  },
+	  components: {
+	    'upload files': {
+	     template: ''
+	    }
+	  },
+	  created: function() {
 
-					} else if (item.isDirectory) {
-						var dirReader = item.createReader();
-						uploadDirs.push(item.fullPath);
-						dirReader.readEntries(function(entries) {
-							for (var i = 0; i < entries.length; i++) {
-								promises.push(traversefileTree(entries[i], path + item.name
-										+ "/"));
-								if (i == entries.length - 1) {
-									return Promise.all(promises).then(function() {
+	        this.fetchEventsList();
+	  },
+	  methods: {
+	    swapComponent: function(component)
+	    {
+	    	console.log(component);
+	      this.currentComponent = component;
+	    },
+	    fetchEventsList: function() {
+        	initStart();
 
-									});
-								}
-							}
-						})
-					}
-				};
-				
-				var createBlob = function(content,path) {
-					var filecontent = content;
-					var filedata = JSON.stringify({"content":""+filecontent+"","encoding":"UTF-8"});
-					return new Promise(function(resolve, reject) {
-						$.ajax({ 
-							url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/blobs',
-							type: 'POST',
-							beforeSend: function(xhr) { 
-								xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
-							},
-							data: filedata
-							})
-							.done(function(response) {
-								console.log("cnt: "+cnt+"+ "+path);
-							    console.log(response);
-							    cnt++;
-							    //resolve(response.sha);
-							    blobList.push(response.sha);
-							    //setTimeout(resolve(),1000);
-							    resolve();
-							});
-					});
-				};
-
-				var createFile = function(path,bsha) {
-					return new Promise(function(resolve, reject) {
-						var blob_sha;
-						//createBlob(content)
-						//.then(function (text) {
-							//console.log(text);
-							uploadList.push({
-								sha:bsha,
-								path:path,
-								mode:"100644",
-								type:"blob"
-							});
-							resolve();
-						//});
-					});
-				};
-				
-				var createFileList = function() {
-					//return new Promise(function(resolve, reject) {
-						for(var fl=0;fl<fileList.length;fl++){
-							var path=fileList[fl].fpath;
-							var blob=blobList[fl];
-							promises.push(createFile(path,blob));
-							if(fl==fileList.length-1){
-								Promise.all(promises).then(function() {
-									createTree();
-								});
+        },
+      	gitClick: function(type,path,url){
+      		if(type==="blob"){
+    			getblobContent(path,url);
+    		}
+    		else{
+    			this.rows=[];
+    			$.ajax(
+    					{
+    						url : url,
+    						type : 'GET',
+    						beforeSend : function(xhr) {
+    							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26")); 
+    						},
+    						data : {}
+    					}).done(function(response) {
+    						console.log(response);
+    						getTree(response.tree);
+    					});
+    		}
+      	},
+      	onDrop: function(e){
+      		alert("drop");
+      		//alert(e.target);
+      		 $("#dragandrophandler").css('border', '2px dotted #0B85A1');
+		     e.preventDefault(); 
+		     
+		    var items=e.dataTransfer.items;
+		    
+		     var p = Promise.resolve().then(function() {
+		    	for(var i=0;i<items.length;i++){
+			    	 var item=items[i].webkitGetAsEntry();
+			    	 if(item){
+			    		 promises.push(item);
+			    	 }
+			     }
+		    }).then(function() {
+				for(var pro=0;pro<promises.length;pro++){
+		    		traversefileTree(promises[pro]);
+		    		if(pro==promises.length-1){
+						if(uploadFiles.length==0){
+							$('#status1').text("");
+							for(var d=0;d<uploadDirs.length;d++){
+								$('#status1').append('<tr><td>' + uploadDirs[d]+ '</a></td><td class="rDid" data-val="'+uploadDirs[d]+'"><span class="glyphicon glyphicon-remove"></td></tr>');
 							}
 						}
-					//});
-				};
-				function createTree(){
-					return $.ajax({ 
-						   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/trees',
-						   type: 'POST',
-						   beforeSend: function(xhr) { 
-							   xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
-						   },
-						   data: JSON.stringify({"tree":uploadList,"base_tree":treeSha})
-						}).done(function(response) {
-								console.log("finish");
-							    console.log(response);
-							    var cmsha=response.sha;
-							    console.log(cmsha);
-							    createCommit(cmsha);
-						});
-					} 
-					
-				function createCommit(tree_sha){
-					var commit_data= JSON.stringify({"message":"file upload branch","tree":""+tree_sha+""});
-					$.ajax({ 
-					   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/commits',
-					   type: 'POST',
-					   beforeSend: function(xhr) { 
-						   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-					   },
-					   data: commit_data
-					}).done(function(response) {
-						    console.log(response);
-						    patch_repos(response.sha);
+						else{
+							$('#status1').text("");
+							for(var d=0;d<uploadFiles.length;d++){
+								$('#status1').append('<tr><td>' + uploadFiles[d]+ '</a></td><td class="rid" data-val="'+uploadFiles[d]+'"><span class="glyphicon glyphicon-remove"></td></tr>');
+							}
+						}
+						$('#status1').append('<input type="button" id="appendbtn" class="btn btn-primary" value="Commit" />');
+		    		}
+				}
+		    }); 
+      	}
+	  }
+	})
+  
+  var traversefileTree = function(item, path) {
+		path = path || "";
+		if (item.isFile) {
+			uploadFiles.push(path + item.name);
+			item.file(function(file) {
+				var r = new FileReader();
+				r.onload = function(e) {
+					var contents = e.target.result;
+					var tpath = path + item.name;
+					fileList.push({
+						fpath : tpath,
+						fcontent : contents
 					});
 				}
+				r.readAsText(file);
+			});
 
-				function patch_repos(sha){
-					$.ajax({ 
-					   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/refs/heads/master',
-					   type: 'PATCH',
-					   beforeSend: function(xhr) { 
-						   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-					   },
-					   data: JSON.stringify({"sha":sha,"force":true})
-					}).done(function(response) {
-						    console.log(response);
+		} else if (item.isDirectory) {
+			var dirReader = item.createReader();
+			uploadDirs.push(item.fullPath);
+			dirReader.readEntries(function(entries) {
+				for (var i = 0; i < entries.length; i++) {
+					promises.push(traversefileTree(entries[i], path + item.name
+							+ "/"));
+					if (i == entries.length - 1) {
+						return Promise.all(promises).then(function() {
+
+						});
+					}
+				}
+			})
+		}
+	};
+	
+	var createBlob = function(content,path) {
+		var filecontent = content;
+		var filedata = JSON.stringify({"content":""+filecontent+"","encoding":"UTF-8"});
+		return new Promise(function(resolve, reject) {
+			$.ajax({ 
+				url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/blobs',
+				type: 'POST',
+				beforeSend: function(xhr) { 
+					xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+				},
+				data: filedata
+				})
+				.done(function(response) {
+					console.log("cnt: "+cnt+"+ "+path);
+				    console.log(response);
+				    cnt++;
+				    //resolve(response.sha);
+				    blobList.push(response.sha);
+				    //setTimeout(resolve(),1000);
+				    resolve();
+				});
+		});
+	};
+
+	var createFile = function(path,bsha) {
+		return new Promise(function(resolve, reject) {
+			var blob_sha;
+				uploadList.push({
+					sha:bsha,
+					path:path,
+					mode:"100644",
+					type:"blob"
+				});
+				resolve();
+		});
+	};
+	
+	var createFileList = function() {
+		//return new Promise(function(resolve, reject) {
+			for(var fl=0;fl<fileList.length;fl++){
+				var path=fileList[fl].fpath;
+				var blob=blobList[fl];
+				promises.push(createFile(path,blob));
+				if(fl==fileList.length-1){
+					Promise.all(promises).then(function() {
+						createTree();
 					});
 				}
-	
-	</script>
+			}
+		//});
+	};
+	function createTree(){
+		return $.ajax({ 
+			   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/trees',
+			   type: 'POST',
+			   beforeSend: function(xhr) { 
+				   xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+			   },
+			   data: JSON.stringify({"tree":uploadList,"base_tree":treeSha})
+			}).done(function(response) {
+					console.log("finish");
+				    console.log(response);
+				    var cmsha=response.sha;
+				    console.log(cmsha);
+				    createCommit(cmsha);
+			});
+		} 
+		
+	function createCommit(tree_sha){
+		var commit_data= JSON.stringify({"message":"file upload branch","tree":""+tree_sha+""});
+		$.ajax({ 
+		   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/commits',
+		   type: 'POST',
+		   beforeSend: function(xhr) { 
+			   xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+		   },
+		   data: commit_data
+		}).done(function(response) {
+			    console.log(response);
+			    patch_repos(response.sha);
+		});
+	}
+
+	function patch_repos(sha){
+		$.ajax({ 
+		   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/refs/heads/master',
+		   type: 'PATCH',
+		   beforeSend: function(xhr) { 
+			   xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+		   },
+		   data: JSON.stringify({"sha":sha,"force":true})
+		}).done(function(response) {
+			    console.log(response);
+		});
+	}
+</script>
 
 </body>
 </html>
