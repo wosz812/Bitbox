@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.StudentDTO;
 import com.bitbox.service.IBitboxService;
 
 @RequestMapping(value = "/git")
@@ -53,26 +54,15 @@ public class GitController {
 		int status=Integer.parseInt((String) session.getAttribute("status"));
 		String url="";
 		String gtitle=(String) session.getAttribute("title");
-		//master id 삽입 => repository 생성하기 위한 masterid
-		if(status==1){
-			String masId=SecurityContextHolder.getContext().getAuthentication().getName();
-			GroupDTO gdto=new GroupDTO();
-			gdto.setTitle(gtitle);
-			gdto.setMaster_id(masId);
-			boolean flag=service.gitMasterUpdate(gdto);
-			if(flag){
-				url = "bitbox/gitBoard";
-			}
-		}else if(status==0){ //생성된 repos에 member 초대하기
-			/*GroupDTO gdto=new GroupDTO();
-			gdto.setTitle(gtitle);
-			GroupDTO sdto=service.selectMasId(gdto);
-			String masId=sdto.getMaster_id();
-			model.addAttribute("masId",masId);*/
-			url = "bitbox/gitBoard";
-		}
+		StudentDTO sdto=service.getMasInfo(gtitle);
+		String masId=sdto.getGit_id();
+		String masPw=sdto.getGit_pw();
+		
+		model.addAttribute("masId",masId);
+		model.addAttribute("masPw",masPw);
 		model.addAttribute("title",session.getAttribute("title"));
 		model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
+		url = "bitbox/gitBoard";
 		return url;
 	}
 }

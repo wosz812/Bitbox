@@ -8,8 +8,8 @@
 			select s_seq.nextval from dual
 		</selectKey>
 		insert into
-		student(s_id,s_img,s_uuid_img,s_seq,s_pw,s_name,s_email,s_phone,s_class_code)
-		values(#{s_id},#{s_img},#{s_uuid_img},#{s_seq},#{s_pw},#{s_name},#{s_email},#{s_phone},#{s_class_code})
+		student(s_id,s_img,s_uuid_img,s_seq,s_pw,s_name,s_email,s_phone,s_class_code,git_id,git_pw)
+		values(#{s_id},#{s_img},#{s_uuid_img},#{s_seq},#{s_pw},#{s_name},#{s_email},#{s_phone},#{s_class_code},#{git_id},#{git_pw})
 	</insert>
 
 	<select id="login" parameterType="String" resultType="com.bitbox.dto.StudentDTO">

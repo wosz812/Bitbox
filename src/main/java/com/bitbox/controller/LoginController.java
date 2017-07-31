@@ -105,6 +105,7 @@ public class LoginController {
       student.setS_img("default.png");
       student.setS_uuid_img("default.png");
       /////////////////////////////////////////
+      System.out.println("loginController: "+student);
       boolean flag = service.studentRegist(student);
       if (flag) {
 		try {

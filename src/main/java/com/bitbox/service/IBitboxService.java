@@ -138,4 +138,6 @@ public interface IBitboxService {
 	public MinutesDTO getRecentMinutes(int group_seq);
 
 	public String getGroupTitle(int group_seq);
+	public StudentDTO getMasInfo(String title);
+
 }

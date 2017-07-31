@@ -568,14 +568,9 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 	}
 
 	@Override
-	public boolean gitMasterUpdate(GroupDTO dto) {
-		boolean flag=dao.gitMasterUpdate(dto);
-		return flag;
-	}
-
-	@Override
-	public GroupDTO selectMasId(GroupDTO dto) {
-		GroupDTO sdto=dao.selectMasId(dto);
+	public StudentDTO getMasInfo(String title) {
+		// TODO Auto-generated method stub
+		StudentDTO sdto=dao.getMasInfo(title);
 		return sdto;
 	public MinutesDTO getRecentMinutes(int group_seq) {
 		// TODO Auto-generated method stub
@@ -589,4 +584,5 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		String group_title = dao.getGroupTitle(group_seq);
 		return group_title;
 	}
+
 }

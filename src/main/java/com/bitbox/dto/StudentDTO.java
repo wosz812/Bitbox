@@ -8,6 +8,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class StudentDTO implements UserDetails {
+	public String getGit_id() {
+		return git_id;
+	}
+	public void setGit_id(String git_id) {
+		this.git_id = git_id;
+	}
+	public String getGit_pw() {
+		return git_pw;
+	}
+	public void setGit_pw(String git_pw) {
+		this.git_pw = git_pw;
+	}
 	private String s_id;
 	private String s_img;
 	private String s_uuid_img;
@@ -17,14 +29,19 @@ public class StudentDTO implements UserDetails {
 	private String s_name;
 	private int s_phone;
 	private int s_class_code;
+	private String git_id;
+	private String git_pw;
 	
 	private List<GroupDTO> group = new ArrayList<GroupDTO>();
 	
 	
+	
 	@Override
 	public String toString() {
-		return "StudentDTO [s_id=" + s_id + ", s_seq=" + s_seq + ", s_pw=" + s_pw + ", s_email=" + s_email
-				+ ", s_name=" + s_name + ", s_phone=" + s_phone + ", s_class_code=" + s_class_code + "]";
+		return "StudentDTO [s_id=" + s_id + ", s_img=" + s_img + ", s_uuid_img=" + s_uuid_img + ", s_seq=" + s_seq
+				+ ", s_pw=" + s_pw + ", s_email=" + s_email + ", s_name=" + s_name + ", s_phone=" + s_phone
+				+ ", s_class_code=" + s_class_code + ", git_id=" + git_id + ", git_pw=" + git_pw + ", group=" + group
+				+ "]";
 	}
 	public String getS_email() {
 		return s_email;

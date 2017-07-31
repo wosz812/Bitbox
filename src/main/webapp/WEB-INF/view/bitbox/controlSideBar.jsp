@@ -1,7 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
       <footer class="main-footer">
          <div class="pull-right hidden-xs">
             <b>Version</b> 2.3.8
@@ -185,4 +181,3 @@
       <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
-</html>
