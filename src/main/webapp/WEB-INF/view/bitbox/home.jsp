@@ -27,45 +27,47 @@
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-	
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
- <style type="text/css">
- 	#graph{
- 		width:50px;
- 		height:100px;
- 	
- 	}
- 	#sales-chart3{
- 		
- 		
- 	}
- 	#sales-chart{
- 		
- 		margin-left: 20px;
- 	}
- 	#sales-chart2{
- 		
- 		
- 	}
- 	#slide{
- 		margin-top:-10px;
- 	}
- 	.btn{
- 		text-align:right;
- 	}
- 	.btn-item{
- 		width:80%;
- 	}
- 	.inp{
- 		width:65%;
- 	}
- 	
- </style>
+<style type="text/css">
+#graph {
+	width: 50px;
+	height: 100px;
+}
+
+#sales-chart3 {
+	
+}
+
+#sales-chart {
+	margin-left: 20px;
+}
+
+#sales-chart2 {
+	
+}
+
+#slide {
+	margin-top: -10px;
+}
+
+.btn {
+	text-align: right;
+}
+
+.btn-item {
+	width: 80%;
+}
+
+.inp {
+	width: 65%;
+}
+</style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -115,8 +117,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="info-box bg-green">
-						<span class="info-box-icon"><i
-							class="fa fa-comments-o"></i></span>
+						<span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
 
 						<div class="info-box-content">
 							<span class="info-box-text">Comments</span> <span
@@ -146,15 +147,18 @@
 							<div class="chart" id="sales-chart"
 								style="width: 180px; height: 180px; position: relative;"></div>
 						</div>
-						
-						<div class="box-body chart-responsive col-md-4" align="center" style="width:10px; margin-left: 10">
+
+						<div class="box-body chart-responsive col-md-4" align="center"
+							style="width: 10px; margin-left: 10">
 							<div class="chart" id="sales-chart3"
 								style="width: 180px; height: 180px; position: relative;"></div>
 						</div>
 
-						<div class="box-body chart-responsive col-md-4" align="right" style="margin-left: 190px">
+						<div class="box-body chart-responsive col-md-4" align="right"
+							style="margin-left: 190px">
 							<div class="chart" id="sales-chart2"
-								style=" width:180px; height: 180px; position: relative;" align="center"></div>
+								style="width: 180px; height: 180px; position: relative;"
+								align="center"></div>
 						</div>
 						<!-- /.box-body -->
 					</div>
@@ -165,80 +169,87 @@
 						<div class="box-header with-border">
 							<h3 class="box-title font">TO DO</h3>
 						</div>
-						<div class="box-body chart-responsive"  style="overflow: scroll; height:250px;">
+						<div class="box-body chart-responsive"
+							style="overflow: scroll; height: 250px;">
 							<div id="todo-list">
-								<table class="table table-hover" style="width:422.33px;">
-									<div id="todo">	
-									</div>
+								<table class="table table-hover" style="width: 422.33px;">
+									<div id="todo"></div>
 								</table>
 							</div>
 						</div>
 						<!-- /.box-body -->
 					</div>
 				</div>
-					<div class="col-md-8" id="slide">
-						<div class="box box-solid">
-							<!-- /.box-header -->
-							<div class="box-body">
-								<div id="carousel-example-generic" class="carousel slide"
-									data-ride="carousel">
-									<ol class="carousel-indicators">
-										<li data-target="#carousel-example-generic" data-slide-to="0"
-											class="active"></li>
-										<li data-target="#carousel-example-generic" data-slide-to="1"
-											class=""></li>
-										<li data-target="#carousel-example-generic" data-slide-to="2"
-											class=""></li>
-									</ol>
-									<div class="carousel-inner">
+				<div class="col-md-8" id="slide">
+					<div class="box box-solid">
+						<!-- /.box-header -->
+						<div class="box-body">
+							<div id="carousel-example-generic" class="carousel slide"
+								data-ride="carousel">
+								<ol class="carousel-indicators">
+									<li data-target="#carousel-example-generic" data-slide-to="0"
+										class="active"></li>
+									<li data-target="#carousel-example-generic" data-slide-to="1"
+										class=""></li>
+									<li data-target="#carousel-example-generic" data-slide-to="2"
+										class=""></li>
+								</ol>
+								<div class="carousel-inner">
 
-										<div class="item active">
-											<a href="http://www.bitacademy.com"> <img src="/img/img_bit.JPG"
-												alt="First slide"></a>
+									<div class="item active">
+										<a href="http://www.bitacademy.com"> <img
+											src="/img/img_bit.JPG" alt="First slide"></a>
 
-											<div class="carousel-caption">First Slide</div>
-										</div>
-										<div class="item">
-											<a href="http://www.hrd.go.kr"> <img src="/img/img_hrd.JPG"
-												alt="Second slide"></a>
-
-											<div class="carousel-caption">Second Slide</div>
-										</div>
-										<div class="item">
-											<a href="https://www.aladin.co.kr"> <img
-												src="/img/img_aladin.jpg" alt="Third slide"></a>
-
-											<div class="carousel-caption">Third Slide</div>
-										</div>
+										<div class="carousel-caption">First Slide</div>
 									</div>
-									<a class="left carousel-control"
-										href="#carousel-example-generic" data-slide="prev"> <span
-										class="fa fa-angle-left"></span>
-									</a> <a class="right carousel-control"
-										href="#carousel-example-generic" data-slide="next"> <span
-										class="fa fa-angle-right"></span>
-									</a>
+									<div class="item">
+										<a href="http://www.hrd.go.kr"> <img
+											src="/img/img_hrd.JPG" alt="Second slide"></a>
+
+										<div class="carousel-caption">Second Slide</div>
+									</div>
+									<div class="item">
+										<a href="https://www.aladin.co.kr"> <img
+											src="/img/img_aladin.jpg" alt="Third slide"></a>
+
+										<div class="carousel-caption">Third Slide</div>
+									</div>
 								</div>
+								<a class="left carousel-control"
+									href="#carousel-example-generic" data-slide="prev"> <span
+									class="fa fa-angle-left"></span>
+								</a> <a class="right carousel-control"
+									href="#carousel-example-generic" data-slide="next"> <span
+									class="fa fa-angle-right"></span>
+								</a>
 							</div>
-							<!-- /.box-body -->
 						</div>
-						<!-- /.box -->
+						<!-- /.box-body -->
 					</div>
-					
-					<div class="col-md-4">
+					<!-- /.box -->
+				</div>
+
+				<div class="col-md-4">
 					<!-- DONUT CHART -->
 					<div class="box" style="height: 400px">
 						<div class="box-header with-border">
 							<h3 class="box-title font">간편 메뉴</h3>
+							<div>
+								<label style="font-size: large; margin: 10px;">-최근 회의록 뽑기</label>
+								<c:forEach items="${groupList}" var="group">
+									<li><a href="/bitbox/recent_Down?group_seq=${group.group_seq}">
+									<i class="fa fa-group"></i> ${group.title}</a></li>
+								</c:forEach>
+							</div>
 						</div>
-						
+
 						<!-- /.box-body -->
 					</div>
 				</div>
 			</section>
 		</div>
 		<!-- /.content-wrapper -->
-		<%@include file="controlSideBar.jsp"%> 
+		<%@include file="controlSideBar.jsp"%>
 	</div>
 	<!-- ./wrapper -->
 	<!-- jQuery 2.2.3 -->
@@ -260,66 +271,66 @@
 	<!-- page script -->
 	<script type="text/javascript" src="/js/chart.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$(document).ready(function() {
 			$.ajax({
-		        url : '/bitbox/getTodoList',
-		        type : 'POST',
-		        success : function(data) {
-		           $('#todo').html(data);
-		        }
-		     });
+				url : '/bitbox/getTodoList',
+				type : 'POST',
+				success : function(data) {
+					$('#todo').html(data);
+				}
+			});
 		});
-		
+
 		$(document).on("click", "#todoButton", addTodo);
 		function addTodo() {
-			 var todoText = document.getElementById("todoText").value;
-	         var controller = '/bitbox/addTodo'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
-	         //var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
-	         var url = controller + '?text=' + todoText;
-	         $.ajax({
-	            url : url,
-	            type : 'POST',
-	            //data: { "gno": JSON.stringify(gno)},
-	            //data: { "gno": gno},
-	            success : function(data) {
-	               $('#todo').html(data.toString());
-	            }
-	         });
-	      }
-		
+			var todoText = document.getElementById("todoText").value;
+			var controller = '/bitbox/addTodo'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
+			//var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
+			var url = controller + '?text=' + todoText;
+			$.ajax({
+				url : url,
+				type : 'POST',
+				//data: { "gno": JSON.stringify(gno)},
+				//data: { "gno": gno},
+				success : function(data) {
+					$('#todo').html(data.toString());
+				}
+			});
+		}
+
 		$(document).on("click", "#todoDeleteAll", deleteAll);
 		function deleteAll() {
-	         var controller = '/bitbox/deleteAll'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
-	         //var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
-	         var url = controller
-	         $.ajax({
-	            url : url,
-	            type : 'POST',
-	            //data: { "gno": JSON.stringify(gno)},
-	            //data: { "gno": gno},
-	            success : function(data) {
-	               $('#todo').html(data.toString());
-	            }
-	         });
-	      }
-		
+			var controller = '/bitbox/deleteAll'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
+			//var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
+			var url = controller
+			$.ajax({
+				url : url,
+				type : 'POST',
+				//data: { "gno": JSON.stringify(gno)},
+				//data: { "gno": gno},
+				success : function(data) {
+					$('#todo').html(data.toString());
+				}
+			});
+		}
+
 		$(document).on("click", "#deleteLine", deleteLine);
 		function deleteLine() {
-			 var seq = $(this).attr("seq");
-	         var controller = '/bitbox/deleteLine'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
-	         //var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
-	         var url = controller + '?seq=' + seq;
-	         $.ajax({
-	            url : url,
-	            type : 'POST',
-	            //data: { "gno": JSON.stringify(gno)},
-	            //data: { "gno": gno},
-	            success : function(data) {
-	               $('#todo').html(data.toString());
-	            }
-	         });
-	      }
-   </script>
+			var seq = $(this).attr("seq");
+			var controller = '/bitbox/deleteLine'; //JH : controller 명 지정해주기 예:localhost/index.php/controller(이거)/function/param
+			//var base_url = '<?php echo site_url(); //you have to load the "url_helper" to use this function ?>';            
+			var url = controller + '?seq=' + seq;
+			$.ajax({
+				url : url,
+				type : 'POST',
+				//data: { "gno": JSON.stringify(gno)},
+				//data: { "gno": gno},
+				success : function(data) {
+					$('#todo').html(data.toString());
+				}
+			});
+		}
+	</script>
 
 </body>
 </html>

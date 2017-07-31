@@ -134,4 +134,8 @@ public interface IBitboxService {
 	public boolean gitMasterUpdate(GroupDTO dto);
 	
 	public GroupDTO selectMasId(GroupDTO dto);
+
+	public MinutesDTO getRecentMinutes(int group_seq);
+
+	public String getGroupTitle(int group_seq);
 }
