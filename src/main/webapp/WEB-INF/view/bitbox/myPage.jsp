@@ -100,7 +100,7 @@ function readURL(input) {
 									</div>
 									<div class="form-group">
 										<label for="exampleInputEmail1">반</label> <input type="text"
-											class="form-control" name="s_class_code"
+											class="form-control" name="s_class_name"
 											value="${class_name}" readonly="readonly">
 									</div>
 

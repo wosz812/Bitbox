@@ -506,4 +506,18 @@ public class BitboxDAO implements IBitboxDAO {
 		return flag;
 	}
 
+	@Override
+	public MinutesDTO getRecentMinutes(int group_seq) {
+		// TODO Auto-generated method stub
+		MinutesDTO minutes = session.selectOne(namespace + ".getRecentMinutes", group_seq);
+		return minutes;
+	}
+
+	@Override
+	public String getGroupTitle(int group_seq) {
+		// TODO Auto-generated method stub
+		String group_title = session.selectOne(namespace + ".getGroupTitle",group_seq);
+		return group_title;
+	}
+
 }

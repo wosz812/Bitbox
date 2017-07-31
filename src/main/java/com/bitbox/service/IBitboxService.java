@@ -130,4 +130,8 @@ public interface IBitboxService {
 	public boolean deleteAll(String id);
 
 	public boolean deleteLine(int seq);
+
+	public MinutesDTO getRecentMinutes(int group_seq);
+
+	public String getGroupTitle(int group_seq);
 }

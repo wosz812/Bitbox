@@ -566,4 +566,18 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		boolean flag = dao.deleteLine(seq);
 		return flag;
 	}
+
+	@Override
+	public MinutesDTO getRecentMinutes(int group_seq) {
+		// TODO Auto-generated method stub
+		MinutesDTO minutes = dao.getRecentMinutes(group_seq);
+		return minutes;
+	}
+
+	@Override
+	public String getGroupTitle(int group_seq) {
+		// TODO Auto-generated method stub
+		String group_title = dao.getGroupTitle(group_seq);
+		return group_title;
+	}
 }
