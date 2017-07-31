@@ -531,4 +531,5 @@ public class BitboxDAO implements IBitboxDAO {
 		return group_title;
 	}
 
+
 }

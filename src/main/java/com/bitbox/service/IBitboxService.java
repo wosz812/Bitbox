@@ -131,13 +131,13 @@ public interface IBitboxService {
 
 	public boolean deleteLine(int seq);
 	
-	public boolean gitMasterUpdate(GroupDTO dto);
-	
-	public GroupDTO selectMasId(GroupDTO dto);
+
+	public StudentDTO getMasInfo(String title);
+
 
 	public MinutesDTO getRecentMinutes(int group_seq);
 
-	public String getGroupTitle(int group_seq);
-	public StudentDTO getMasInfo(String title);
+	String getGroupTitle(int group_seq);
+
 
 }
