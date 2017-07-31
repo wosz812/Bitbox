@@ -126,7 +126,7 @@ margin-right:5px;
 			  <div class="dropdown-menu">
 				  Clone with HTTPS
 				  Use Git or checkout with SVN using the web URL.
-				  <input type="text" class="form-control" placeholder="Text input">
+				  <input type="text" class="form-control" id="clone_url">
 				  <a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download zip</button></a>
 			  </div>
 			  </div>
@@ -187,6 +187,42 @@ var promises=new Array();
 var uploadDirs=new Array();
 var uploadFiles=new Array();
 var cnt=1;
+
+//create repository
+var createRepos=function(){
+	var reposdata='{"name": "${title}","description":"repo create from ajax test","homepage": "https://sample.com","auto_init":true}';
+	console.log(reposdata);
+	$.ajax({ 
+	    url: 'https://api.github.com/user/repos',
+	    type: 'POST',
+	    beforeSend: function(xhr) { 
+	        xhr.setRequestHeader("Authorization", 'Bearer ${token}'); 
+	    },
+	    data: reposdata
+	}).done(function(response) {
+	    console.log(response);
+	    toReplace.fetchEventsList();
+	});
+}
+
+//Add Collaborators ===>
+var addCollaborator=function(){
+	apiUrl="https://api.github.com/repos/${masId}/${title}/collaborators/${username}";
+	$.ajax({
+		url:apiUrl,
+		type:'PUT',
+		beforeSend: function(xhr){
+			xhr.setRequestHeader('Authorization','Bearer ${token}');
+			xhr.setRequestHeader("Accept","application/vnd.github.swamp-thing-preview+json");
+		},
+		data:{}
+	}).done(function(response){
+		console.log(response);
+	});
+}
+
+
+
  $(document).ready(function()
 		{
 		var obj = $("#dragandrophandler");
@@ -238,13 +274,27 @@ var cnt=1;
 			},1000); 
 		}); 
 }); 
+ var getTitle = function() {
+	 $.ajax({ 	
+		 url: 'https://api.github.com/repos/${username}/${title}',
+		 type: 'GET',
+		    
+		  beforeSend: function(xhr) { 
+		    }  , 
+		    data: {}
+		}).done(function(response) {
+		    console.log(response);
+		    $("#title").html(response["full_name"]);
+		    $("#clone_url").val(response["clone_url"]);
+	});	
+ }
  var initStart = function() {
 		$.ajax({ 
 	
-		url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/refs/heads/master',
+		url: 'https://api.github.com/repos/${username}/${title}/git/refs/heads/master',
 		type: 'GET',
 		beforeSend: function(xhr) { 
-			xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26")); 
+			xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 		},
 		data: {}
 		})
@@ -256,13 +306,13 @@ var cnt=1;
 	}
 	
 		var getCurrentTreeSHA = function(sha) {
-			api_url = "https://api.github.com/repos/yujiyeon/repo-test2/git/commits/"+ sha;
+			api_url = "https://api.github.com/repos/${username}/${title}/git/commits/"+ sha;
 			$.ajax(
 					{
 						url : api_url,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 						},
 						data : {}
 					}).done(function(response) {
@@ -276,10 +326,10 @@ var cnt=1;
 		var fgetTree = function(sha) {
 			$.ajax(
 					{
-						url : "https://api.github.com/repos/yujiyeon/repo-test2/git/trees/"+sha,
+						url : "https://api.github.com/repos/${username}/${title}/git/trees/"+sha,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 						},
 						data : {}
 					}).done(function(response) {
@@ -320,7 +370,7 @@ var cnt=1;
 						url : url,
 						type : 'GET',
 						beforeSend : function(xhr) {
-							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 						},
 						data : {}
 					}).done(function(response) {
@@ -353,10 +403,10 @@ var cnt=1;
 	     template: ''
 	    }
 	  },
-	  created: function() {
+	  /* created: function() {
 
-	        this.fetchEventsList();
-	  },
+	        toReplace.fetchEventsList();
+	  }, */
 	  methods: {
 	    swapComponent: function(component)
 	    {
@@ -378,7 +428,7 @@ var cnt=1;
     						url : url,
     						type : 'GET',
     						beforeSend : function(xhr) {
-    							xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26")); 
+    							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
     						},
     						data : {}
     					}).done(function(response) {
@@ -465,10 +515,10 @@ var cnt=1;
 		var filedata = JSON.stringify({"content":""+filecontent+"","encoding":"UTF-8"});
 		return new Promise(function(resolve, reject) {
 			$.ajax({ 
-				url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/blobs',
+				url: 'https://api.github.com/repos/${username}/${title}/git/blobs',
 				type: 'POST',
 				beforeSend: function(xhr) { 
-					xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+					xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
 				},
 				data: filedata
 				})
@@ -513,10 +563,10 @@ var cnt=1;
 	};
 	function createTree(){
 		return $.ajax({ 
-			   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/trees',
+			   url: 'https://api.github.com/repos/${username}/${title}/git/trees',
 			   type: 'POST',
 			   beforeSend: function(xhr) { 
-				   xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+				   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 			   },
 			   data: JSON.stringify({"tree":uploadList,"base_tree":treeSha})
 			}).done(function(response) {
@@ -531,10 +581,10 @@ var cnt=1;
 	function createCommit(tree_sha){
 		var commit_data= JSON.stringify({"message":"file upload branch","tree":""+tree_sha+""});
 		$.ajax({ 
-		   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/commits',
+		   url: 'https://api.github.com/repos/${username}/${title}/git/commits',
 		   type: 'POST',
 		   beforeSend: function(xhr) { 
-			   xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+			   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 		   },
 		   data: commit_data
 		}).done(function(response) {
@@ -545,16 +595,24 @@ var cnt=1;
 
 	function patch_repos(sha){
 		$.ajax({ 
-		   url: 'https://api.github.com/repos/yujiyeon/repo-test2/git/refs/heads/master',
+		   url: 'https://api.github.com/repos/${username}/${title}/git/refs/heads/master',
 		   type: 'PATCH',
 		   beforeSend: function(xhr) { 
-			   xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26")); 
+			   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 		   },
 		   data: JSON.stringify({"sha":sha,"force":true})
 		}).done(function(response) {
 			    console.log(response);
 		});
 	}
+	
+	if(${status}==1){
+		createRepos();
+	} else if(${status}==0){
+		//addCollaborator();
+		getTitle();
+		toReplace.fetchEventsList();
+	} 
 </script>
 
 </body>

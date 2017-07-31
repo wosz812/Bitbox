@@ -64,11 +64,11 @@ public class GitController {
 				url = "bitbox/gitBoard";
 			}
 		}else if(status==0){ //생성된 repos에 member 초대하기
-			GroupDTO gdto=new GroupDTO();
+			/*GroupDTO gdto=new GroupDTO();
 			gdto.setTitle(gtitle);
 			GroupDTO sdto=service.selectMasId(gdto);
 			String masId=sdto.getMaster_id();
-			model.addAttribute("masId",masId);
+			model.addAttribute("masId",masId);*/
 			url = "bitbox/gitBoard";
 		}
 		model.addAttribute("title",session.getAttribute("title"));
