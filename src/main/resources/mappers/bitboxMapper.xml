@@ -283,4 +283,17 @@
 	<delete id="deleteAll" parameterType="String">
 		delete from todo where todo_id = #{id}
 	</delete>
+	
+	<select id="getRecentMinutes" resultType="com.bitbox.dto.MinutesDTO" parameterType="Integer">
+		select * 
+		from(select * 
+			 from gminutes 
+			 where group_seq = #{group_seq} 
+			 order by min_seq desc)
+		where rownum=1
+	</select>
+	
+	<select id="getGroupTitle" resultType="String" parameterType="Integer">
+		select title from cgroup where group_seq = #{group_seq}
+	</select>
 </mapper>

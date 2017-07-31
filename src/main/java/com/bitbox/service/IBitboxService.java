@@ -131,6 +131,13 @@ public interface IBitboxService {
 
 	public boolean deleteLine(int seq);
 	
+
 	public StudentDTO getMasInfo(String title);
+
+
+	public MinutesDTO getRecentMinutes(int group_seq);
+
+	String getGroupTitle(int group_seq);
+
 
 }

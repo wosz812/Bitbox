@@ -2,6 +2,7 @@ package com.bitbox.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -664,4 +665,36 @@ public class BitBoxController {
 		return todoList;
 	}
 	
+	@RequestMapping(value = "/recent_Down", method = { RequestMethod.POST, RequestMethod.GET })
+	public String recentDownload(@RequestParam("group_seq") int group_seq, Model model,HttpServletResponse response) {
+		String url = "/bitbox/download";
+		// 줄바꿈처리
+		MinutesDTO minutes = service.getRecentMinutes(group_seq);
+		if(minutes==null){
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out;
+				out = response.getWriter();
+				out.println("<script>alert('error : 회의록이 존재하지 않습니다');</script>");
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			url = "/bitbox/home";
+		}else{
+			String group_title = service.getGroupTitle(group_seq);
+			System.out.println("in : "+minutes);
+			minutes.setMin_content(service.enter(minutes.getMin_content()));
+			minutes.setMin_opinion(service.enter(minutes.getMin_opinion()));
+			minutes.setMin_schedule(service.enter(minutes.getMin_schedule()));
+			minutes.setMin_decide(service.enter(minutes.getMin_decide()));
+			minutes.setMin_prepare(service.enter(minutes.getMin_prepare()));
+	
+			model.addAttribute("data", minutes);
+			model.addAttribute("title", group_title);
+			
+		}
+		return url;
+	}
 }
