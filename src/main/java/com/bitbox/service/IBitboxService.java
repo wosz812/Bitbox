@@ -131,7 +131,6 @@ public interface IBitboxService {
 
 	public boolean deleteLine(int seq);
 	
-	public boolean gitMasterUpdate(GroupDTO dto);
-	
-	public GroupDTO selectMasId(GroupDTO dto);
+	public StudentDTO getMasInfo(String title);
+
 }

@@ -64,13 +64,23 @@
 	 	</select>
         <span class="glyphicon glyphicon-book form-control-feedback"></span>
       </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="GIT-ID" id="git_id" name="git_id">
+        <span class="fa fa-github form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="GIT-PW" id="git_pw" name="git_pw">
+        <span class="fa fa-lock form-control-feedback"></span>
+        <h6 style="color: red;" id="git_error"></h6>
+      </div>
+      <button type="button" class="btn btn-primary btn-flat" onclick="git_check()" id="git_info">Github 입력정보 확인</button>
       <div class="row">
         <div class="col-xs-8">
         	<br>
         	<a href="/login/">I already have a membership</a>
         </div>
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Regist</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat disabled" id="regist" >Regist</button>
         </div>
       </div>
     </form>
@@ -98,6 +108,31 @@
       increaseArea: '20%' // optional
     });
   });
+  
+  function git_check(){
+	  var git_id=$("#git_id").val();
+	  var git_pw=$("#git_pw").val();
+	  $.ajax({ 
+		    url: 'https://api.github.com/authorizations',
+		    type: 'GET',
+		    beforeSend: function(xhr) { 
+		        xhr.setRequestHeader("Authorization", "Basic " + btoa(git_id+":"+git_pw)); 
+		    },
+		    error: function(xhr, status, error) {
+		        //alert(xhr.responseText);
+		        $("h6").css("color", "red");
+		        $("h6").text("입력정보가 올바르지 않습니다.");
+		    }
+		    //data: '{"scopes":["repo"],"note":"create repo with ajax"}'
+		}).done(function(response) {
+		    console.log(response);
+		    $("h6").css("color", "blue");
+	        $("h6").text("입력정보 확인.");
+	        $('#regist').removeClass(' btn btn-primary btn-block btn-flat disabled');
+	        $('#regist').addClass('btn btn-primary btn-block btn-flat');
+	        $("#git_info").prop("disabled",true);
+		});
+  }
 </script>
 </body>
 </html>

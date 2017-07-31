@@ -40,7 +40,9 @@ create table student(
   s_name varchar(100) not null,
   s_email varchar(200)not null,
   s_phone number not null,
-  s_class_code number not null
+  s_class_code number not null,
+  git_id varchar(100),
+  git_pw varchar(100)
   CONSTRAINT bitclass_class_code_fk1 REFERENCES bitclass(class_code)
 );
 

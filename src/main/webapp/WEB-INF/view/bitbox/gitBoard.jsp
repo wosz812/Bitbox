@@ -111,52 +111,60 @@ margin-right:5px;
 			${token}
 			${username}
 			${status}
+			${id}
 			<div id="toReplace">
-		    <div :is="currentComponent">
-		    	<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
-		    	<table id="status1"></table>
-		    	<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
-		    </div>
-		    <div v-show="!currentComponent">
-		    <div class="dropdown">
-		    <div class="btn-group" style="float:right; margin-right:20px;">
-		       <button class="btn btn-primary" @click="swapComponent(component)"  id="upfile">{{component}}</button>
-		       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">clone or download
-			  <span class="caret"></span></button>  
-			  <div class="dropdown-menu">
-				  Clone with HTTPS
-				  Use Git or checkout with SVN using the web URL.
-				  <input type="text" class="form-control" id="clone_url">
-				  <a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download zip</button></a>
-			  </div>
-			  </div>
+				<div v-if="currentComponent==='upload files'">
+					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files
+						Here</div>
+					<table id="status1"></table>
+					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
+				</div>
+				<div v-if="currentComponent==='invitation'">
+					<a href="{{html_url}}" id="invitation_url">invitation</a>
+				</div>
+				<div v-show="!currentComponent">
+					<div class="dropdown">
+						<div class="btn-group" style="float: right; margin-right: 20px;">
+							<button class="btn btn-primary" @click="swapComponent(component)"
+								id="upfile">{{component}}</button>
+							<button class="btn btn-primary dropdown-toggle" type="button"
+								data-toggle="dropdown">
+								clone or download <span class="caret"></span>
+							</button>
+							<div class="dropdown-menu">
+								Clone with HTTPS Use Git or checkout with SVN using the web URL.
+								<input type="text" class="form-control" id="clone_url">
+								<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download
+										zip</button></a>
+							</div>
+						</div>
+					</div>
+
+					<section class="content" id="sectiongB">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="box">
+									<div class="box-header with-border">
+										<h3 class="box-title">${title}repository</h3>
+									</div>
+									<!-- /.box-header -->
+									<div class="box-body">
+										<table class="table table-bordered">
+											<tr v-for="row in rows">
+												<td><img v-bind:src=row.src></td>
+												<td><a v-on:click="gitClick(row.type,row.path,row.url)">{{row.path}}</a></td>
+											</tr>
+										</table>
+									</div>
+									<!-- /.box-body -->
+								</div>
+							</div>
+						</div>
+					</section>
+					<div id="myEditor"></div>
+				</div>
 			</div>
-			
-		      <section class="content" id="sectiongB">
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="box">
-				            <div class="box-header with-border">
-				              <h3 class="box-title">${title} repository</h3>
-				            </div>
-				            <!-- /.box-header -->
-				            <div class="box-body">
-				              <table class="table table-bordered">
-						      	<tr v-for="row in rows">
-						      		<td><img v-bind:src=row.src></td>
-						      		<td><a v-on:click="gitClick(row.type,row.path,row.url)">{{row.path}}</a></td>
-						    	</tr>
-						      </table>
-				            </div>
-				            <!-- /.box-body -->
-			           </div>
-		           </div>
-	           </div>
-           </section>
-		      <div id="myEditor"></div>
-		    </div>
-		  </div>
-			
+
 		</div>
 		<!-- /.content-wrapper -->
 		<%@include file="controlSideBar.jsp"%> 
@@ -205,21 +213,7 @@ var createRepos=function(){
 	});
 }
 
-//Add Collaborators ===>
-var addCollaborator=function(){
-	apiUrl="https://api.github.com/repos/${masId}/${title}/collaborators/${username}";
-	$.ajax({
-		url:apiUrl,
-		type:'PUT',
-		beforeSend: function(xhr){
-			xhr.setRequestHeader('Authorization','Bearer ${token}');
-			xhr.setRequestHeader("Accept","application/vnd.github.swamp-thing-preview+json");
-		},
-		data:{}
-	}).done(function(response){
-		console.log(response);
-	});
-}
+
 
 
 
@@ -276,7 +270,7 @@ var addCollaborator=function(){
 }); 
  var getTitle = function() {
 	 $.ajax({ 	
-		 url: 'https://api.github.com/repos/${username}/${title}',
+		 url: 'https://api.github.com/repos/${masId}/${title}',
 		 type: 'GET',
 		    
 		  beforeSend: function(xhr) { 
@@ -291,7 +285,7 @@ var addCollaborator=function(){
  var initStart = function() {
 		$.ajax({ 
 	
-		url: 'https://api.github.com/repos/${username}/${title}/git/refs/heads/master',
+		url: 'https://api.github.com/repos/${masId}/${title}/git/refs/heads/master',
 		type: 'GET',
 		beforeSend: function(xhr) { 
 			xhr.setRequestHeader('Authorization', 'Bearer ${token}');
@@ -306,7 +300,7 @@ var addCollaborator=function(){
 	}
 	
 		var getCurrentTreeSHA = function(sha) {
-			api_url = "https://api.github.com/repos/${username}/${title}/git/commits/"+ sha;
+			api_url = "https://api.github.com/repos/${masId}/${title}/git/commits/"+ sha;
 			$.ajax(
 					{
 						url : api_url,
@@ -326,7 +320,7 @@ var addCollaborator=function(){
 		var fgetTree = function(sha) {
 			$.ajax(
 					{
-						url : "https://api.github.com/repos/${username}/${title}/git/trees/"+sha,
+						url : "https://api.github.com/repos/${masId}/${title}/git/trees/"+sha,
 						type : 'GET',
 						beforeSend : function(xhr) {
 							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
@@ -390,30 +384,53 @@ var addCollaborator=function(){
 		    		    );
 					});
 		}  
-		
+		 
+		 
   var toReplace =  new Vue({
 	  el: '#toReplace',
 	  data: {
 	    currentComponent: null,
 	    component: 'upload files',
-	    rows: [{src:"",path:"",type:"",url:""}]
+	    rows: [{src:"",path:"",type:"",url:""}],
+	    html_url: ''
 	  },
 	  components: {
 	    'upload files': {
 	     template: ''
+	    },
+	    'invitation': {
+		     template: ''
+		 }
+	  },
+	  watch: {
+	    // 질문이 변경될 때 마다 이 기능이 실행됩니다.
+	    html_url: function (newValue) {
+	    	//debugger;
 	    }
 	  },
-	  /* created: function() {
 
-	        toReplace.fetchEventsList();
-	  }, */
+	  
+	  created: function() {
+		  //이게 vue component 생성 시점을 맞춰야할거같은데
+		  //vue 흠 흠 흠흠흠흠흠흠잠깐만나 하는거 봐바바
+	        //toReplace.fetchEventsList();
+	  },
 	  methods: {
 	    swapComponent: function(component)
 	    {
 	    	console.log(component);
 	      this.currentComponent = component;
 	    },
+	    component: function()
+	    {
+	      return true;
+	    },
+	    changeUrl:function(url){
+	    	this.html_url=url; //이렇게 하고
+	    	this.swapComponent("invitation");
+	    },
 	    fetchEventsList: function() {
+	    	getTitle();
         	initStart();
 
         },
@@ -515,7 +532,7 @@ var addCollaborator=function(){
 		var filedata = JSON.stringify({"content":""+filecontent+"","encoding":"UTF-8"});
 		return new Promise(function(resolve, reject) {
 			$.ajax({ 
-				url: 'https://api.github.com/repos/${username}/${title}/git/blobs',
+				url: 'https://api.github.com/repos/${masId}/${title}/git/blobs',
 				type: 'POST',
 				beforeSend: function(xhr) { 
 					xhr.setRequestHeader('Authorization', 'Bearer ${token}'); 
@@ -563,7 +580,7 @@ var addCollaborator=function(){
 	};
 	function createTree(){
 		return $.ajax({ 
-			   url: 'https://api.github.com/repos/${username}/${title}/git/trees',
+			   url: 'https://api.github.com/repos/${masId}/${title}/git/trees',
 			   type: 'POST',
 			   beforeSend: function(xhr) { 
 				   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
@@ -581,7 +598,7 @@ var addCollaborator=function(){
 	function createCommit(tree_sha){
 		var commit_data= JSON.stringify({"message":"file upload branch","tree":""+tree_sha+""});
 		$.ajax({ 
-		   url: 'https://api.github.com/repos/${username}/${title}/git/commits',
+		   url: 'https://api.github.com/repos/${masId}/${title}/git/commits',
 		   type: 'POST',
 		   beforeSend: function(xhr) { 
 			   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
@@ -595,7 +612,7 @@ var addCollaborator=function(){
 
 	function patch_repos(sha){
 		$.ajax({ 
-		   url: 'https://api.github.com/repos/${username}/${title}/git/refs/heads/master',
+		   url: 'https://api.github.com/repos/${masId}/${title}/git/refs/heads/master',
 		   type: 'PATCH',
 		   beforeSend: function(xhr) { 
 			   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
@@ -606,13 +623,38 @@ var addCollaborator=function(){
 		});
 	}
 	
+	//Add Collaborators ===>
+	var addCollaborator=function(){
+		apiUrl="https://api.github.com/repos/${masId}/${title}/collaborators/${username}";
+		$.ajax({
+			url:apiUrl,
+			type:'PUT',
+			beforeSend: function(xhr){
+				xhr.setRequestHeader('Authorization',"Basic " + btoa("${masId}:${masPw}"));
+				xhr.setRequestHeader("Accept","application/vnd.github.swamp-thing-preview+json");
+			},
+			data:{}
+		}).done(function(response){
+			console.log(response);
+			
+			var html_url=response["html_url"];
+			console.log(html_url);
+			toReplace.changeUrl(html_url);
+			
+			//$("#invitation_url").attr("href",html_url);
+			//toReplace.fetchEventsList();
+			
+		});
+	}//다사 let'sgetit
 	if(${status}==1){
 		createRepos();
-	} else if(${status}==0){
-		//addCollaborator();
-		getTitle();
+		
+	} else if(${status}==2){
+		addCollaborator();
+		
+	} else{
 		toReplace.fetchEventsList();
-	} 
+	}
 </script>
 
 </body>

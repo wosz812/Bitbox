@@ -53,7 +53,7 @@ public class BitboxDAO implements IBitboxDAO {
 	@Override
 	public boolean studentRegist(StudentDTO student) {
 		boolean flag = false;
-
+		System.out.println("DAO: "+student);
 		int aCnt = session.insert(login + ".regist", student);
 		if (aCnt > 0) {
 			flag = true;
@@ -508,20 +508,11 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 
 	@Override
-	public boolean gitMasterUpdate(GroupDTO dto) {
+	public StudentDTO getMasInfo(String title) {
 		// TODO Auto-generated method stub
-		boolean flag=false;
-		int aCnt = session.update(git + ".masterId", dto);
-		if (aCnt > 0) {
-			flag = true;
-		}
-		return flag;
+		StudentDTO dto=session.selectOne(git+".getMasInfo",title);
+		return dto;
 	}
 
-	@Override
-	public GroupDTO selectMasId(GroupDTO dto) {
-		GroupDTO sdto=session.selectOne(git+".selectMasId",dto);
-		return sdto;
-	}
 
 }

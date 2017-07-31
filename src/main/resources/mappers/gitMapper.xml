@@ -3,14 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitbox.gitMapper">
-	<update id="masterId" parameterType="com.bitbox.dto.GroupDTO">
-		update cgroup set
-		master_id = #{master_id} where
-		title=#{title}
-	</update>
-	
-	<select id="selectMasId" parameterType="com.bitbox.dto.GroupDTO" resultType="com.bitbox.dto.GroupDTO">
-		select master_id from cgroup where
-		title=#{title}
+	<select id="getMasInfo" resultType="com.bitbox.dto.StudentDTO" parameterType="String">
+		select * from student where s_id in(select s_id from cgroup where title=#{title})
 	</select>
 </mapper>

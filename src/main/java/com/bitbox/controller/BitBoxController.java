@@ -314,7 +314,7 @@ public class BitBoxController {
 			session.setAttribute("groupList", groupList);
 			String title=group.getTitle();
 			System.out.println("group in title: "+title);
-			url = "redirect:/git/gitBoard?title="+title;
+			url = "redirect:/git/gitBoard?title="+title+"&status=2";
 		}else{
 			model.addAttribute("state", state);
 			url = "redirect:/bitbox/group?state=" + state;
