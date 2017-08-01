@@ -29,19 +29,20 @@
 		</div>
 		<form action="/mail/changePW" method="post">
 			<div class="login-box-body">
+				<p class="login-box-msg">새로운 비밀번호를 입력해주세요.</p>
 				<input type="hidden" name="s_id" value="${id}">
 				<div class="form-group has-feedback">
-	        		<input type="password" class="form-control" placeholder="Password" name="s_pw">
+	        		<input type="password" class="form-control" placeholder="비밀번호" name="s_pw">
 	        		<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	     		</div>
 	      		<div class="form-group has-feedback">
-	        		<input type="password" class="form-control" placeholder="Password Check">
+	        		<input type="password" class="form-control" placeholder="비밀번호 확인">
 	        		<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	      		</div>
 				<div class="row">
 					<div class="col-xs-12" align="right">
 						<button class="btn btn-primary">비밀번호 변경</button>
-						<button type="submit" onclick="winClose();" class="btn btn-primary">Close</button>
+						<button type="submit" onclick="winClose();" class="btn btn-primary">닫기</button>
 					</div>
 				</div>
 			</div>
