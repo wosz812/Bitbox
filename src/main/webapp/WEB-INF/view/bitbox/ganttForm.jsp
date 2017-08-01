@@ -56,6 +56,7 @@ window.onload = function() {
 	AUIGantt.createNewDocument(myGanttID, 50);
 	
 	// 간트 데이터 삽입
+	var myGanttData = document.getElementById("gan_data").value;
 	AUIGantt.setGanttData(myGanttID, myGanttData);
 };
 

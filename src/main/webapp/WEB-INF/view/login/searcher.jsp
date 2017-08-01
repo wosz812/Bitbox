@@ -63,7 +63,7 @@
 </script>
 	<div class="register-box">
 		<div class="register-logo">
-			<a href="/login/"><b>BIT</b>BOX</a>
+			<a href="/login/searchView"><b>BIT</b>BOX</a>
 		</div>
 
 		<div class="register-box-body">
@@ -72,7 +72,7 @@
             	<button class="btn btn-primary" onclick="div_OnOff(0);">ID Search</button>
             	<button class="btn btn-primary" onclick="div_OnOff(1);">PW Search</button>
             </div>
-			<form>
+			<form action="/mail/sendMail" method="post">
 				<input type="hidden" id="type" name="type" value="0">
 				<div id="con" style="display:none" class="form-group has-feedback">
         			<input type="text" class="form-control" placeholder="Id" name="s_id">
@@ -92,7 +92,7 @@
 						<a href="/login/">I already know</a>
       				</div>
        			 	<div class="col-xs-4">
-          				<button type="submit" onclick="popup(this.form)" class="btn btn-primary btn-block btn-flat">찾기</button>
+          				<button type="button" onclick="popup(this.form)" class="btn btn-primary btn-block btn-flat">찾기</button>
         			</div>
      			 </div>
 			</form>

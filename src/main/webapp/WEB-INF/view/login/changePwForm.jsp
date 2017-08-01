@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>BITBOX Login</title>
+  <title>BITBOX SearchInfo</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -18,43 +18,35 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
 </head>
 <body class="hold-transition login-page">
+	<script type="text/javascript">
+		function winClose(){
+			window.close();
+		}
+	</script>
 	<div class="login-box">
 		<div class="login-logo">
-			<a href="/login/"><b>BIT</b>BOX</a>
+			<a href="#"><b>BIT</b>BOX</a>
 		</div>
-		<!-- /.login-logo -->
-				<div class="login-box-body">
-			<p class="login-box-msg">Sign in to start your session</p>
-			<form action="/login/login" method="post">
+		<form action="/mail/changePW" method="post">
+			<div class="login-box-body">
+				<input type="hidden" name="s_id" value="${id}">
 				<div class="form-group has-feedback">
-					<input type="text" class="form-control" placeholder="Id" name="s_id" value="${logID }">
-					<span class="glyphicon glyphicon-check form-control-feedback"></span>
-				</div>
-				<div class="form-group has-feedback">
-					<input type="password" class="form-control" placeholder="Password" name="s_pw"> 
-					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-					<h6 style="color: red;">${different}</h6>
-				</div>
+	        		<input type="password" class="form-control" placeholder="Password" name="s_pw">
+	        		<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+	     		</div>
+	      		<div class="form-group has-feedback">
+	        		<input type="password" class="form-control" placeholder="Password Check">
+	        		<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+	      		</div>
 				<div class="row">
-					<div class="col-xs-8">
-						<a href="/login/searchView">I forgot my information</a><br>
-						<a href="/login/registView">Register a new membership</a>
-					</div>
-					<div class="col-xs-4">
-						<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+					<div class="col-xs-12" align="right">
+						<button class="btn btn-primary">ºñ¹Ð¹øÈ£ º¯°æ</button>
+						<button type="submit" onclick="winClose();" class="btn btn-primary">Close</button>
 					</div>
 				</div>
-			</form>
-			<!-- <div class="social-auth-links text-center">
-      <p>- OR -</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-        Facebook(êµ¬í˜„x)</a>
-      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-        Google+(êµ¬í˜„x)</a>
-    </div> -->			
-		</div>
+			</div>
+		</form>
 	</div>
-
 	<!-- jQuery 2.2.3 -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->

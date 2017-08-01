@@ -29,13 +29,13 @@
 		</div>
 		<div class="login-box-body">
 			<p class="login-box-msg">${info}</p>
-				<div class="row">
-					<div class="col-xs-8">
-					</div>
-					<div class="col-xs-4">
-						<button type="submit" onclick="winClose();" class="btn btn-primary btn-block btn-flat">Close</button>
-					</div>
+			<div class="row">
+				<div class="col-xs-8">
 				</div>
+				<div class="col-xs-4">
+					<button type="button" onclick="winClose();" class="btn btn-primary btn-block btn-flat">Close</button>
+				</div>
+			</div>
 		</div>
 	</div>
 

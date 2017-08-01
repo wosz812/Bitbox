@@ -36,4 +36,8 @@
 	<select id="idCheck" parameterType="String" resultType="com.bitbox.dto.StudentDTO">
 		select * from student where s_id = #{s_id}
 	</select>
+	
+	<update id="changePw" parameterType="com.bitbox.dto.StudentDTO">
+		update student set s_pw = #{s_pw} where s_id = #{s_id}
+	</update>
 </mapper>

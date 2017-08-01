@@ -123,6 +123,7 @@ public interface IBitboxService {
 	public boolean saveGantt(GanttDTO gantt);
 
 	public String getClassName(int s_class_code);
+
 	public ArrayList<String> todoList(TodoDTO dto);
 
 	public ArrayList<String> getTodoList(String id);
@@ -130,14 +131,13 @@ public interface IBitboxService {
 	public boolean deleteAll(String id);
 
 	public boolean deleteLine(int seq);
-	
+
+	public boolean changePw(StudentDTO student);
 
 	public StudentDTO getMasInfo(String title);
-
 
 	public MinutesDTO getRecentMinutes(int group_seq);
 
 	public String getGroupTitle(int group_seq);
-
 
 }

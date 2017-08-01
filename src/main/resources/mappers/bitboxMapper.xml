@@ -164,8 +164,8 @@
 		<selectKey keyProperty="q_seq" order="BEFORE" resultType="Integer">
 			select q_seq.nextval from dual
 		</selectKey>
-		insert into qna(q_seq, q_title, q_content, q_upload, q_image, q_category, s_id)
-		values(#{q_seq}, #{q_title}, #{q_content}, #{q_upload}, #{q_image}, #{q_category}, #{s_id})
+		insert into qna(q_seq, q_title, q_content, q_readcount, q_upload, q_image, q_category, s_id)
+		values(#{q_seq}, #{q_title}, #{q_content}, 0, #{q_upload}, #{q_image}, #{q_category}, #{s_id})
 	</insert>
 	
 	<select id="qnaCnt" resultType="Integer">

@@ -77,5 +77,5 @@ public interface IBitboxDAO {
 	public StudentDTO getMasInfo(String title);
 	public MinutesDTO getRecentMinutes(int group_seq);
 	public String getGroupTitle(int group_seq);
-
+	public boolean changePw(StudentDTO student);
 }

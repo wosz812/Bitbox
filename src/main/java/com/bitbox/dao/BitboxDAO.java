@@ -527,6 +527,16 @@ public class BitboxDAO implements IBitboxDAO {
 		String group_title = session.selectOne(namespace + ".getGroupTitle",group_seq);
 		return group_title;
 	}
+	
+	@Override
+	public boolean changePw(StudentDTO student) {
+		boolean flag = false;
+		int aCnt = session.update(login + ".changePw", student);
+		if (aCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
 
 
 }

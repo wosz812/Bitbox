@@ -60,11 +60,10 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 		// @formatter:off
 		// http.formLogin().usernameParameter("").passwordParameter("s_pw").loginPage("/login");
 		// http.requestMatchers().antMatchers("/","/login/**","/bitbox/**","/git/**","/memo/**","/mail/**");
-		http.authorizeRequests().antMatchers("/", "/login/**").permitAll()
-				.antMatchers("/bitbox/**", "/git/**", "/memo/**", "/mail/**").authenticated().anyRequest()
-				.authenticated().and().exceptionHandling()
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login/")).and().csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).disable()
+		http.authorizeRequests().antMatchers("/", "/login/**", "/mail/**").permitAll()
+				.antMatchers("/bitbox/**", "/git/**", "/memo/**").authenticated().anyRequest().authenticated().and()
+				.exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login/")).and()
+				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).disable()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 		// @formatter:on
 	}

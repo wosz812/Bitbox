@@ -188,14 +188,17 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		endPage = endPage <= pageCount ? endPage : pageCount;
 
 		if (pageUnit != 0) {
-			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + ((pageUnit - 1) * 10) + "'><button class=\"btn btn-primary\">prev</button></a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + ((pageUnit - 1) * 10)
+					+ "'><button class=\"btn btn-primary\">prev</button></a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (i) + "'><button class=\"btn btn-primary\">" + (i + 1) + "</button></a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (i) + "'><button class=\"btn btn-primary\">"
+					+ (i + 1) + "</button></a> ");
 		}
 		// next
 		if (endPage < pageCount) {
-			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (endPage) + "'><button class=\"btn btn-primary\">next</button></a> ");
+			pageList.add(" <a href='/memo/pMemo?group_seq=0&page=" + (endPage)
+					+ "'><button class=\"btn btn-primary\">next</button></a> ");
 		}
 
 		return pageList;
@@ -217,7 +220,8 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 					+ "'><button class=\"btn btn-default\">prev</button></a> ");
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
-			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (i) + "'><button class=\"btn btn-primary\">" + (i + 1) + "</button></a> ");
+			pageList.add(" <a href='/memo/gMemo?group_seq=" + group_seq + "&page=" + (i)
+					+ "'><button class=\"btn btn-primary\">" + (i + 1) + "</button></a> ");
 		}
 		// next
 		if (endPage < pageCount) {
@@ -424,8 +428,7 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		}
 		for (int i = pageUnit * 10; i < endPage; i++) {
 			mpageList.add(" <a href='/bitbox/minutesList?page=" + (i) + "&group_seq=" + group_seq + "&group_title="
-					+ group_title + "'><button class=\"btn btn-primary\">" + (i + 1)
-					+ "</button></a> ");
+					+ group_title + "'><button class=\"btn btn-primary\">" + (i + 1) + "</button></a> ");
 		}
 		// next
 		if (endPage < pageCount) {
@@ -504,10 +507,10 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 	public boolean myUpdate(StudentDTO dto) {
 		// TODO Auto-generated method stub
 		boolean flag = dao.myUpdate(dto);
-		
+
 		return flag;
 	}
-	
+
 	@Override
 	public GanttDTO chart(int group_seq) {
 		GanttDTO gantt = dao.chart(group_seq);
@@ -526,6 +529,7 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		String className = dao.getClassName(s_class_code);
 		return className;
 	}
+
 	public ArrayList<String> getTodoList(String id) {
 		List<TodoDTO> todoList = dao.getTodoList(id);
 		ArrayList<String> list = new ArrayList<String>();
@@ -534,8 +538,8 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 				+ "<td><button id=\"todoDeleteAll\" class=\"btn btn-danger\">Delete all</button></td></tr>");
 		for (TodoDTO todo : todoList) {
 			list.add("<tr><td colspan=\"2\" style=\"padding-left: 15px\">" + todo.getTodo()
-					+ "</td><td class=\"btn\"><button class=\"btn btn-warning\" id=\"deleteLine\" seq=\"" + todo.getTodo_seq()
-					+ "\">Delete</button></td></tr>");
+					+ "</td><td class=\"btn\"><button class=\"btn btn-warning\" id=\"deleteLine\" seq=\""
+					+ todo.getTodo_seq() + "\">Delete</button></td></tr>");
 		}
 		return list;
 	}
@@ -549,8 +553,8 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 				+ "<td><button id=\"todoDeleteAll\" class=\"btn btn-danger\">Delete all</button></td></tr>");
 		for (TodoDTO todo : todoList) {
 			list.add("<tr><td colspan=\"2\"  style=\"padding-left: 15px\">" + todo.getTodo()
-					+ "</td><td class=\"btn\"><button class=\"btn btn-warning\" id=\"deleteLine\" seq=\"" + todo.getTodo_seq()
-					+ "\">Delete</button></td></tr>");
+					+ "</td><td class=\"btn\"><button class=\"btn btn-warning\" id=\"deleteLine\" seq=\""
+					+ todo.getTodo_seq() + "\">Delete</button></td></tr>");
 		}
 		return list;
 	}
@@ -570,9 +574,10 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 	@Override
 	public StudentDTO getMasInfo(String title) {
 		// TODO Auto-generated method stub
-		StudentDTO sdto=dao.getMasInfo(title);
+		StudentDTO sdto = dao.getMasInfo(title);
 		return sdto;
 	}
+
 	public MinutesDTO getRecentMinutes(int group_seq) {
 		// TODO Auto-generated method stub
 		MinutesDTO minutes = dao.getRecentMinutes(group_seq);
@@ -586,5 +591,9 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		return group_title;
 	}
 
-
+	@Override
+	public boolean changePw(StudentDTO student) {
+		boolean flag = dao.changePw(student);
+		return flag;
+	}
 }
