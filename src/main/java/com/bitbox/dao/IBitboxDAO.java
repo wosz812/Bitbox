@@ -2,6 +2,7 @@ package com.bitbox.dao;
 
 import java.util.List;
 
+import com.bitbox.dto.CClassDTO;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
@@ -12,6 +13,8 @@ import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.SubSubjectDTO;
+import com.bitbox.dto.SubjectDateFormat;
 import com.bitbox.dto.TodoDTO;
 import com.bitbox.dto.mPageDTO;
 
@@ -78,4 +81,7 @@ public interface IBitboxDAO {
 	public MinutesDTO getRecentMinutes(int group_seq);
 	public String getGroupTitle(int group_seq);
 	public boolean changePw(StudentDTO student);
+	public List<CClassDTO> getSubject(int code);
+	public CClassDTO getDate(SubjectDateFormat dateFormat);
+	public List<SubSubjectDTO>  subSubject(String subject);
 }

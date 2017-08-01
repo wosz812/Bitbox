@@ -1,13 +1,15 @@
 package com.bitbox.dto;
 
+import java.sql.Date;
+
 import oracle.sql.DATE;
 
 public class CClassDTO {
 	private int c_seq;
 	private int class_code;
 	private String sub_name;
-	private DATE start_date;
-	private DATE end_date;
+	private Date start_date;
+	private Date end_date;
 
 	public int getC_seq() {
 		return c_seq;
@@ -33,19 +35,19 @@ public class CClassDTO {
 		this.sub_name = sub_name;
 	}
 
-	public DATE getStart_date() {
+	public Date getStart_date() {
 		return start_date;
 	}
 
-	public void setStart_date(DATE start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
 
-	public DATE getEnd_date() {
+	public Date getEnd_date() {
 		return end_date;
 	}
 
-	public void setEnd_date(DATE end_date) {
+	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
 

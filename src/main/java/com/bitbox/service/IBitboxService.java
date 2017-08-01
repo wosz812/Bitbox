@@ -16,6 +16,8 @@ import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.SubjectDateFormat;
+import com.bitbox.dto.SubjectFormat;
 import com.bitbox.dto.TodoDTO;
 
 public interface IBitboxService {
@@ -139,5 +141,11 @@ public interface IBitboxService {
 	public MinutesDTO getRecentMinutes(int group_seq);
 
 	public String getGroupTitle(int group_seq);
+	
+	public ArrayList<SubjectFormat> getSubject(int code);
+
+	public ArrayList<SubjectFormat> getDate(SubjectDateFormat dateFormat);
+
+	public ArrayList<SubjectFormat> getsubSubject(String subject);
 
 }

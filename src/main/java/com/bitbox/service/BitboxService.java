@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitbox.dao.IBitboxDAO;
+import com.bitbox.dto.CClassDTO;
 import com.bitbox.dto.CalendarFormat;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GanttDTO;
@@ -27,6 +29,9 @@ import com.bitbox.dto.PMemoDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.SubSubjectDTO;
+import com.bitbox.dto.SubjectDateFormat;
+import com.bitbox.dto.SubjectFormat;
 import com.bitbox.dto.TodoDTO;
 import com.bitbox.dto.mPageDTO;
 
@@ -595,5 +600,77 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 	public boolean changePw(StudentDTO student) {
 		boolean flag = dao.changePw(student);
 		return flag;
+	}
+	@Override
+	public ArrayList<SubjectFormat> getSubject(int code) {
+		//과정 과목 받아오는 메소드.
+		List<CClassDTO> list = dao.getSubject(code);
+		ArrayList<SubjectFormat> formats = new ArrayList<SubjectFormat>();
+		SubjectFormat f = null;
+		for (int i = 0; i < list.size(); i++) {
+			f = new SubjectFormat();
+			f.setLabel(list.get(i).getSub_name());
+			f.setValue("1");
+			formats.add(f);
+		}
+		return formats;
+	}
+
+	@Override
+	public ArrayList<SubjectFormat> getDate(SubjectDateFormat dateFormat) {
+		//과정 일수 받아오는 메소드.
+		CClassDTO dto = dao.getDate(dateFormat);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		formatter.format(new Date());
+		ArrayList<SubjectFormat> formats = new ArrayList<SubjectFormat>();
+		SubjectFormat format1 = new SubjectFormat();
+		SubjectFormat format2 = new SubjectFormat();
+		try {
+
+			long endDate = diffOfDate(formatter.format(new Date()), formatter.format(dto.getEnd_date()));
+			if (endDate < 0) {
+				endDate = 0;
+			}
+			format1.setLabel("남은 일수");
+			format1.setValue(String.valueOf(endDate));
+			System.out.println("남은 일수 :" + String.valueOf(endDate));
+			long startDate = diffOfDate(formatter.format(dto.getStart_date()), formatter.format(new Date()));
+			long totalDate = diffOfDate(formatter.format(dto.getStart_date()), formatter.format(dto.getEnd_date()));
+			if (startDate > totalDate) {
+				startDate = totalDate;
+			}
+			format2.setLabel("현재 일수");
+			format2.setValue(String.valueOf(startDate));
+			formats.add(format1);
+			formats.add(format2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return formats;
+	}
+
+	@Override
+	public ArrayList<SubjectFormat> getsubSubject(String subject) {
+		// TODO Auto-generated method stub
+		ArrayList<SubjectFormat> formats = new ArrayList<SubjectFormat>();
+		SubjectFormat sf = null;
+		List<SubSubjectDTO> sub = dao.subSubject(subject);
+		for (int i = 0; i < sub.size(); i++) {
+			sf = new SubjectFormat();
+			sf.setLabel(sub.get(i).getSub());
+			sf.setValue("1");
+			formats.add(sf);
+		}
+		return formats;
+	}
+
+	public static long diffOfDate(String begin, String end) throws Exception {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		Date beginDate = formatter.parse(begin);
+		Date endDate = formatter.parse(end);
+		long diff = endDate.getTime() - beginDate.getTime();
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+		return diffDays;
 	}
 }

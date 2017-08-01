@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bitbox.dto.CClassDTO;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
@@ -19,6 +20,8 @@ import com.bitbox.dto.PageDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.SubSubjectDTO;
+import com.bitbox.dto.SubjectDateFormat;
 import com.bitbox.dto.TodoDTO;
 import com.bitbox.dto.gPageDTO;
 import com.bitbox.dto.mPageDTO;
@@ -536,6 +539,26 @@ public class BitboxDAO implements IBitboxDAO {
 			flag = true;
 		}
 		return flag;
+	}
+	@Override
+	public List<CClassDTO> getSubject(int code) {
+		// TODO Auto-generated method stub
+		List<CClassDTO> list = session.selectList(namespace + ".getSubject", code);
+		return list;
+	}
+
+	@Override
+	public CClassDTO getDate(SubjectDateFormat dateFormat) {
+		// TODO Auto-generated method stub
+		CClassDTO dto = session.selectOne(namespace + ".getDate", dateFormat);
+		return dto;
+	}
+
+	@Override
+	public List<SubSubjectDTO> subSubject(String subject) {
+		// TODO Auto-generated method stub
+		List<SubSubjectDTO> sub = session.selectList(namespace + ".getsubSubject", subject);
+		return sub;
 	}
 
 
