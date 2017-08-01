@@ -253,7 +253,7 @@
 										<ul class="dropdown-menu" role="menu"
 											aria-labelledby="dropdownMenu1">
 											<li role="presentation"  class="btn btn-info"><a role="menuitem" tabindex="-1"
-												href="/bitbox/recent_Down">Hwp</a></li>
+												href="/bitbox/recent_Down?group_seq=${group.group_seq }">Hwp</a></li>
 											<li role="presentation"  class="btn btn-success"><a role="menuitem" tabindex="-1"
 												href="#">PDF</a></li>
 										</ul></td>
