@@ -156,11 +156,10 @@ margin-right:5px;
 								<div class="input-group">
 								<input type="text" class="form-control pull-right" id="clone_url">
 				                  <div class="input-group-addon">
-				                    <i class="fa fa-copy"></i>
+				                    <button class="fa fa-copy" onclick="copyToClipboard()" id="btn_copy" data-toggle="tooltip" title="url copy!" data-placement="bottom"></button>
 				                  </div>
 				                </div>
-								<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download
-										zip</button></a>
+								<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button style="margin-top: 10px;" type="button" class="btn btn-primary btn-block btn-flat">Download Zip</button></a>
 							</div>
 						</div>
 					</div>
@@ -670,11 +669,18 @@ var createRepos=function(){
 	}
 	
 	function click_func(){
-		alert("hello");
+		//alert("hello");
 		$('#close_refresh').prop("disabled",false);
 		$("#invitation_btn").prop("disabled",true);
 	}
-	
+	function copyToClipboard() {
+	    var $temp = $("<input>");
+	    $("body").append($temp);
+	    $temp.val($("#clone_url").val()).select();
+	    document.execCommand("copy");
+	    $temp.remove();
+	    $("btn_copy").tooltip();
+	}
 	if(${status}==1){
 		createRepos();
 		
