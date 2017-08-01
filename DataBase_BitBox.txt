@@ -11,8 +11,7 @@ select * from BITCLASS;
 
 //??
 create table subject(
-  sub_name varchar(100) primary key,
-  book varchar(100)
+  sub_name varchar(100) primary key
 );
 
 select * from SUBJECT;
@@ -50,8 +49,6 @@ create table student(
 //s_seq ������
 create SEQUENCE s_seq start with 1;
 
-insert into student values('admin',s_seq.nextval,'1234','��뼺','9251992@naver.com',01050300976,1);
-
 select *from student;
 
 //���� ������Ʈ
@@ -70,7 +67,6 @@ create table Pboard(
 //p_boardseq ������
 create SEQUENCE p_boardseq start with 1;
 
-insert into PBOARD(P_BOARDseq,P_TITLE,P_CONTENT,P_UPLOAD,P_CATEGORY,s_ID) values(p_boardseq.nextval,'First File','Testing...','Test.zip','Java','admin');
 
 select * from PBOARD;
 
@@ -86,8 +82,6 @@ create table cgroup(
 
 //group_seq  ������
 create SEQUENCE group_seq start with 1;
-
-insert into cgroup values(group_seq.nextval,'1234','��Ʈ�ڽ����͵�','�׽�Ʈ���Դϴ�.','admin');
 
 select * from cgroup;
 
@@ -106,8 +100,6 @@ create table gboard(
 
 //g_boardseq ������
 create SEQUENCE g_boardseq start with 1;
-
-insert into gboard(g_BOARDseq,g_TITLE,g_CONTENT,g_UPLOAD,group_seq) values(g_boardseq.nextval,'First Test','Testing','Test.zip',1);
 
 select * from gboard;
 
@@ -164,10 +156,6 @@ create table qna(
   s_id varchar(20) not null
   CONSTRAINT student_s_id_fk4 REFERENCES student(s_id)
 );
-
-insert into qna values(q_seq.nextval, 'what is your name?', 'how old are you?', '300.jpg', 'minions', 'JAVA', 'admin');
-
-
 create sequence q_seq start with 1;
 
 select * from qna;
@@ -224,3 +212,115 @@ create table todo(
 );
 
 create SEQUENCE todo_seq start with 1;
+
+create table sub_subject(
+   sub_subject_seq number primary key,
+   sub varchar2(100),
+   sub_name varchar2(100)
+   CONSTRAINT subject_sub_name_fk1 REFERENCES subject(sub_name)
+);
+
+create SEQUENCE sub_subject_seq start with 1;
+
+
+insert into subject values('JAVA');
+insert into cclass values(c_seq.nextval,1,'JAVA',to_date('2017-03-06', 'yyyy-mm-dd'),to_date('2017-03-17','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'변수와 연산자','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'조건과 반복','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'클래스와 객체','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'필드와 메소드','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'생성자와 접근제어','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'배열','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'상속','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'인터페이스','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'패키지','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'예외처리','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'제네릭','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'스레드','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'입출력','JAVA');
+insert into sub_subject values(sub_subject_seq.nextval,'네트워킹','JAVA');
+
+
+insert into subject values('DBMS');
+insert into cclass values(c_seq.nextval,1,'DBMS',to_date('2017-03-20', 'yyyy-mm-dd'),to_date('2017-03-24','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'DB개념및설치','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'SQL기본','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'SQLPLUS 명령어','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'DB개념및설치','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'SELECT 사용법','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'SQL 주요함수','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'그룹함수','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'조인','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'서브쿼리','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'DDL','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'DML','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'트랜잭션','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'제약조건','DBMS');
+insert into sub_subject values(sub_subject_seq.nextval,'가상테이블 VIEW','DBMS');
+
+insert into subject values('JSP');
+insert into cclass values(c_seq.nextval,1,'JSP',to_date('2017-03-27', 'yyyy-mm-dd'),to_date('2017-04-06','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'웹프로그래밍 이해','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'JDK','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'JSP동작원리 및 서블릿','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'스크립트','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'JSP 기초문법','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'JSP 지시자와 태그','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'JSP 내부객체','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'자바 빈즈','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'JDBC로 DB연동','JSP');
+insert into sub_subject values(sub_subject_seq.nextval,'홈페이지 구축','JSP');
+
+insert into subject values('XML');
+insert into cclass values(c_seq.nextval,1,'XML',to_date('2017-04-10', 'yyyy-mm-dd'),to_date('2017-04-12','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'XML개념','XML');
+insert into sub_subject values(sub_subject_seq.nextval,'관련기술비교','XML');
+insert into sub_subject values(sub_subject_seq.nextval,'XML표준안','XML');
+insert into sub_subject values(sub_subject_seq.nextval,'XML용도','XML');
+
+insert into subject values('JPA/hibernate');
+insert into cclass values(c_seq.nextval,1,'JPA/hibernate',to_date('2017-04-13', 'yyyy-mm-dd'),to_date('2017-04-19','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'JPA','JPA/hibernate');
+insert into sub_subject values(sub_subject_seq.nextval,'필드와컬럼매핑','JPA/hibernate');
+insert into sub_subject values(sub_subject_seq.nextval,'식별자 매핑','JPA/hibernate');
+insert into sub_subject values(sub_subject_seq.nextval,'연관관계 매핑','JPA/hibernate');
+
+
+insert into subject values('Spring');
+insert into cclass values(c_seq.nextval,1,'Spring',to_date('2017-04-20', 'yyyy-mm-dd'),to_date('2017-05-11','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'스프링 DI','Spring');
+insert into sub_subject values(sub_subject_seq.nextval,'메세지및 이벤트처리','Spring');
+insert into sub_subject values(sub_subject_seq.nextval,'어노테이션 및 자바코드 설정','Spring');
+insert into sub_subject values(sub_subject_seq.nextval,'스프링 AOP','Spring');
+insert into sub_subject values(sub_subject_seq.nextval,'MVC 이용한 웹 요청처리','Spring');
+insert into sub_subject values(sub_subject_seq.nextval,'DB연동및 JDBC','Spring');
+insert into sub_subject values(sub_subject_seq.nextval,'트랜잭션관리','Spring');
+insert into sub_subject values(sub_subject_seq.nextval,'ORM 연동지원','Spring');
+
+insert into subject values('Junit/TDD');
+insert into cclass values(c_seq.nextval,1,'Junit/TDD',to_date('2017-05-12', 'yyyy-mm-dd'),to_date('2017-05-17','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'테스트 주도 개발 ','Junit/TDD');
+insert into sub_subject values(sub_subject_seq.nextval,'Test with JUnit ','Junit/TDD');
+
+
+insert into subject values('Android');
+insert into cclass values(c_seq.nextval,1,'Android',to_date('2017-05-18', 'yyyy-mm-dd'),to_date('2017-06-01','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'안드로이드 개요및 개발환경','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'View 개요','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'레이아웃 개요','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'고급 위젯','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'메뉴와 대화상자','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'파일처리','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'그래픽과이미지','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'액티비티와인텐트','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'어댑터뷰','Android');
+insert into sub_subject values(sub_subject_seq.nextval,'4대 컴포넌트','Android');
+
+insert into subject values('UML');
+insert into cclass values(c_seq.nextval,1,'UML',to_date('2017-06-02', 'yyyy-mm-dd'),to_date('2017-06-09','yyyy-mm-dd'));
+insert into sub_subject values(sub_subject_seq.nextval,'UML이란','UML');
+insert into sub_subject values(sub_subject_seq.nextval,'유스케이스 다이어그램','UML');
+insert into sub_subject values(sub_subject_seq.nextval,'모델링 절차','UML');
+insert into sub_subject values(sub_subject_seq.nextval,'클래스 간의관계','UML');
+insert into sub_subject values(sub_subject_seq.nextval,'순차다이어그램','UML');
+insert into sub_subject values(sub_subject_seq.nextval,'통신다이어그램','UML');
