@@ -8,7 +8,7 @@ $.ajax({
 			var donut3 = new Morris.Donut({
 				element : 'sales-chart',
 				resize : true,
-				colors : [ "#3c8dbc", "#f56954", "#00a65a" ],
+				colors : [ "#E1F5F2", "#6BC5D2", "#5A5D9D", "#390050" ],
 				data : datas,
 				hideHover : 'auto'
 			}).on('click', function(i, row) {
@@ -28,8 +28,7 @@ $.ajax({
 			var donut3 = new Morris.Donut({
 				element : 'sales-chart3',
 				resize : true,
-				colors : [ "#3c8dbc", "#f56954", "#00a65a", "#ffdf3e",
-						"#f56954" ],
+				colors : [ "#E1F5F2", "#6BC5D2" ],
 				data : datas,
 				hideHover : 'auto'
 			});
@@ -46,7 +45,7 @@ $.ajax({
 			var donut3 = new Morris.Donut({
 				element : 'sales-chart2',
 				resize : true,
-				colors : [ "#da3f3a", "#f56954" ],
+				colors : [ "#E1F5F2", "#5A5D9D" ],
 				data : datas,
 				hideHover : 'auto'
 			});
@@ -64,7 +63,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : ["#E1F5F2", "#6BC5D2"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -78,7 +77,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : ["#E1F5F2", "#5A5D9D"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -94,7 +93,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#6BC5D2" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -108,7 +107,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#5A5D9D"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -123,7 +122,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#6BC5D2"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -137,7 +136,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#5A5D9D"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -152,7 +151,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : ["#E1F5F2", "#6BC5D2" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -166,7 +165,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#5A5D9D" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -181,7 +180,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#6BC5D2" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -195,7 +194,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#5A5D9D"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -210,7 +209,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#6BC5D2" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -224,7 +223,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#5A5D9D" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -239,7 +238,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#6BC5D2"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -253,7 +252,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#5A5D9D"],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -268,7 +267,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : ["#E1F5F2", "#6BC5D2" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -282,7 +281,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : [ "#E1F5F2", "#5A5D9D" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -297,7 +296,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart3',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : ["#E1F5F2", "#6BC5D2" ],
 					data : datas,
 					hideHover : 'auto'
 				});
@@ -311,7 +310,7 @@ function displayData(i, row) {
 				var donut3 = new Morris.Donut({
 					element : 'sales-chart2',
 					resize : true,
-					colors : [ "#00a65a", "#8ec96d" ],
+					colors : ["#E1F5F2", "#5A5D9D"],
 					data : datas,
 					hideHover : 'auto'
 				});
