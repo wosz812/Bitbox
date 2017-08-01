@@ -1,9 +1,0 @@
-diff a/src/main/java/com/bitbox/service/BitboxService.java b/src/main/java/com/bitbox/service/BitboxService.java	(rejected hunks)
-@@ -427,6 +427,7 @@
- 					+ group_title + "'><button class=\"btn btn-primary\">" + (i + 1)
- 					+ "</button></a> ");
- 					+ group_title + "'>" + (i + 1) + "</a> ");
-+>>>>>>> master
- 		}
- 		// next
- 		if (endPage < pageCount) {

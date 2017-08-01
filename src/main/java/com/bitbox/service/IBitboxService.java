@@ -137,7 +137,7 @@ public interface IBitboxService {
 
 	public MinutesDTO getRecentMinutes(int group_seq);
 
-	String getGroupTitle(int group_seq);
+	public String getGroupTitle(int group_seq);
 
 
 }
