@@ -513,11 +513,8 @@ public class BitboxDAO implements IBitboxDAO {
 		StudentDTO dto=session.selectOne(git+".getMasInfo",title);
 		return dto;
 	}
-
+	
 	@Override
-	public GroupDTO selectMasId(GroupDTO dto) {
-		GroupDTO sdto=session.selectOne(git+".selectMasId",dto);
-		return sdto;
 	public MinutesDTO getRecentMinutes(int group_seq) {
 		// TODO Auto-generated method stub
 		MinutesDTO minutes = session.selectOne(namespace + ".getRecentMinutes", group_seq);

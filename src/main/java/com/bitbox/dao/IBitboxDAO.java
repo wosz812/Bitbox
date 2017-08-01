@@ -74,14 +74,8 @@ public interface IBitboxDAO {
 	public List<TodoDTO> getTodoList(String id);
 	public boolean deleteAll(String id);
 	public boolean deleteLine(int seq);
-
 	public StudentDTO getMasInfo(String title);
-
-
-	public boolean gitMasterUpdate(GroupDTO dto);
-	public GroupDTO selectMasId(GroupDTO dto);
 	public MinutesDTO getRecentMinutes(int group_seq);
 	public String getGroupTitle(int group_seq);
-	public StudentDTO getMasInfo(String title);
 
 }
