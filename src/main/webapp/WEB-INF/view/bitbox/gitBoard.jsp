@@ -107,11 +107,14 @@ margin-right:5px;
 		<%@include file="sidebar.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<a href="/git/gitBoardView" class="aaf"><span id="title"></span></a>
-			${token}
+			
+			<section class="content-header">
+		      <a href="/git/gitBoardView" class="aaf"><h2 id="title"></h2></a>
+		    </section>
+			<%-- ${token}
 			${username}
 			${status}
-			${id}
+			${id} --%>
 			<div id="toReplace">
 				<div v-if="currentComponent==='upload files'">
 					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files
@@ -120,7 +123,8 @@ margin-right:5px;
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</div>
 				<div v-if="currentComponent==='invitation'">
-					<a href="{{html_url}}" id="invitation_url">invitation</a>
+					<a href="{{html_url}}" target="_blank" id="invitation_url">invitation</a>
+					<a href="/git/gitBoard?title=${title}"><button class="btn btn-primary">Close</button></a>
 				</div>
 				<div v-show="!currentComponent">
 					<div class="dropdown">
@@ -213,10 +217,6 @@ var createRepos=function(){
 	});
 }
 
-
-
-
-
  $(document).ready(function()
 		{
 		var obj = $("#dragandrophandler");
@@ -269,20 +269,24 @@ var createRepos=function(){
 		}); 
 }); 
  var getTitle = function() {
-	 $.ajax({ 	
-		 url: 'https://api.github.com/repos/${masId}/${title}',
-		 type: 'GET',
-		    
-		  beforeSend: function(xhr) { 
-		    }  , 
-		    data: {}
-		}).done(function(response) {
-		    console.log(response);
-		    $("#title").html(response["full_name"]);
-		    $("#clone_url").val(response["clone_url"]);
-	});	
+	 return new Promise(function(resolve, reject) {
+		 $.ajax({ 	
+			 url: 'https://api.github.com/repos/${masId}/${title}',
+			 type: 'GET',
+			    
+			  beforeSend: function(xhr) { 
+			    }  , 
+			    data: {}
+			}).done(function(response) {
+			    console.log(response);
+			    $("#title").html(response["full_name"]);
+			    $("#clone_url").val(response["clone_url"]);
+			    resolve();
+		});	
+	 });
  }
  var initStart = function() {
+	 return new Promise(function(resolve, reject) {
 		$.ajax({ 
 	
 		url: 'https://api.github.com/repos/${masId}/${title}/git/refs/heads/master',
@@ -296,7 +300,9 @@ var createRepos=function(){
 		    console.log(response);
 		    var sha=response.object.sha;
 		    getCurrentTreeSHA(sha);
+		    resolve();
 		});
+	 });
 	}
 	
 		var getCurrentTreeSHA = function(sha) {
@@ -411,9 +417,7 @@ var createRepos=function(){
 
 	  
 	  created: function() {
-		  //이게 vue component 생성 시점을 맞춰야할거같은데
-		  //vue 흠 흠 흠흠흠흠흠흠잠깐만나 하는거 봐바바
-	        //toReplace.fetchEventsList();
+			
 	  },
 	  methods: {
 	    swapComponent: function(component)
@@ -421,17 +425,14 @@ var createRepos=function(){
 	    	console.log(component);
 	      this.currentComponent = component;
 	    },
-	    component: function()
-	    {
-	      return true;
-	    },
 	    changeUrl:function(url){
 	    	this.html_url=url; //이렇게 하고
 	    	this.swapComponent("invitation");
 	    },
 	    fetchEventsList: function() {
-	    	getTitle();
-        	initStart();
+        	Promise.all([getTitle(), initStart()]).then(function () {
+        		console.log("모두 완료됨");
+        	});
 
         },
       	gitClick: function(type,path,url){
