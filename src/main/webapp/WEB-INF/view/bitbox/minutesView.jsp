@@ -85,10 +85,17 @@
 									</div>
 								</div>
 								<div class="box-footer" align="right" style="padding: 15px">
-								<button type="button" class="btn btn-primary" onclick="gourl(0)">다운받기</button>
 								<button type="button" class="btn btn-primary" onclick="gourl(1)">수정하기</button>
 								<button type="button" class="btn btn-primary" onclick="gourl(2)">삭제하기</button>
 								<button type="button" class="btn btn-primary" onclick="gourl(3)">돌아가기</button>
+								<button type="button" class="btn btn-primary btn-default dropdown toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">다운받기
+								<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+									<li role="presentation" class="btn btn-info"><a role="menuitem" tabindex="-1" onclick="gourl(0)">Hwp</a></li>
+									
+									<li role="presentation" class="btn btn-success"><a role="menuitem" tabindex="-1" onclick="gourl(4)">PDF</a></li>
+								</ul>
 							</div>
 							</form>
 							
@@ -117,6 +124,8 @@
 				url = "/bitbox/minutesDelete";
 			} else if (type == 3){
 				url = "/bitbox/minutesList";
+			} else if (type == 4){
+				url = "/bitbox/pdfCreate";
 			}
 			ds.action = url;
 			ds.submit();

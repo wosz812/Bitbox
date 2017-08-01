@@ -235,11 +235,31 @@
 						<div class="box-header with-border">
 							<h3 class="box-title font">간편 메뉴</h3>
 							<div>
-								<label style="font-size: large; margin: 10px;">-최근 회의록 뽑기</label>
+								<label style="font-size: large; margin: 10px;">-최근 회의록
+									뽑기</label>
+								<table class="table table-hover" >
 								<c:forEach items="${groupList}" var="group">
-									<li><a href="/bitbox/recent_Down?group_seq=${group.group_seq}">
-									<i class="fa fa-group"></i> ${group.title}</a></li>
+								<tr>
+									<td colspan="3">
+									<i class="fa fa-group"></i> <h4>${group.title}</h4>
+									</td>
+									<td>
+										<button class="btn btn-primary btn-default dropdown-toggle" type="button"
+											id="dropdownMenu1" data-toggle="dropdown"
+											aria-expanded="true"
+											style="float: right;">
+											다운받기 <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu"
+											aria-labelledby="dropdownMenu1">
+											<li role="presentation"  class="btn btn-info"><a role="menuitem" tabindex="-1"
+												href="/bitbox/recent_Down">Hwp</a></li>
+											<li role="presentation"  class="btn btn-success"><a role="menuitem" tabindex="-1"
+												href="#">PDF</a></li>
+										</ul></td>
+								</tr>																																			
 								</c:forEach>
+								</table>
 							</div>
 						</div>
 
