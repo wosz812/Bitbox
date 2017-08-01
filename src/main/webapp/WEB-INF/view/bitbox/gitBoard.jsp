@@ -123,8 +123,23 @@ margin-right:5px;
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</div>
 				<div v-if="currentComponent==='invitation'">
-					<a href="{{html_url}}" target="_blank" id="invitation_url">invitation</a>
-					<a href="/git/gitBoard?title=${title}"><button class="btn btn-primary">Close</button></a>
+					<div class="col-md-6">
+				          <div class="box box-default">
+				            <div class="box-header with-border">
+				              <i class="fa fa-warning"></i>
+				              <h3 class="box-title">Alerts</h3>
+				            </div>
+				            <div class="box-body">
+				              <div class="alert alert-warning alert-dismissible">
+						      	<h4><i class="icon fa fa-warning"></i> Github Rpository 초대를 수락해주세요</h4>
+						        <div class="btn-group-horizontal">
+					            	<a href="{{html_url}}" target="_blank" id="invitation_url"><button type="button" class="btn btn-primary" onclick="click_func()" id="invitation_btn">Accept</button></a>
+					                <a href="/git/gitBoard?title=${title}"><button type="button" class="btn btn-default" id="close_refresh" disabled>Close</button></a>
+					            </div>
+						     </div>
+				            </div>
+				          </div>
+					</div>
 				</div>
 				<div v-show="!currentComponent">
 					<div class="dropdown">
@@ -137,7 +152,13 @@ margin-right:5px;
 							</button>
 							<div class="dropdown-menu">
 								Clone with HTTPS Use Git or checkout with SVN using the web URL.
-								<input type="text" class="form-control" id="clone_url">
+								<!-- <input type="text" class="form-control" > -->
+								<div class="input-group">
+								<input type="text" class="form-control pull-right" id="clone_url">
+				                  <div class="input-group-addon">
+				                    <i class="fa fa-copy"></i>
+				                  </div>
+				                </div>
 								<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button>download
 										zip</button></a>
 							</div>
@@ -646,7 +667,14 @@ var createRepos=function(){
 			//toReplace.fetchEventsList();
 			
 		});
-	}//다사 let'sgetit
+	}
+	
+	function click_func(){
+		alert("hello");
+		$('#close_refresh').prop("disabled",false);
+		$("#invitation_btn").prop("disabled",true);
+	}
+	
 	if(${status}==1){
 		createRepos();
 		
