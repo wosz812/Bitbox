@@ -1,8 +1,12 @@
 package com.bitbox.controller;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,24 +31,33 @@ public class MailController {
 	@RequestMapping(value = "/sendMail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String sendMail(StudentDTO dto, Model model, @RequestParam("type") int type) {
 		String url = "/login/searchInfo";
-		StudentDTO student = service.searchInfo(dto, type);
 		String info = "";
-		if (student != null) {
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom("Hello");
-			message.setTo(student.getS_email());
-			message.setSubject("BitBox에서 소중한 회원님의 정보를 알려드립니다.");// 제목
-			if (type == 0) {
-				message.setText(student.getS_name() + " 님의 ID는 < " + student.getS_id() + " > 입니다.");// 내용
+		StudentDTO student = service.searchInfo(dto, type);
+		MimeMessage message = null;
+		MimeMessageHelper messageHelper = null;
+		try {
+			if (student != null) {
+				message = mailSender.createMimeMessage();
+				messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				messageHelper.setFrom("BITBOX");
+				messageHelper.setTo(student.getS_email());
+				messageHelper.setSubject("BITBOX에서 소중한 회원님의 정보를 알려드립니다.");// 제목
+				if (type == 0) {
+					messageHelper.setText(student.getS_name() + " 님의 ID는 < " + student.getS_id() + " > 입니다.");// 내용
+				} else {
+					String sendUrl = "<a href=\"http://localhost:8080/mail/changePwForm?id=" + dto.getS_id()
+							+ "\">비밀번호 변경</a>";
+					messageHelper.setText("아래 링크를 통해 새로운 비밀번호를 입력하시기 바랍니다.<br>" + sendUrl, true);// 내용
+				}
+				mailSender.send(message);
+				info = "요청하신 정보를 < " + student.getS_email() + " > 로 보냈으니 확인부탁드립니다.";
 			} else {
-				String sendUrl = "http://localhost:8080/mail/changePwForm?id=" + dto.getS_id();
-				message.setText("아래 링크를 통해 새로운 비밀번호를 입력하시기 바랍니다.\r\n" + sendUrl);// 내용
+				info = "입력한 정보가 알맞지 않습니다.";
 			}
-			mailSender.send(message);
-			info = "요청하신 정보를 < " + student.getS_email() + " > 로 보냈으니 확인부탁드립니다.";
-		} else {
-			info = "입력한 정보가 알맞지 않습니다.";
+		} catch (MessagingException e) {
+			e.printStackTrace();
 		}
+
 		model.addAttribute("info", info);
 		return url;
 	}
