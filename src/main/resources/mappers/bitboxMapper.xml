@@ -296,4 +296,15 @@
 	<select id="getGroupTitle" resultType="String" parameterType="Integer">
 		select title from cgroup where group_seq = #{group_seq}
 	</select>
+	
+	<select id="getSubject" parameterType="Integer" resultType="com.bitbox.dto.CClassDTO">
+	select * from cclass where CLASS_CODE=#{code}
+	</select>
+	<select id="getDate" parameterType="com.bitbox.dto.SubjectDateFormat" 	resultType="com.bitbox.dto.CClassDTO">
+	select c_seq,class_code,sub_name,to_date(start_date,'yy-mm-dd')Start_date ,to_date(end_date,'yy-mm-dd')End_Date from cclass where SUB_NAME=#{subject} and CLASS_CODE=#{code}
+	</select>
+	
+	<select id="getsubSubject" parameterType="String" resultType="com.bitbox.dto.SubSubjectDTO">
+	select * from sub_subject where sub_name=#{subject}
+	</select>
 </mapper>

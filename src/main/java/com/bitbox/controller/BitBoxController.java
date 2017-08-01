@@ -41,6 +41,8 @@ import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
+import com.bitbox.dto.SubjectDateFormat;
+import com.bitbox.dto.SubjectFormat;
 import com.bitbox.dto.TodoDTO;
 import com.bitbox.service.IBitboxService;
 import com.google.gson.Gson;
@@ -696,5 +698,27 @@ public class BitBoxController {
 			
 		}
 		return url;
+	}
+	@RequestMapping(value = "/getSubject", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody ArrayList<SubjectFormat> getSubject(HttpSession session) {
+		int code=(int) session.getAttribute("code");
+		ArrayList<SubjectFormat> subjectList =service.getSubject(code);
+		return subjectList;
+	}
+	@RequestMapping(value = "/getSubSubject", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody ArrayList<SubjectFormat> getSubSubject(HttpSession session,@RequestParam("subject")String subject) {
+		ArrayList<SubjectFormat> sub_subject=service.getsubSubject(subject);	
+		return sub_subject;
+	}
+	
+	@RequestMapping(value = "/getSubjectDate", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody ArrayList<SubjectFormat> getSubjectDate(HttpSession session,@RequestParam("subject")String subject) {
+		System.out.println(subject);
+		int code=(int) session.getAttribute("code");
+		SubjectDateFormat dateFormat=new SubjectDateFormat();
+		dateFormat.setSubject(subject);
+		dateFormat.setCode(code);
+		ArrayList<SubjectFormat> date=service.getDate(dateFormat);		
+		return date;
 	}
 }
