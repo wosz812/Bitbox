@@ -1,6 +1,9 @@
 package com.bitbox.controller;
 
+import java.awt.Color;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,11 +45,22 @@ import com.bitbox.dto.PBoardDTO;
 import com.bitbox.dto.QnaDTO;
 import com.bitbox.dto.ReQnaDTO;
 import com.bitbox.dto.StudentDTO;
-import com.bitbox.dto.SubjectDateFormat;
-import com.bitbox.dto.SubjectFormat;
 import com.bitbox.dto.TodoDTO;
 import com.bitbox.service.IBitboxService;
+import com.bitbox.service.PdfService;
 import com.google.gson.Gson;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 @RequestMapping(value = "/bitbox")
 
@@ -586,6 +601,10 @@ public class BitBoxController {
 		String fileName = profile_img.getOriginalFilename();
 		UUID uuidname = UUID.randomUUID();
 		try {
+			File directory = new File(path);
+			if(!directory.exists()){
+				directory.mkdirs();// 파일경로 없으면 생성
+			}
 			profile_img.transferTo(new File(path + uuidname.toString() + "_" + fileName));
 			dto.setS_img(fileName);
 			dto.setS_uuid_img(uuidname.toString() + "_" + fileName);
@@ -699,26 +718,27 @@ public class BitBoxController {
 		}
 		return url;
 	}
-	@RequestMapping(value = "/getSubject", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody ArrayList<SubjectFormat> getSubject(HttpSession session) {
-		int code=(int) session.getAttribute("code");
-		ArrayList<SubjectFormat> subjectList =service.getSubject(code);
-		return subjectList;
-	}
-	@RequestMapping(value = "/getSubSubject", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody ArrayList<SubjectFormat> getSubSubject(HttpSession session,@RequestParam("subject")String subject) {
-		ArrayList<SubjectFormat> sub_subject=service.getsubSubject(subject);	
-		return sub_subject;
-	}
-	
-	@RequestMapping(value = "/getSubjectDate", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody ArrayList<SubjectFormat> getSubjectDate(HttpSession session,@RequestParam("subject")String subject) {
-		System.out.println(subject);
-		int code=(int) session.getAttribute("code");
-		SubjectDateFormat dateFormat=new SubjectDateFormat();
-		dateFormat.setSubject(subject);
-		dateFormat.setCode(code);
-		ArrayList<SubjectFormat> date=service.getDate(dateFormat);		
-		return date;
+	@RequestMapping(value = "/pdfCreate", method = { RequestMethod.POST, RequestMethod.GET })
+	public String pdfCreate(HttpServletRequest req,HttpServletResponse response,MinutesDTO minutes, @RequestParam("group_title") String group_title, Model model){
+		String url = "/bitbox/home";
+		
+		PdfService pdf = new PdfService();
+		url = pdf.makePDF(minutes, group_title);
+		
+//		try {
+//			response.setContentType("text/html; charset=UTF-8");
+//			PrintWriter out;
+//			out = response.getWriter();
+//			out.println("<script>alert('c:/dev/pdf에 저장되었습니다.');</script>");
+//			out.flush();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+	    //System.out.println(url);
+	    return "redirect:"+url;
+	    
+//	    return url;
 	}
 }
