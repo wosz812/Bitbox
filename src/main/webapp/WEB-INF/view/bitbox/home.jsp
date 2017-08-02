@@ -233,37 +233,37 @@
 					<!-- DONUT CHART -->
 					<div class="box" style="height: 400px">
 						<div class="box-header with-border">
-							<h3 class="box-title font">간편 메뉴</h3>
+							<h3 class="box-title font">최근 회의록</h3>
 							<div>
-								<label style="font-size: large; margin: 10px;">-최근 회의록
-									뽑기</label>
-								<table class="table table-hover" >
-								<c:forEach items="${groupList}" var="group">
-								<tr>
-									<td colspan="3">
-									<i class="fa fa-group"></i> <h4>${group.title}</h4>
-									</td>
-									<td>
-										<button class="btn btn-primary btn-default dropdown-toggle" type="button"
-											id="dropdownMenu1" data-toggle="dropdown"
-											aria-expanded="true"
-											style="float: right;">
-											다운받기 <span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu" role="menu"
-											aria-labelledby="dropdownMenu1">
-											<li role="presentation"  class="btn btn-info"><a role="menuitem" tabindex="-1"
-												href="/bitbox/recent_Down?group_seq=${group.group_seq }">Hwp</a></li>
-											<li role="presentation"  class="btn btn-success"><a role="menuitem" tabindex="-1"
-												href="#">PDF</a></li>
-										</ul></td>
-								</tr>																																			
-								</c:forEach>
+								<table class="table table-hover" style="width: 460.33px;">
+									<tr><td></td></tr>
+									<tr align="center">
+										<td><label>그룹명</label></td>
+										<td><label>다운받기</label></td>
+									</tr>
+									<c:forEach items="${groupList}" var="group">
+										<tr align="center">
+											<td>
+												<h4>${group.title}</h4>
+											</td>
+											<td>
+												<div class="btn-group" align="right">
+								                	<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+								                		다운받기&nbsp;&nbsp;
+									                    <span class="caret"></span>
+									                    <span class="sr-only">Toggle Dropdown</span>
+								                    </button>
+								               		<ul class="dropdown-menu" role="menu">
+									                    <li><a href="/bitbox/recent_Down?group_seq=${group.group_seq }">Hwp</a></li>
+									                    <li><a href="/bitbox/recent_Pdf?group_seq=${group.group_seq }">PDF</a></li>
+								                  	</ul>
+								                </div>
+											</td>
+										</tr>																																			
+									</c:forEach>
 								</table>
 							</div>
 						</div>
-
-						<!-- /.box-body -->
 					</div>
 				</div>
 			</section>
