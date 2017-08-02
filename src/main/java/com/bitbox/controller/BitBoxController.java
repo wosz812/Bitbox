@@ -744,6 +744,46 @@ public class BitBoxController {
 	    
 //	    return url;
 	}
+	
+	@RequestMapping(value = "/recent_Pdf", method = { RequestMethod.POST, RequestMethod.GET })
+	public String recentPdf(@RequestParam("group_seq") int group_seq, Model model,HttpServletResponse response) {
+		String url = "";
+		// 줄바꿈처리
+		MinutesDTO minutes = service.getRecentMinutes(group_seq);
+		if(minutes==null){
+			//회의록이 없을경우
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out;
+				out = response.getWriter();
+				out.println("<script>alert('error : 회의록이 존재하지 않습니다');</script>");
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			url = "/bitbox/home";
+		}else{
+			String group_title = service.getGroupTitle(group_seq);
+			PdfService pdf = new PdfService();
+			url = pdf.makePDF(minutes, group_title);
+			
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out;
+				out = response.getWriter();
+				out.println("<script>alert('회의록은 C:/dev/pdf 에 저장되었습니다.');</script>");
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			url = "/bitbox/home";
+		}
+		return url;
+	}
+	
 	@RequestMapping(value = "/getSubject", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody ArrayList<SubjectFormat> getSubject(HttpSession session) {
 		int code=(int) session.getAttribute("code");

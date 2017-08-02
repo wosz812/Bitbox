@@ -29,7 +29,7 @@ public class PdfService {
 		String url = "/bitbox/minutesView?seq="+minutes.getMin_seq()+"&group="+group_title+"&page=0";
 		String fileName = "";
 		String dir = "C:\\dev\\pdf\\";
-		fileName = "Min"+group_title+".pdf";
+		fileName = "Min_"+group_title+".pdf";
 		
 		File directory = new File(dir);
 	    if(!directory.exists()) directory.mkdirs(); //파일경로 없으면 생성

@@ -248,14 +248,14 @@
 											</td>
 											<td>
 												<div class="btn-group" align="right">
-								                	<button type="button" class="btn btn-success">다운받기</button>
 								                	<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+								                		다운받기&nbsp;&nbsp;
 									                    <span class="caret"></span>
 									                    <span class="sr-only">Toggle Dropdown</span>
 								                    </button>
 								               		<ul class="dropdown-menu" role="menu">
 									                    <li><a href="/bitbox/recent_Down?group_seq=${group.group_seq }">Hwp</a></li>
-									                    <li><a href="#">PDF</a></li>
+									                    <li><a href="/bitbox/recent_Pdf?group_seq=${group.group_seq }">PDF</a></li>
 								                  	</ul>
 								                </div>
 											</td>
