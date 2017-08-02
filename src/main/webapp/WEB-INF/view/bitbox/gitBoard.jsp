@@ -117,8 +117,12 @@ margin-right:5px;
 			${id} --%>
 			<div id="toReplace">
 				<div v-if="currentComponent==='upload files'">
-					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files
-						Here</div>
+					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
+					<div class="progress">
+		                <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+		                  <span class="sr-only">40% Complete (success)</span>
+		                </div>
+		              </div>
 					<table id="status1"></table>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</div>
