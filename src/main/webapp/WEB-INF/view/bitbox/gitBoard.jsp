@@ -118,11 +118,11 @@ margin-right:5px;
 			<div id="toReplace">
 				<div v-if="currentComponent==='upload files'">
 					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
-					<div class="progress">
+					<!-- <div class="progress">
 		                <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
 		                  <span class="sr-only">40% Complete (success)</span>
 		                </div>
-		              </div>
+		            </div> -->
 					<table id="status1"></table>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</div>
@@ -179,8 +179,8 @@ margin-right:5px;
 									<div class="box-body">
 										<table class="table table-bordered">
 											<tr v-for="row in rows">
-												<td><img v-bind:src=row.src></td>
-												<td><a v-on:click="gitClick(row.type,row.path,row.url)">{{row.path}}</a></td>
+												<td width="15px"><img v-bind:src=row.src></td>
+												<td style="text-align:left"><a v-on:click="gitClick(row.type,row.path,row.url)">{{row.path}}</a></td>
 											</tr>
 										</table>
 									</div>
@@ -223,6 +223,8 @@ var promises=new Array();
 var uploadDirs=new Array();
 var uploadFiles=new Array();
 var cnt=1;
+var flag=0;//상위 폴더 생성하기위한 변수
+var prevUrl=new Array();
 
 //create repository
 var createRepos=function(){
@@ -358,6 +360,7 @@ var createRepos=function(){
 						data : {}
 					}).done(function(response) {
 						console.log(response);
+						prevUrl.push(response["url"]);
 					    getTree(response.tree);
 					});
 				}
@@ -366,8 +369,18 @@ var createRepos=function(){
 		//tree를 얻어온 것 테이블에 뿌려주기
 		 var getTree = function(res) {
 			$('#gBlist').text("");
+			var el=new Object();
+			var len=prevUrl.length;
+			if(len!=1){
+				el={
+						src:"/img/directory.png",
+						path:"..",
+						type:"",
+						url:prevUrl[prevUrl.length-2]
+				}
+				toReplace.rows.push(el);
+			}
 			$.each(res,function(key,object) {
-				var el=new Object();
 				if(res[key].type=="tree"){
 					el={
 							src:"/img/directory.png",
@@ -421,7 +434,7 @@ var createRepos=function(){
 	  data: {
 	    currentComponent: null,
 	    component: 'upload files',
-	    rows: [{src:"",path:"",type:"",url:""}],
+	    rows: [],
 	    html_url: ''
 	  },
 	  components: {
@@ -460,6 +473,7 @@ var createRepos=function(){
 
         },
       	gitClick: function(type,path,url){
+      		flag=1;
       		if(type==="blob"){
     			getblobContent(path,url);
     		}
@@ -475,6 +489,11 @@ var createRepos=function(){
     						data : {}
     					}).done(function(response) {
     						console.log(response);
+    						if(path===".."){
+    		    				prevUrl.pop();
+    		    			}else{
+    							prevUrl.push(response["url"]);
+    		    			}
     						getTree(response.tree);
     					});
     		}
