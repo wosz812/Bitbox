@@ -163,7 +163,7 @@ margin-right:5px;
 				                    <button class="fa fa-copy" onclick="copyToClipboard()" id="btn_copy" data-toggle="tooltip" title="url copy!" data-placement="bottom"></button>
 				                  </div>
 				                </div>
-								<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button style="margin-top: 10px;" type="button" class="btn btn-primary btn-block btn-flat">Download Zip</button></a>
+								<a href="https://api.github.com/repos/${masId}/${title}/zipball"><button style="margin-top: 10px;" type="button" class="btn btn-primary btn-block btn-flat">Download Zip</button></a>
 							</div>
 						</div>
 					</div>
