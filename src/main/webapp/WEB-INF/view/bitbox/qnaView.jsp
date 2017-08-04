@@ -93,7 +93,7 @@
 										onclick="gourl(3)">삭제</button>
 								</div>
 								<div align="center">
-									<h4><label>Coment</label></h4>
+									<h4><label>Comment</label></h4>
 								</div>
 							</form>
 							<c:forEach var="re" items="${replyList}">
