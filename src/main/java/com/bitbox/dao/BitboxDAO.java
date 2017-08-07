@@ -561,5 +561,23 @@ public class BitboxDAO implements IBitboxDAO {
 		return sub;
 	}
 
+	@Override
+	public List<ReQnaDTO> getReQnaAlarm(String s_id) {
+		// TODO Auto-generated method stub
+		List<ReQnaDTO> dto=session.selectList(namespace+".getReQnaAlarm",s_id);
+		return dto;
+	}
+
+	@Override
+	public boolean qnaState(int q_seq) {
+		// TODO Auto-generated method stub
+		boolean flag=false;
+		int aCnt=session.update(namespace + ".qnaState", q_seq);
+		if(aCnt>0){
+			flag=true;
+		}
+		return flag;
+	}
+
 
 }

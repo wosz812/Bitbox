@@ -353,8 +353,8 @@ public class BitBoxController {
 		return url;
 	}
 
-	@RequestMapping(value = "/alarm", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody int alarm() {
+	@RequestMapping(value = "/groupAlarm", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody int groupAlarm() {
 		// System.out.println("alarm call");
 		// System.out.println("modal: "+gNo);
 		int cnt = service.getCnt();
@@ -362,7 +362,23 @@ public class BitBoxController {
 
 		return cnt;
 	}
-
+	
+	@RequestMapping(value = "/qnaAlarm", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody List<ReQnaDTO> qnaAlarm(HttpSession session) {
+		// System.out.println("alarm call");
+		// System.out.println("modal: "+gNo);
+		String s_id=(String) session.getAttribute("id");
+		List<ReQnaDTO> list = service.getReQnaAlarm(s_id);
+		//System.out.println("controller reqna list: "+list);
+		return list;
+	}
+	
+	@RequestMapping(value = "/qnaState", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody boolean qnaState(@RequestParam("q_seq") int q_seq) {
+		boolean flag=service.qnaState(q_seq);
+		return flag;
+	}
+	
 	@RequestMapping(value = "/qna", method = { RequestMethod.POST, RequestMethod.GET })
 	public String qna(HttpSession session, Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 		String url = "/bitbox/qna";

@@ -84,4 +84,6 @@ public interface IBitboxDAO {
 	public List<CClassDTO> getSubject(int code);
 	public CClassDTO getDate(SubjectDateFormat dateFormat);
 	public List<SubSubjectDTO>  subSubject(String subject);
+	public List<ReQnaDTO> getReQnaAlarm(String s_id);
+	public boolean qnaState(int q_seq);
 }
