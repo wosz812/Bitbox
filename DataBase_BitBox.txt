@@ -222,6 +222,17 @@ create table sub_subject(
 
 create SEQUENCE sub_subject_seq start with 1;
 
+create table grouplog(
+  log_seq number primary key,
+  s_id varchar(200) not null,
+  title varchar(100)not null,
+  acting_id varchar(100),
+  action varchar(100)not null,
+  detail varchar(1000)not null
+);
+
+create SEQUENCE log_seq start with 1;
+
 
 insert into subject values('JAVA');
 insert into cclass values(c_seq.nextval,1,'JAVA',to_date('2017-03-06', 'yyyy-mm-dd'),to_date('2017-03-17','yyyy-mm-dd'));

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bitbox.dto.CClassDTO;
+import com.bitbox.dto.GLogDTO;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
@@ -280,11 +281,9 @@ public class BitboxDAO implements IBitboxDAO {
 	}
 
 	@Override
-	public int getCnt() {
-		// System.out.println("dao call");
-		int cnt = session.selectOne(namespace + ".getCnt");
-		// System.out.println("dao getCnt: "+cnt);
-		return cnt;
+	public List<GLogDTO> getGLogAlarm(String s_id) {
+		List<GLogDTO> list = session.selectList(namespace + ".getGLogAlarm",s_id);
+		return list;
 	}
 
 	@Override
@@ -577,6 +576,43 @@ public class BitboxDAO implements IBitboxDAO {
 			flag=true;
 		}
 		return flag;
+	}
+
+	@Override
+	public List<GinDTO> getGroupMember(GroupDTO dto) {
+		// TODO Auto-generated method stub
+		List<GinDTO> list=session.selectList(namespace+".getGroupMember",dto);
+		return list;
+	}
+
+	@Override
+	public boolean insertGLog(GLogDTO dto) {
+		// TODO Auto-generated method stub
+		System.out.println("insert log dto: "+dto);
+		boolean flag=false;
+		int aCnt=session.insert(namespace + ".insertGLog", dto);
+		if(aCnt>0){
+			flag=true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean readGLog(int log_seq) {
+		// TODO Auto-generated method stub
+		boolean flag=false;
+		int aCnt=session.delete(namespace + ".readGLog", log_seq);
+		if(aCnt>0){
+			flag=true;
+		}
+		return flag;
+	}
+
+	@Override
+	public int getGroupSeq(String title) {
+		// TODO Auto-generated method stub
+		int seq=session.selectOne(namespace+".getGroupSeq",title);
+		return seq;
 	}
 
 

@@ -316,4 +316,29 @@
 		update reqna set state=1 where q_seq=#{q_seq} and state=0
 	</update>
 	
+	<select id="getGroupMember" parameterType="com.bitbox.dto.GroupDTO" resultType="com.bitbox.dto.GinDTO">
+		select * from groupin where group_seq in (select group_seq from cgroup where title=#{title}) and s_id!=#{s_id}
+	</select>
+	
+	<insert id="insertGLog" parameterType="com.bitbox.dto.GLogDTO">
+		<selectKey keyProperty="log_seq" order="BEFORE"
+			resultType="Integer">
+			select log_seq.nextval from dual
+		</selectKey>
+		insert into
+		grouplog(log_seq,s_id,title,acting_id,action,detail)
+		values(#{log_seq},#{s_id},#{title},#{acting_id},#{action},#{detail})
+	</insert>
+	
+	<select id="getGLogAlarm" parameterType="String" resultType="com.bitbox.dto.GLogDTO">
+		select * from grouplog where s_id=#{s_id}
+	</select>
+	
+	<delete id="readGLog" parameterType="Integer">
+		delete from grouplog where log_seq=#{log_seq}
+	</delete>
+	
+	<select id="getGroupSeq" parameterType="String" resultType="Integer">
+		select group_seq from cgroup where title=#{title}
+	</select>
 </mapper>

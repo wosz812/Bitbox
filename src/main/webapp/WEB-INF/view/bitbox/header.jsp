@@ -23,7 +23,7 @@
               <span class="label label-success">{{qnaAlarm}}</span>
             </a>
               <ul class="dropdown-menu">
-              <li class="header">You have {{qnaAlarm}} messages</li>
+              <li class="header">You have {{qnaAlarm}} Q&A reply</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu" >
@@ -55,12 +55,11 @@
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
-                  <li v-for="row in qnaRows">
-                    <a href="#">
-                    <h6>
-                      <i class="fa fa-users text-aqua"></i>
-                        {{row.re_writer}}
-                    </h6><span>{{row.re_content}}</span>
+                  <li v-for="row in groupRows">
+                    <a v-bind:href="goUrl(row.action,row.title)" @click="gLogclick(row.log_seq)">
+                      <i v-if="row.action==='group join'" class="fa fa-user-plus text-aqua"></i>
+                      <i v-if="row.action==='file upload'" class="fa fa-cloud-upload text-green"></i>
+                      <i v-if="row.action==='write meeting'" class="fa fa-users text-yellow"></i> {{row.detail}}
                     </a>
                   </li>
                 </ul>
@@ -88,8 +87,10 @@
   	  el: '#app',
   	  data: {
   	    groupAlarm: "",
+  	    groupRows:[],
   	    qnaAlarm: "",
   	    qnaRows: [],
+  	    click_url:"/bitbox/gitBoard"
   	  },
   	  created: function() {
   		this.getQnaAlarm();
@@ -108,8 +109,9 @@
               url : url,
               type : 'POST',
 	            success : function(data) {
-	              self.groupAlarm=data;
-	              console.log(data);
+	            	console.log(data);
+	              self.groupAlarm=data.length;
+	              self.groupRows=data;
 	            }
 	          });
           },
@@ -138,6 +140,28 @@
     	              }
     	            }
     	       });
+          },
+          gLogclick:function(seq){
+        	  var url="/bitbox/readGLog?log_seq="+seq;
+        	  $.ajax({
+                  url : url,
+                  type : 'POST',
+    	            success : function(data) {
+    	              if(data){
+    	            	  console.log(data);
+    	              }
+    	            }
+    	       });
+          },
+          goUrl:function(action,title){
+        	  if(action=="group join"){
+        		  return "/git/gitBoard?title="+title;
+        	  }else if(action=="file upload"){
+        		  return "/git/gitBoard?title="+title;
+        	  }else if(action=="write meeting"){
+        		  return "/bitbox/minutesList?group_title="+title;
+        	  }
+        	  
           }
   	  }
   	})

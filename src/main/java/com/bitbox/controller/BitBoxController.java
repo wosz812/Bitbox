@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitbox.dto.CalendarFormat;
+import com.bitbox.dto.GLogDTO;
 import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
 import com.bitbox.dto.GroupDTO;
@@ -329,13 +330,25 @@ public class BitBoxController {
 
 		int state = service.groupJoin(group, gIn);
 
-		if (state == 0) {
-			session.removeAttribute("groupList");
-			List<GroupDTO> groupList = service.getGroupList(id);
-			session.setAttribute("groupList", groupList);
-			String title=group.getTitle();
-			System.out.println("group in title: "+title);
-			url = "redirect:/git/gitBoard?title="+title+"&status=2";
+		if (state == 0) { //group에 대한 repository를 만들기 위한 if문
+			//groupLog table에 가입 연산 log남기기
+			List<GinDTO> getGMemberList=service.getGroupMember(group);
+			ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
+			for(int i=0;i<getGMemberList.size();i++){
+				GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "group join", id+"님이 "+group.getTitle()+"그룹에 가입했습니다.");
+				gLogList.add(dto);
+			}
+			System.out.println(gLogList);
+			boolean flag=service.insertGLog(gLogList);
+			if(flag){
+				session.removeAttribute("groupList");
+				
+				List<GroupDTO> groupList = service.getGroupList(id);
+				session.setAttribute("groupList", groupList);
+				String title=group.getTitle();
+				System.out.println("group in title: "+title);
+				url = "redirect:/git/gitBoard?title="+title+"&status=2";
+			}
 		}else{
 			model.addAttribute("state", state);
 			url = "redirect:/bitbox/group?state=" + state;
@@ -354,13 +367,13 @@ public class BitBoxController {
 	}
 
 	@RequestMapping(value = "/groupAlarm", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody int groupAlarm() {
+	public @ResponseBody List<GLogDTO> groupAlarm(HttpSession session) {
 		// System.out.println("alarm call");
 		// System.out.println("modal: "+gNo);
-		int cnt = service.getCnt();
+		String s_id=(String) session.getAttribute("id");
+		List<GLogDTO> list = service.getGLogAlarm(s_id);
 		// System.out.println("controller: "+modal);
-
-		return cnt;
+		return list;
 	}
 	
 	@RequestMapping(value = "/qnaAlarm", method = { RequestMethod.POST, RequestMethod.GET })
@@ -376,6 +389,30 @@ public class BitBoxController {
 	@RequestMapping(value = "/qnaState", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody boolean qnaState(@RequestParam("q_seq") int q_seq) {
 		boolean flag=service.qnaState(q_seq);
+		return flag;
+	}
+	
+	@RequestMapping(value = "/readGLog", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody boolean readGLog(HttpSession session,@RequestParam("log_seq") int log_seq) {
+		boolean flag=service.readGLog(log_seq);
+		return flag;
+	}
+	
+	@RequestMapping(value = "/uploadFile", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody boolean uploadFile(HttpSession session,@RequestParam("title") String title) {
+		String id=(String) session.getAttribute("id");
+		GroupDTO group=new GroupDTO();
+		group.setS_id(id);
+		group.setTitle(title);
+		
+		List<GinDTO> getGMemberList=service.getGroupMember(group);
+		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
+		for(int i=0;i<getGMemberList.size();i++){
+			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "file upload", id+"님이 "+group.getTitle()+"에 파일을 업로드 했습니다.");
+			gLogList.add(dto);
+		}
+		System.out.println(gLogList);
+		boolean flag=service.insertGLog(gLogList);
 		return flag;
 	}
 	
@@ -510,26 +547,45 @@ public class BitBoxController {
 	public String registMinutes(HttpSession session, MinutesDTO minutes, @RequestParam("member") String[] nameList,
 			@RequestParam("group_title") String group_title, @RequestParam("group_seq") int group_seq, Model model) {
 		String url = "";
-		StringBuffer sb = new StringBuffer();
-		sb.append(nameList[0]);
-		if (nameList.length > 1) {
-			for (int i = 1; i < nameList.length; i++) {
-				sb.append("," + nameList[i]);
-			}
+		String id=(String) session.getAttribute("id");
+		GroupDTO group=new GroupDTO();
+		group.setS_id(id);
+		group.setTitle(group_title);
+		
+		List<GinDTO> getGMemberList=service.getGroupMember(group);
+		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
+		for(int i=0;i<getGMemberList.size();i++){
+			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting", id+"님이 "+group.getTitle()+"에 회의록을 작성했습니다.");
+			gLogList.add(dto);
 		}
-		minutes.setMin_attendee(sb.toString());
-		boolean flag = service.registMinutes(minutes);
-		if (flag) {
-			url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title;
+		//System.out.println(gLogList);
+		boolean flags=service.insertGLog(gLogList);
+		if(flags){
+			StringBuffer sb = new StringBuffer();
+			sb.append(nameList[0]);
+			if (nameList.length > 1) {
+				for (int i = 1; i < nameList.length; i++) {
+					sb.append("," + nameList[i]);
+				}
+			}
+			minutes.setMin_attendee(sb.toString());
+			boolean flag = service.registMinutes(minutes);
+			if (flag) {
+				url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title;
+			}
 		}
 		return url;
 	}
 
 	@RequestMapping(value = "/minutesList", method = { RequestMethod.POST, RequestMethod.GET })
-	public String minutesList(HttpSession session, @RequestParam("group_seq") int group_seq,
+	public String minutesList(HttpSession session, @RequestParam(value="group_seq",defaultValue="0") int group_seq,
 			@RequestParam("group_title") String group_title, Model model,
 			@RequestParam(value = "page", defaultValue = "0") int page) {
-		String url = "/bitbox/minutesList";
+		String url="";
+		if(group_seq==0){
+			group_seq=service.getGroupSeq(group_title);
+		}
+		url= "/bitbox/minutesList";
 		List<MinutesDTO> list = service.minutesList(group_seq, page);
 		ArrayList<String> mPageList = service.getMinutesPageList(group_seq, page, group_title);
 		model.addAttribute("list", list);

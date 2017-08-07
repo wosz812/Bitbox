@@ -278,7 +278,16 @@ var createRepos=function(){
 		});
 		$(document).on('click','#appendbtn',function() {
 			$('#status1').text("");
-			
+			$.ajax({
+	              url : "/bitbox/uploadFile?title=${title}",
+	              type : 'POST',
+		            success : function(data) {
+		            	console.log(data);
+		            	if(data){
+		            		console.log(data);
+		            	}
+		            }
+		    });
 			var fl=0;
 			 var testInterval=setInterval(function() {
 				var path=fileList[fl].fpath;
