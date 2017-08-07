@@ -147,5 +147,9 @@ public interface IBitboxService {
 	public ArrayList<SubjectFormat> getDate(SubjectDateFormat dateFormat);
 
 	public ArrayList<SubjectFormat> getsubSubject(String subject);
+	
+	public List<ReQnaDTO> getReQnaAlarm(String s_id);
+	
+	public boolean qnaState(int q_seq);
 
 }

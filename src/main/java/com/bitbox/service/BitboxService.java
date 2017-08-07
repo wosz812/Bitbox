@@ -673,4 +673,18 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		long diffDays = diff / (24 * 60 * 60 * 1000);
 		return diffDays;
 	}
+
+	@Override
+	public List<ReQnaDTO> getReQnaAlarm(String s_id) {
+		// TODO Auto-generated method stub
+		List<ReQnaDTO> dto=dao.getReQnaAlarm(s_id);
+		return dto;
+	}
+
+	@Override
+	public boolean qnaState(int q_seq) {
+		// TODO Auto-generated method stub
+		boolean flag=dao.qnaState(q_seq);
+		return flag;
+	}
 }

@@ -307,4 +307,13 @@
 	<select id="getsubSubject" parameterType="String" resultType="com.bitbox.dto.SubSubjectDTO">
 	select * from sub_subject where sub_name=#{subject}
 	</select>
+	
+	<select id="getReQnaAlarm" resultType="com.bitbox.dto.ReQnaDTO" parameterType="String">
+		select * from reqna where q_seq in (select q_seq from qna where s_id=#{s_id}) and state=0
+	</select>
+	
+	<update id="qnaState" parameterType="Integer">
+		update reqna set state=1 where q_seq=#{q_seq} and state=0
+	</update>
+	
 </mapper>
