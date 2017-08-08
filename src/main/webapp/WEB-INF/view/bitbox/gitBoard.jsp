@@ -214,6 +214,7 @@ margin-right:5px;
 		src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<!-- page script -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js"></script>
+	<script src="/js/bootstrap-waitingfor.js"></script>
 	<script type="text/javascript">
 var treeSha;
 var fileList=new Array();
@@ -278,7 +279,7 @@ var createRepos=function(){
 		});
 		$(document).on('click','#appendbtn',function() {
 			$('#status1').text("");
-			$.ajax({
+			$.ajax({ //upload file 할 때 알람 띄우기 위해 필요한 ajax
 	              url : "/bitbox/uploadFile?title=${title}",
 	              type : 'POST',
 		            success : function(data) {
@@ -287,7 +288,8 @@ var createRepos=function(){
 		            		console.log(data);
 		            	}
 		            }
-		    });
+		    });//ajax end
+		    waitingDialog.show('Please wait for upload to complete');
 			var fl=0;
 			 var testInterval=setInterval(function() {
 				var path=fileList[fl].fpath;
@@ -673,6 +675,7 @@ var createRepos=function(){
 		   data: JSON.stringify({"sha":sha,"force":true})
 		}).done(function(response) {
 			    console.log(response);
+			    waitingDialog.hide();
 		});
 	}
 	
