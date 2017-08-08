@@ -232,7 +232,7 @@
 				<div class="col-md-4">
 					<!-- DONUT CHART -->
 					<div class="box" style="height: 400px">
-						<div class="box-header with-border">
+						<div class="box-header with-border" style="overflow: scroll; height: 400px;">
 							<h3 class="box-title font">최근 회의록</h3>
 							<div>
 								<table class="table table-hover" style="width: 460.33px;">
