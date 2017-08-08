@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bitbox.dao.IBitboxDAO;
 import com.bitbox.dto.CClassDTO;
 import com.bitbox.dto.CalendarFormat;
+import com.bitbox.dto.GLogDTO;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
@@ -287,11 +288,11 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 	}
 
 	@Override
-	public int getCnt() {
+	public List<GLogDTO> getGLogAlarm(String s_id) {
 		// System.out.println("service call");
-		int cnt = dao.getCnt();
+		List<GLogDTO> list= dao.getGLogAlarm(s_id);
 		// System.out.println("dao call-service");
-		return cnt;
+		return list;
 	}
 
 	@Override
@@ -672,5 +673,57 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		long diff = endDate.getTime() - beginDate.getTime();
 		long diffDays = diff / (24 * 60 * 60 * 1000);
 		return diffDays;
+	}
+
+	@Override
+	public List<ReQnaDTO> getReQnaAlarm(String s_id) {
+		// TODO Auto-generated method stub
+		List<ReQnaDTO> dto=dao.getReQnaAlarm(s_id);
+		return dto;
+	}
+
+	@Override
+	public boolean qnaState(int q_seq) {
+		// TODO Auto-generated method stub
+		boolean flag=dao.qnaState(q_seq);
+		return flag;
+	}
+
+	@Override
+	public List<GinDTO> getGroupMember(GroupDTO dto) {
+		// TODO Auto-generated method stub
+		List<GinDTO> list=dao.getGroupMember(dto);
+		return list;
+	}
+
+	@Override
+	public boolean insertGLog(ArrayList<GLogDTO> list) {
+		ArrayList<Boolean> flagList=new ArrayList<Boolean>();
+		boolean flag=false;
+		for(int i=0;i<list.size();i++){
+			flagList.add(dao.insertGLog(list.get(i)));
+		}
+		for(int i=0;i<flagList.size();i++){
+			if(flagList.get(i)){
+				if(i==flagList.size()-1){
+					flag=true;
+				}
+			}
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean readGLog(int log_seq) {
+		// TODO Auto-generated method stub
+		boolean flag=dao.readGLog(log_seq);
+		return flag;
+	}
+
+	@Override
+	public int getGroupSeq(String title) {
+		// TODO Auto-generated method stub
+		int seq=dao.getGroupSeq(title);
+		return seq;
 	}
 }

@@ -3,6 +3,7 @@ package com.bitbox.dao;
 import java.util.List;
 
 import com.bitbox.dto.CClassDTO;
+import com.bitbox.dto.GLogDTO;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
@@ -48,7 +49,7 @@ public interface IBitboxDAO {
 	public boolean updateGMemo(GMemoDTO gmemo);
 	public boolean removeGMemo(int seq);
 	public GMemoDTO getGMemoModal(int seq);
-	public int getCnt();
+	public List<GLogDTO> getGLogAlarm(String s_id);
 	public List<QnaDTO> getQnaList(int start);
 	public boolean registQna(QnaDTO qna);
 	public QnaDTO detailQna(int q_seq);
@@ -84,4 +85,10 @@ public interface IBitboxDAO {
 	public List<CClassDTO> getSubject(int code);
 	public CClassDTO getDate(SubjectDateFormat dateFormat);
 	public List<SubSubjectDTO>  subSubject(String subject);
+	public List<ReQnaDTO> getReQnaAlarm(String s_id);
+	public boolean qnaState(int q_seq);
+	public List<GinDTO> getGroupMember(GroupDTO dto);
+	public boolean insertGLog(GLogDTO dto);
+	public boolean readGLog(int log_seq);
+	public int getGroupSeq(String title);
 }

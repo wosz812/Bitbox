@@ -117,8 +117,12 @@ margin-right:5px;
 			${id} --%>
 			<div id="toReplace">
 				<div v-if="currentComponent==='upload files'">
-					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files
-						Here</div>
+					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
+					<!-- <div class="progress">
+		                <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+		                  <span class="sr-only">40% Complete (success)</span>
+		                </div>
+		            </div> -->
 					<table id="status1"></table>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</div>
@@ -159,7 +163,7 @@ margin-right:5px;
 				                    <button class="fa fa-copy" onclick="copyToClipboard()" id="btn_copy" data-toggle="tooltip" title="url copy!" data-placement="bottom"></button>
 				                  </div>
 				                </div>
-								<a href="https://api.github.com/repos/wosz812/Bitbox/zipball"><button style="margin-top: 10px;" type="button" class="btn btn-primary btn-block btn-flat">Download Zip</button></a>
+								<a href="https://api.github.com/repos/${masId}/${title}/zipball"><button style="margin-top: 10px;" type="button" class="btn btn-primary btn-block btn-flat">Download Zip</button></a>
 							</div>
 						</div>
 					</div>
@@ -175,8 +179,8 @@ margin-right:5px;
 									<div class="box-body">
 										<table class="table table-bordered">
 											<tr v-for="row in rows">
-												<td><img v-bind:src=row.src></td>
-												<td><a v-on:click="gitClick(row.type,row.path,row.url)">{{row.path}}</a></td>
+												<td width="15px"><img v-bind:src=row.src></td>
+												<td style="text-align:left"><a v-on:click="gitClick(row.type,row.path,row.url)">{{row.path}}</a></td>
 											</tr>
 										</table>
 									</div>
@@ -210,6 +214,7 @@ margin-right:5px;
 		src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<!-- page script -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js"></script>
+	<script src="/js/bootstrap-waitingfor.js"></script>
 	<script type="text/javascript">
 var treeSha;
 var fileList=new Array();
@@ -219,6 +224,8 @@ var promises=new Array();
 var uploadDirs=new Array();
 var uploadFiles=new Array();
 var cnt=1;
+var flag=0;//상위 폴더 생성하기위한 변수
+var prevUrl=new Array();
 
 //create repository
 var createRepos=function(){
@@ -272,7 +279,17 @@ var createRepos=function(){
 		});
 		$(document).on('click','#appendbtn',function() {
 			$('#status1').text("");
-			
+			$.ajax({ //upload file 할 때 알람 띄우기 위해 필요한 ajax
+	              url : "/bitbox/uploadFile?title=${title}",
+	              type : 'POST',
+		            success : function(data) {
+		            	console.log(data);
+		            	if(data){
+		            		console.log(data);
+		            	}
+		            }
+		    });//ajax end
+		    waitingDialog.show('Please wait for upload to complete');
 			var fl=0;
 			 var testInterval=setInterval(function() {
 				var path=fileList[fl].fpath;
@@ -354,6 +371,7 @@ var createRepos=function(){
 						data : {}
 					}).done(function(response) {
 						console.log(response);
+						prevUrl.push(response["url"]);
 					    getTree(response.tree);
 					});
 				}
@@ -362,8 +380,18 @@ var createRepos=function(){
 		//tree를 얻어온 것 테이블에 뿌려주기
 		 var getTree = function(res) {
 			$('#gBlist').text("");
+			var el=new Object();
+			var len=prevUrl.length;
+			if(len!=1){
+				el={
+						src:"/img/directory.png",
+						path:"..",
+						type:"",
+						url:prevUrl[prevUrl.length-2]
+				}
+				toReplace.rows.push(el);
+			}
 			$.each(res,function(key,object) {
-				var el=new Object();
 				if(res[key].type=="tree"){
 					el={
 							src:"/img/directory.png",
@@ -417,7 +445,7 @@ var createRepos=function(){
 	  data: {
 	    currentComponent: null,
 	    component: 'upload files',
-	    rows: [{src:"",path:"",type:"",url:""}],
+	    rows: [],
 	    html_url: ''
 	  },
 	  components: {
@@ -456,6 +484,7 @@ var createRepos=function(){
 
         },
       	gitClick: function(type,path,url){
+      		flag=1;
       		if(type==="blob"){
     			getblobContent(path,url);
     		}
@@ -471,6 +500,11 @@ var createRepos=function(){
     						data : {}
     					}).done(function(response) {
     						console.log(response);
+    						if(path===".."){
+    		    				prevUrl.pop();
+    		    			}else{
+    							prevUrl.push(response["url"]);
+    		    			}
     						getTree(response.tree);
     					});
     		}
@@ -641,6 +675,7 @@ var createRepos=function(){
 		   data: JSON.stringify({"sha":sha,"force":true})
 		}).done(function(response) {
 			    console.log(response);
+			    waitingDialog.hide();
 		});
 	}
 	

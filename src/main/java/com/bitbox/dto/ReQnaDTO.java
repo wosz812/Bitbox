@@ -5,6 +5,7 @@ public class ReQnaDTO {
 	private String re_writer;
 	private String re_content;
 	private int q_seq;
+	private int state;
 	public int getRe_seq() {
 		return re_seq;
 	}
@@ -29,10 +30,18 @@ public class ReQnaDTO {
 	public void setQ_seq(int q_seq) {
 		this.q_seq = q_seq;
 	}
+	
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
 	@Override
 	public String toString() {
 		return "ReQnaDTO [re_seq=" + re_seq + ", re_writer=" + re_writer + ", re_content=" + re_content + ", q_seq="
-				+ q_seq + "]";
+				+ q_seq + ", state=" + state + "]";
 	}
+	
 	
 }

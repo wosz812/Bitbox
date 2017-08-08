@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitbox.dto.CalendarFormat;
+import com.bitbox.dto.GLogDTO;
 import com.bitbox.dto.GMemoDTO;
 import com.bitbox.dto.GanttDTO;
 import com.bitbox.dto.GinDTO;
@@ -76,7 +77,7 @@ public interface IBitboxService {
 
 	public GMemoDTO getGMemoModal(int seq);
 
-	public int getCnt();
+	public List<GLogDTO> getGLogAlarm(String s_id);
 
 	public List<QnaDTO> getQnaList(int page);
 
@@ -147,5 +148,17 @@ public interface IBitboxService {
 	public ArrayList<SubjectFormat> getDate(SubjectDateFormat dateFormat);
 
 	public ArrayList<SubjectFormat> getsubSubject(String subject);
+	
+	public List<ReQnaDTO> getReQnaAlarm(String s_id);
+	
+	public boolean qnaState(int q_seq);
+	
+	public List<GinDTO> getGroupMember(GroupDTO dto);
+	
+	public boolean insertGLog(ArrayList<GLogDTO> list);
+	
+	public boolean readGLog(int log_seq);
+	
+	public int getGroupSeq(String title);
 
 }
