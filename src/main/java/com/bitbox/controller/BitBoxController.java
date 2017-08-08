@@ -878,4 +878,14 @@ public class BitBoxController {
 		ArrayList<SubjectFormat> date=service.getDate(dateFormat);		
 		return date;
 	}
+	@RequestMapping(value = "/titleCheck", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody boolean titleCheck(@RequestParam("title")String title) {
+		boolean flag=false;
+		int seq=service.getGroupSeq(title);
+		if(seq>0){ //해당 title에 대한 그룹이 있으니까 seq가 0보다 크다.
+			flag=true;
+		}
+		//title seq가 0과 같다면 해당 title을 가진 그룹이 없다라고 판단.
+		return flag;
+	}
 }
