@@ -611,10 +611,25 @@ public class BitBoxController {
 	public String minuteUpdate(HttpSession session, MinutesDTO minutes, @RequestParam("group_title") String group_title,
 			Model model, @RequestParam("page") int page) {
 		String url = "";
-		boolean flag = service.updateMinutes(minutes);
-		if (flag) {
-			url = "redirect:/bitbox/minutesView?seq=" + minutes.getMin_seq() + "&group=" + group_title + "&page="
-					+ page;
+		String id=(String) session.getAttribute("id");
+		GroupDTO group=new GroupDTO();
+		group.setS_id(id);
+		group.setTitle(group_title);
+		
+		List<GinDTO> getGMemberList=service.getGroupMember(group);
+		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
+		for(int i=0;i<getGMemberList.size();i++){
+			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting", id+"님이 "+group.getTitle()+"에 회의록을 수정했습니다.");
+			gLogList.add(dto);
+		}
+		//System.out.println(gLogList);
+		boolean flags=service.insertGLog(gLogList);
+		if(flags){
+			boolean flag = service.updateMinutes(minutes);
+			if (flag) {
+				url = "redirect:/bitbox/minutesView?seq=" + minutes.getMin_seq() + "&group=" + group_title + "&page="
+						+ page;
+			}
 		}
 		return url;
 	}
@@ -623,10 +638,25 @@ public class BitBoxController {
 	public String minuteDelete(HttpSession session, MinutesDTO minutes, @RequestParam("group_title") String group_title,
 			Model model, @RequestParam("page") int page) {
 		String url = "";
-		boolean flag = service.deleteMinutes(minutes.getMin_seq());
-		if (flag) {
-			url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title
-					+ "&page=" + page;
+		String id=(String) session.getAttribute("id");
+		GroupDTO group=new GroupDTO();
+		group.setS_id(id);
+		group.setTitle(group_title);
+		
+		List<GinDTO> getGMemberList=service.getGroupMember(group);
+		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
+		for(int i=0;i<getGMemberList.size();i++){
+			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting", id+"님이 "+group.getTitle()+"에 회의록을 삭제했습니다.");
+			gLogList.add(dto);
+		}
+		//System.out.println(gLogList);
+		boolean flags=service.insertGLog(gLogList);
+		if(flags){
+			boolean flag = service.deleteMinutes(minutes.getMin_seq());
+			if (flag) {
+				url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title
+						+ "&page=" + page;
+			}
 		}
 		return url;
 	}
