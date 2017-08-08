@@ -34,7 +34,6 @@
                       </div>
                       <h4>
                         {{row.re_writer}}
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4><p>{{row.re_content}}</p>
                     </a>
                   </li>
@@ -56,10 +55,12 @@
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
                   <li v-for="row in groupRows">
+                  <div class="pull-right"><button type="button" class="btn btn-box-tool" @click="gLogclick(row.log_seq)"><i class="fa fa-times"></i></button></div>
                     <a v-bind:href="goUrl(row.action,row.title)" @click="gLogclick(row.log_seq)">
                       <i v-if="row.action==='group join'" class="fa fa-user-plus text-aqua"></i>
                       <i v-if="row.action==='file upload'" class="fa fa-cloud-upload text-green"></i>
-                      <i v-if="row.action==='write meeting'" class="fa fa-users text-yellow"></i> {{row.detail}}
+                      <i v-if="row.action==='write meeting'" class="fa fa-users text-yellow"></i>
+                      {{row.detail}}
                     </a>
                   </li>
                 </ul>
@@ -142,6 +143,7 @@
     	       });
           },
           gLogclick:function(seq){
+        	  var self=this;
         	  var url="/bitbox/readGLog?log_seq="+seq;
         	  $.ajax({
                   url : url,
@@ -149,6 +151,8 @@
     	            success : function(data) {
     	              if(data){
     	            	  console.log(data);
+    	            	  self.getQnaAlarm();
+    	            	  self.getGroupAlarm();
     	              }
     	            }
     	       });
