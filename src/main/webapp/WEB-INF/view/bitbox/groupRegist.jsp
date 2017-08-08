@@ -61,11 +61,14 @@
 							<form role="form" action="/bitbox/groupRegist"
 								enctype="multipart/form-data">
 								<div class="box-body">
-									<div class="form-group">
-										<label for="exampleInputEmail1">그룹이름</label> <input
-											type="text" class="form-control" name="title"
-											placeholder="Enter title">
+									<label for="exampleInputEmail1">그룹이름</label>
+									<div class="form-group row">
+									<div class="col-xs-10">
+										<input type="text" class="form-control" name="title" placeholder="Enter title">
 									</div>
+									<button class="btn btn-primary" type="button" id="title_check" onclick="click_func()">중복확인</button>
+									</div>
+									
 									<div class="form-group">
 										<label>그룹 비밀번호(그룹가입시에 사용됩니다.)</label> <input type="text"
 											class="form-control" name="pw" placeholder="Enter password">
@@ -79,7 +82,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer" align="right">
-									<button type="submit" class="btn btn-primary">그룹생성</button>
+									<button type="submit" class="btn btn-primary" id="cgroup" disabled>그룹생성</button>
 								</div>
 							</form>
 						</div>
@@ -107,5 +110,35 @@
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		 $("input[name=title]").keyup(function(event){
+		  regexp = /[\ㄱ-ㅎㅏ-ㅣ가-힣\s]/g;
+		  v = $(this).val();
+		  if( regexp.test(v) ) {
+		   alert("그룹 이름에 공백과 한글은 제한됩니다.");
+		   $(this).val(v.replace(regexp,''));
+		  }
+		 });
+
+	});
+	function click_func(){
+		var title=$("input[name=title]").val();
+		var url="/bitbox/titleCheck?title="+title;
+		$.ajax({
+            url : url,
+            type : 'POST',
+	            success : function(data) {
+	              if(!data){
+	            	  $('#cgroup').prop("disabled",false);
+	              }else{
+	            	  alert("그룹 이름 중복");
+	            	  $("input[name=title]").val("");
+	            	  $('#cgroup').prop("disabled",true);
+	              }
+	            }
+	    });
+	}
+	</script>
 </body>
 </html>

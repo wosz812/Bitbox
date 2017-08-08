@@ -341,4 +341,5 @@
 	<select id="getGroupSeq" parameterType="String" resultType="Integer">
 		select group_seq from cgroup where title=#{title}
 	</select>
+	
 </mapper>

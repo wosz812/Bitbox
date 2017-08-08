@@ -611,7 +611,13 @@ public class BitboxDAO implements IBitboxDAO {
 	@Override
 	public int getGroupSeq(String title) {
 		// TODO Auto-generated method stub
-		int seq=session.selectOne(namespace+".getGroupSeq",title);
+		Integer temp=session.selectOne(namespace+".getGroupSeq",title);
+		int seq;
+		if(temp==null){
+			seq=0;
+		}else{
+			seq=temp;
+		}
 		return seq;
 	}
 
