@@ -918,4 +918,25 @@ public class BitBoxController {
 		//title seq가 0과 같다면 해당 title을 가진 그룹이 없다라고 판단.
 		return flag;
 	}
+	@RequestMapping(value = "/getPBoardCnt", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody int getPBoardCnt(HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		int cnt=service.getPBoardCnt(id);
+		return cnt;
+		
+	}
+	
+	@RequestMapping(value = "/getGinCnt", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody int getGinCnt(HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		int cnt=service.getGinCnt(id);
+		return cnt;
+		
+	}
+	@RequestMapping(value = "/getQnaCnt", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody int getQnaCnt(HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		int cnt=service.getQnaCnt(id);
+		return cnt;
+	}
 }

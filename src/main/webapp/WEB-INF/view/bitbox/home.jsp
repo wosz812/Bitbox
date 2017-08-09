@@ -67,6 +67,18 @@
 .inp {
 	width: 65%;
 }
+#group_a{
+    text-overflow:ellipsis;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#group_a:hover{
+    text-overflow:clip;
+    width:auto;
+    white-space: normal;
+}
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -85,13 +97,12 @@
 
 						<div class="info-box-content">
 							<span class="info-box-text">Upload Files</span> <span
-								class="info-box-number">5,200</span>
+								class="info-box-number"><div class="counter" id="pboard_cnt">0</div></span>
 
 							<div class="progress">
-								<div class="progress-bar" style="width: 50%"></div>
+								<div class="percent progress-bar" ></div>
 							</div>
-							<span class="progress-description"> 50% Increase in 30
-								Days </span>
+							<span class="progress-description"> Number of files uploaded to personal board </span>
 						</div>
 
 						<!-- /.info-box-content -->
@@ -104,13 +115,12 @@
 
 						<div class="info-box-content">
 							<span class="info-box-text">Group Join</span> <span
-								class="info-box-number">114,381</span>
+								class="info-box-number"><div class="counter" id="gin_cnt">0</div></span>
 
 							<div class="progress">
-								<div class="progress-bar" style="width: 70%"></div>
+								<div class="percent progress-bar" ></div>
 							</div>
-							<span class="progress-description"> 70% Increase in 30
-								Days </span>
+							<span class="progress-description"> The number of groups I joined </span>
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -121,13 +131,12 @@
 
 						<div class="info-box-content">
 							<span class="info-box-text">Comments</span> <span
-								class="info-box-number">92,050</span>
+								class="info-box-number"><div class="counter" id="qna_cnt">0</div></span>
 
 							<div class="progress">
-								<div class="progress-bar" style="width: 20%"></div>
+								<div class="percent progress-bar" ></div>
 							</div>
-							<span class="progress-description"> 20% Increase in 30
-								Days </span>
+							<span class="progress-description"> Q & A number I wrote </span>
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -350,6 +359,79 @@
 				}
 			});
 		}
+		
+		var getPBoardCnt=new Promise(function(resolve,reject){
+			var url = "/bitbox/getPBoardCnt"
+				$.ajax({
+					url : url,
+					type : 'POST',
+					success : function(data) {
+						$("#pboard_cnt").attr("data-count",data);
+						resolve();
+					}
+				});
+		});
+		
+		var getGinCnt=new Promise(function(resolve,reject){
+			var url = "/bitbox/getGinCnt"
+				$.ajax({
+					url : url,
+					type : 'POST',
+					success : function(data) {
+						$("#gin_cnt").attr("data-count",data);
+						resolve();
+					}
+				});
+		});
+		var getQnaCnt=new Promise(function(resolve,reject){
+			var url = "/bitbox/getQnaCnt"
+				$.ajax({
+					url : url,
+					type : 'POST',
+					success : function(data) {
+						$("#qna_cnt").attr("data-count",data);
+						resolve();
+					}
+				});		
+		});
+		
+		Promise.all([getPBoardCnt,getGinCnt, getQnaCnt]).then(function () {
+			console.log("finish");
+			$('.counter').each(function() {
+				  var $this = $(this),
+				      countTo = $this.attr('data-count'); //countTo: 언제까지 count를 increase할것인가
+				  $({ countNum: $this.text()}).animate({  //증가에 대한 애니메이션 등록
+				    countNum: countTo
+				  },
+				  {
+				    duration: 1000, //속도
+				    easing:'swing', //증가 방법 --> google에 javascript easing검색하면 증가방법에 대한 그래프가 나옴
+				    step: function() { //value를 지정하기전에 값을 변경할 수 있는 animation에 대한 속성
+				      $this.text(Math.floor(this.countNum)); //Math.floor는 counter에 대한 반올림에 대한 함수
+				    },
+				    complete: function() { //animate가 완료되면 counter에 text를 set한다.
+				      $this.text(this.countNum);
+				    }
+				  });
+			});
+			$('.percent').each(function() {
+				  var $this = $(this),
+				      countTo = 100; //countTo: 언제까지 count를 increase할것인가
+				  $({ countNum: $this.width()}).animate({  //증가에 대한 애니메이션 등록
+				    countNum: countTo
+				  },
+				  {
+				    duration: 1000, //속도
+				    easing:'swing', //증가 방법 --> google에 javascript easing검색하면 증가방법에 대한 그래프가 나옴
+				    step: function() { //value를 지정하기전에 값을 변경할 수 있는 animation에 대한 속성
+				      $this.width(Math.floor(this.countNum)+"%"); //Math.floor는 counter에 대한 반올림에 대한 함수
+				    },
+				    complete: function() { //animate가 완료되면 counter에 text를 set한다.
+				      $this.width(this.countNum+"%");
+				    }
+				  });
+			});
+		});
 	</script>
 
 </body>

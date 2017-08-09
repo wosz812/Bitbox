@@ -221,13 +221,6 @@ public class BitboxDAO implements IBitboxDAO {
 		return groupList;
 	}
 
-	@Override
-	public int getPBoardCnt() {
-		int cnt = session.selectOne(namespace + ".getPBoardCnt");
-		System.out.println(cnt);
-		return cnt;
-	}
-
 	public boolean removePMemo(int m_seq) {
 		boolean flag = false;
 		int aCnt = session.delete(namespace + ".removePMemo", m_seq);
@@ -620,6 +613,22 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return seq;
 	}
+	
+	@Override
+	public int getPBoardCnt(String id) {
+		int cnt=session.selectOne(namespace+".getPBoardCnt",id);
+		return cnt;
+	}
 
+	@Override
+	public int getGinCnt(String id) {
+		int cnt=session.selectOne(namespace+".getGinCnt",id);
+		return cnt;
+	}
 
+	@Override
+	public int getQnaCnt(String id) {
+		int cnt=session.selectOne(namespace+".getQnaCnt",id);
+		return cnt;
+	}
 }

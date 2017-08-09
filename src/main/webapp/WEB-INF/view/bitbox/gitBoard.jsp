@@ -95,6 +95,18 @@ margin-right:5px;
     cursor:pointer;
     vertical-align:top
     }
+    #group_a{
+    text-overflow:ellipsis;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#group_a:hover{
+    text-overflow:clip;
+    width:auto;
+    white-space: normal;
+}
 </style>
 
 <link href="/dist/css/bootstrap.min.css" rel="stylesheet"></link>

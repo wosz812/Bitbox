@@ -726,4 +726,22 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		int seq=dao.getGroupSeq(title);
 		return seq;
 	}
+
+	@Override
+	public int getPBoardCnt(String id) {
+		int cnt=dao.getPBoardCnt(id);
+		return cnt;
+	}
+	
+	@Override
+	public int getGinCnt(String id) {
+		int cnt=dao.getGinCnt(id);
+		return cnt;
+	}
+
+	@Override
+	public int getQnaCnt(String id) {
+		int cnt=dao.getQnaCnt(id);
+		return cnt;
+	}
 }

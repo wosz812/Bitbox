@@ -41,7 +41,6 @@ public interface IBitboxDAO {
 	public int PMemoCnt(String id);
 	public boolean projectDelete(PBoardDTO board);
 	public List<GroupDTO> getGroupList(String s_id);
-	public int getPBoardCnt();
 	public int GMemoCnt(int group_seq);
 	public boolean removePMemo(int m_seq);
 	public boolean updatePMemo(PMemoDTO pmemo);
@@ -91,4 +90,7 @@ public interface IBitboxDAO {
 	public boolean insertGLog(GLogDTO dto);
 	public boolean readGLog(int log_seq);
 	public int getGroupSeq(String title);
+	public int getPBoardCnt(String id);
+	public int getGinCnt(String id);
+	public int getQnaCnt(String id);
 }

@@ -108,9 +108,6 @@
 		select count(*) from pmemo where s_id = #{id}
 	</select>
 	
-	<select id="getPBoardCnt" resultType="Integer">
-		select count(*) from pboard 
-	</select>
 	<select id="getGMemoCnt" parameterType="Integer" resultType="Integer">
 		select count(*) from gmemo where group_seq = #{group_seq}
 	</select>
@@ -340,6 +337,18 @@
 	
 	<select id="getGroupSeq" parameterType="String" resultType="Integer">
 		select group_seq from cgroup where title=#{title}
+	</select>
+	
+	<select id="getPBoardCnt" parameterType="String" resultType="Integer">
+		select count(*) as count from pboard where s_id=#{id}
+	</select>
+	
+	<select id="getGinCnt" parameterType="String" resultType="Integer">
+		select count(*) as count from groupin where s_id=#{id}
+	</select>
+	
+	<select id="getQnaCnt" parameterType="String" resultType="Integer">
+		select count(*) as count from qna where s_id=#{id}
 	</select>
 	
 </mapper>

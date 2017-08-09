@@ -56,7 +56,7 @@
                 <ul class="menu">
                   <li v-for="row in groupRows">
                   <div class="pull-right"><button type="button" class="btn btn-box-tool" @click="gLogclick(row.log_seq)"><i class="fa fa-times"></i></button></div>
-                    <a v-bind:href="goUrl(row.action,row.title)" @click="gLogclick(row.log_seq)">
+                    <a v-bind:href="goUrl(row.action,row.title)" @click="gLogclick(row.log_seq)" id="group_a">
                       <i v-if="row.action==='group join'" class="fa fa-user-plus text-aqua"></i>
                       <i v-if="row.action==='file upload'" class="fa fa-cloud-upload text-green"></i>
                       <i v-if="row.action==='write meeting'" class="fa fa-users text-yellow"></i>
@@ -169,5 +169,17 @@
           }
   	  }
   	})
+    
+    var lengthText = 30;
+    var text = $('a').text();
+    var shortText = $.trim(text).substring(0, lengthText).split(" ").slice(0, -1).join(" ") + "...";
+
+    $("#group_a").text(shortText);
+
+    $("#group_a").hover(function(){
+        $(this).text(text);
+    }, function(){
+        $(this).text(shortText);
+    });
     </script>
 

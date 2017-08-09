@@ -161,4 +161,7 @@ public interface IBitboxService {
 	
 	public int getGroupSeq(String title);
 
+	public int getPBoardCnt(String id);
+	public int getGinCnt(String id);
+	public int getQnaCnt(String id);
 }

@@ -40,6 +40,20 @@
 <script type="text/javascript" src="/gantt/AUIGantt.js"></script>
 <!-- AUIGantt 리소스 파일 -->
 <script type="text/javascript" src="/gantt/AUIGantt.resources.kr.js"></script>
+<style type="text/css">
+#group_a{
+    text-overflow:ellipsis;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#group_a:hover{
+    text-overflow:clip;
+    width:auto;
+    white-space: normal;
+}
+</style>
 <script type="text/javascript">
 
 // AUIGantt 생성 후 반환 ID

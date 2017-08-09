@@ -76,6 +76,18 @@ del {
 	border-color: initial;
 	border-image: initial;
 }
+#group_a{
+    text-overflow:ellipsis;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#group_a:hover{
+    text-overflow:clip;
+    width:auto;
+    white-space: normal;
+}
 </style>
 <meta name="google" value="notranslate" />
 <script>
