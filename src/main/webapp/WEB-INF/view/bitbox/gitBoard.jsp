@@ -158,6 +158,11 @@ margin-right:5px;
 					</div>
 				</div>
 				<div v-show="!currentComponent">
+					<div class="progress progress-xxs">
+		                <div class="percent progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+		                </div>
+		            </div>
+					
 					<div class="dropdown">
 						<div class="btn-group" style="float: right; margin-right: 20px;">
 							<button class="btn btn-primary" @click="swapComponent(component)"
@@ -373,6 +378,7 @@ var createRepos=function(){
 		
 		//github repository file Tree 얻어오기
 		var fgetTree = function(sha) {
+			$('.percent').width("10%").attr("aria-valuenow",10); //loading progress bar 10%정도 시작될때 보여주기
 			$.ajax(
 					{
 						url : "https://api.github.com/repos/${masId}/${title}/git/trees/"+sha,
@@ -421,8 +427,11 @@ var createRepos=function(){
 				}
 				toReplace.rows.push(el);
 		    });
+			$('.percent').width("100%").attr("aria-valuenow",100); //github repository table 져오기 완료 휴 loading progress bar 100%
+			setTimeout(function(){ $('.percent').width("0%").attr("aria-valuenow",0); }, 800);
 		} 
 		 var getblobContent= function(path,url){
+			 $('.percent').width("10%").attr("aria-valuenow",10);
 			 var strArray=path.split(".");
 			 var mtemp=strArray[strArray.length-1];
 			$.ajax(
@@ -435,6 +444,8 @@ var createRepos=function(){
 						data : {}
 					}).done(function(response) {
 						console.log(response);
+						$('.percent').width("100%").attr("aria-valuenow",100);
+						setTimeout(function(){ $('.percent').width("0%").attr("aria-valuenow",0); }, 800);
 						var temp=atob(response['content']);
 						YUI().use(
 		    		    		  'aui-ace-editor',
@@ -451,7 +462,6 @@ var createRepos=function(){
 					});
 		}  
 		 
-		 
   var toReplace =  new Vue({
 	  el: '#toReplace',
 	  data: {
@@ -467,17 +477,6 @@ var createRepos=function(){
 	    'invitation': {
 		     template: ''
 		 }
-	  },
-	  watch: {
-	    // 질문이 변경될 때 마다 이 기능이 실행됩니다.
-	    html_url: function (newValue) {
-	    	//debugger;
-	    }
-	  },
-
-	  
-	  created: function() {
-			
 	  },
 	  methods: {
 	    swapComponent: function(component)
@@ -496,6 +495,7 @@ var createRepos=function(){
 
         },
       	gitClick: function(type,path,url){
+      		
       		flag=1;
       		if(type==="blob"){
     			getblobContent(path,url);
@@ -522,8 +522,6 @@ var createRepos=function(){
     		}
       	},
       	onDrop: function(e){
-      		alert("drop");
-      		//alert(e.target);
       		 $("#dragandrophandler").css('border', '2px dotted #0B85A1');
 		     e.preventDefault(); 
 		     
@@ -610,9 +608,7 @@ var createRepos=function(){
 					console.log("cnt: "+cnt+"+ "+path);
 				    console.log(response);
 				    cnt++;
-				    //resolve(response.sha);
 				    blobList.push(response.sha);
-				    //setTimeout(resolve(),1000);
 				    resolve();
 				});
 		});
@@ -632,7 +628,6 @@ var createRepos=function(){
 	};
 	
 	var createFileList = function() {
-		//return new Promise(function(resolve, reject) {
 			for(var fl=0;fl<fileList.length;fl++){
 				var path=fileList[fl].fpath;
 				var blob=blobList[fl];
@@ -643,7 +638,6 @@ var createRepos=function(){
 					});
 				}
 			}
-		//});
 	};
 	function createTree(){
 		return $.ajax({ 
@@ -708,10 +702,6 @@ var createRepos=function(){
 			var html_url=response["html_url"];
 			console.log(html_url);
 			toReplace.changeUrl(html_url);
-			
-			//$("#invitation_url").attr("href",html_url);
-			//toReplace.fetchEventsList();
-			
 		});
 	}
 	
