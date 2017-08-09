@@ -54,6 +54,7 @@ $.ajax({
 });
 
 function displayData(i, row) {
+	//차트 클릭시 해당 로우 가져와 반응하는 메소드.
 	if (row.label == 'JAVA') {
 		$.ajax({
 			url : '/bitbox/getSubSubject?subject=JAVA',

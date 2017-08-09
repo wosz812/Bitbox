@@ -60,9 +60,9 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 		// @formatter:off
 		// http.formLogin().usernameParameter("").passwordParameter("s_pw").loginPage("/login");
 		// http.requestMatchers().antMatchers("/","/login/**","/bitbox/**","/git/**","/memo/**","/mail/**");
-		http.authorizeRequests().antMatchers("/", "/login/**", "/mail/**").permitAll()
-				.antMatchers("/bitbox/**", "/git/**", "/memo/**").authenticated().anyRequest().authenticated().and()
-				.exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login/")).and()
+		http.authorizeRequests().antMatchers("/", "/login/**", "/mail/**").permitAll() // login,mail 인증없이 허용하는 부분
+				.antMatchers("/bitbox/**", "/git/**", "/memo/**").authenticated().anyRequest().authenticated().and() //인증후 허용하는 부분
+				.exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login/")).and() //인증이안될시 리턴시키는 부분
 				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).disable()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 		// @formatter:on
