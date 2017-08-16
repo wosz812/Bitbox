@@ -51,8 +51,8 @@ import com.google.gson.Gson;
 
 @Controller
 public class BitBoxController {
-	//test 수정
-	//test
+	// test 수정
+	// test
 	String path = "c:\\dev\\";
 
 	@Autowired
@@ -70,6 +70,7 @@ public class BitBoxController {
 		// session.setAttribute("groupList", session.getAttribute("groupList"));
 		return url;
 	}
+
 	@RequestMapping(value = "/getData", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody Object getData(HttpServletResponse response, HttpSession session) {
 		logger.info("Data 筌욊쑴�뿯");
@@ -84,9 +85,9 @@ public class BitBoxController {
 		return map;
 	}
 
-
 	@RequestMapping(value = "/listAll", method = { RequestMethod.POST, RequestMethod.GET })
-	public String listAll(HttpSession session, Model model) { //개인프로젝트 게시물 가져오는 메소드.
+	public String listAll(HttpSession session, Model model) { // 개인프로젝트 게시물 가져오는
+																// 메소드.
 		String url = "";
 		List<PBoardDTO> list = service.listAll(session.getAttribute("id").toString());
 		model.addAttribute("list", list);
@@ -95,15 +96,15 @@ public class BitBoxController {
 	}
 
 	@RequestMapping(value = "/registForm", method = { RequestMethod.POST, RequestMethod.GET })
-	public String registForm(HttpSession session) { //개인프로젝트 게시물 페이지 이동 메소드.
+	public String registForm(HttpSession session) { // 개인프로젝트 게시물 페이지 이동 메소드.
 		String url = "/bitbox/personalRegistForm";
 		return url;
 	}
 
 	@RequestMapping(value = "/regist", method = { RequestMethod.POST, RequestMethod.GET })
 	public String regist(@RequestParam("p_title") String p_title, @RequestParam("p_content") String p_content,
-			@RequestParam("p_category") String p_category, HttpSession session, MultipartFile p_filename) { 
-																//개인 프로젝트 게시물 등록 메소드.											
+			@RequestParam("p_category") String p_category, HttpSession session, MultipartFile p_filename) {
+		// 개인 프로젝트 게시물 등록 메소드.
 		String url = null;
 		PBoardDTO board = new PBoardDTO();
 		String path = this.path;
@@ -129,7 +130,10 @@ public class BitBoxController {
 	}
 
 	@RequestMapping(value = "/download", method = { RequestMethod.POST, RequestMethod.GET })
-	public HttpEntity<?> downloadtest(@RequestParam("p_boardseq") String p_boardseq, HttpServletRequest req) {//개인프로젝트 파일 다운로드 메소드.
+	public HttpEntity<?> downloadtest(@RequestParam("p_boardseq") String p_boardseq, HttpServletRequest req) {// 개인프로젝트
+																												// 파일
+																												// 다운로드
+																												// 메소드.
 		String path = SystemPropertyUtils.resolvePlaceholders("${storage.path:" + this.path + "}");
 		HttpHeaders header = new HttpHeaders();
 		PBoardDTO board = service.finduuidname(p_boardseq);
@@ -142,7 +146,7 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/uploadImage", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody String uploadImage(HttpServletRequest req, HttpServletResponse res, MultipartFile image) {
-		//QnA에 이미지 업로드 메소드.
+		// QnA에 이미지 업로드 메소드.
 		String path = req.getSession().getServletContext().getRealPath("/") + "image\\";
 		System.out.println(path);
 		UUID uuidname = UUID.randomUUID();
@@ -161,7 +165,7 @@ public class BitBoxController {
 	public String projectUpdate(HttpSession session, @RequestParam("p_title") String p_title,
 			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
 			@RequestParam(value = "cal", defaultValue = "") String cal) {
-		//개인 프로젝트 업데이트 메소드.
+		// 개인 프로젝트 업데이트 메소드.
 		String url = "";
 		boolean flag = false;
 		PBoardDTO board = new PBoardDTO();
@@ -185,7 +189,7 @@ public class BitBoxController {
 	public String projectDelete(HttpSession session, @RequestParam("p_title") String p_title,
 			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
 			@RequestParam(value = "cal", defaultValue = "") String cal) {
-		//개인 프로젝트 삭제 메소드.
+		// 개인 프로젝트 삭제 메소드.
 		String url = "";
 		boolean flag = false;
 		PBoardDTO board = new PBoardDTO();
@@ -207,7 +211,7 @@ public class BitBoxController {
 	public String detailProject(Model model, HttpSession session, @RequestParam("p_title") String p_title,
 			@RequestParam("p_content") String p_content, @RequestParam("p_boardseq") int p_boardseq,
 			@RequestParam("p_filename") String p_filename, @RequestParam("p_category") String p_category) {
-		//개인프로젝트 상세 페이지 이동 메소드.
+		// 개인프로젝트 상세 페이지 이동 메소드.
 		String url = "/bitbox/projectView";
 		PBoardDTO board = new PBoardDTO();
 		board.setP_boardseq(p_boardseq);
@@ -222,7 +226,7 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/calendar", method = { RequestMethod.POST, RequestMethod.GET })
 	public String calendar(HttpSession session) {
-		//캘린더 페이지로 이동 메소드.
+		// 캘린더 페이지로 이동 메소드.
 		String url = "/bitbox/calendar";
 		session.setAttribute("id", session.getAttribute("id"));
 		session.setAttribute("code", session.getAttribute("code"));
@@ -232,17 +236,17 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/getCalendar", method = RequestMethod.GET)
 	public @ResponseBody String getVacation(HttpServletResponse response, HttpSession session) {
-		//캘린더에  개인프로젝트 데이터 보내주는 메소드.
+		// 캘린더에 개인프로젝트 데이터 보내주는 메소드.
 		List<CalendarFormat> data = service.getCalendar(session.getAttribute("id").toString());
 		String json = new Gson().toJson(data);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		return json;
-	}	
+	}
 
 	@RequestMapping(value = "/logout", method = { RequestMethod.POST, RequestMethod.GET })
 	public String logout(HttpSession session) {
-		//로그아웃 메소드.
+		// 로그아웃 메소드.
 		String url = "redirect:/login/";
 		session.invalidate();
 		return url;
@@ -250,14 +254,14 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/groupRegistForm", method = { RequestMethod.POST, RequestMethod.GET })
 	public String groupRegistForm(HttpSession session) {
-		//그룹 가입 페이지로 이동 메소드.
+		// 그룹 가입 페이지로 이동 메소드.
 		String url = "/bitbox/groupRegist";
 		return url;
 	}
 
 	@RequestMapping(value = "/groupRegist", method = { RequestMethod.POST, RequestMethod.GET })
 	public String groupRegist(HttpSession session, GroupDTO dto) {
-		//그룹 등록 메소드.
+		// 그룹 등록 메소드.
 		String url = "/bitbox/groupRegist";
 		dto.setS_id(session.getAttribute("id").toString());
 		boolean flag = service.groupRegist(dto);
@@ -266,8 +270,8 @@ public class BitBoxController {
 			List<GroupDTO> groupList = service.getGroupList(session.getAttribute("id").toString());
 			session.setAttribute("groupList", groupList);
 			url = "redirect:/bitbox/group";
-			String title=dto.getTitle();
-			url = "redirect:/git/gitBoard?title="+title+"&status=1";
+			String title = dto.getTitle();
+			url = "redirect:/git/gitBoard?title=" + title + "&status=1";
 		}
 		return url;
 	}
@@ -296,25 +300,26 @@ public class BitBoxController {
 		GinDTO gIn = new GinDTO(group.getGroup_seq(), id);
 		// System.out.println(gIn);
 		int state = service.groupJoin(group, gIn);
-		if (state == 0) { //group에 대한 repository를 만들기 위한 if문
-			//groupLog table에 가입 연산 log남기기
-			List<GinDTO> getGMemberList=service.getGroupMember(group);
-			ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
-			for(int i=0;i<getGMemberList.size();i++){
-				GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "group join", id+"님이 "+group.getTitle()+"그룹에 가입했습니다.");
+		if (state == 0) { // group에 대한 repository를 만들기 위한 if문
+			// groupLog table에 가입 연산 log남기기
+			List<GinDTO> getGMemberList = service.getGroupMember(group);
+			ArrayList<GLogDTO> gLogList = new ArrayList<GLogDTO>();
+			for (int i = 0; i < getGMemberList.size(); i++) {
+				GLogDTO dto = new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "group join",
+						id + "님이 " + group.getTitle() + "그룹에 가입했습니다.");
 				gLogList.add(dto);
 			}
 			System.out.println(gLogList);
-			boolean flag=service.insertGLog(gLogList);
-			if(flag){
-				session.removeAttribute("groupList");				
+			boolean flag = service.insertGLog(gLogList);
+			if (flag) {
+				session.removeAttribute("groupList");
 				List<GroupDTO> groupList = service.getGroupList(id);
 				session.setAttribute("groupList", groupList);
-				String title=group.getTitle();
-				System.out.println("group in title: "+title);
-				url = "redirect:/git/gitBoard?title="+title+"&status=2";
+				String title = group.getTitle();
+				System.out.println("group in title: " + title);
+				url = "redirect:/git/gitBoard?title=" + title + "&status=2";
 			}
-		}else{
+		} else {
 			model.addAttribute("state", state);
 			url = "redirect:/bitbox/group?state=" + state;
 		}
@@ -325,7 +330,7 @@ public class BitBoxController {
 		 * }else{ //state==2 System.out.println("비밀번호 오류입니다.");
 		 * url="redirect:/bitbox/group"; }
 		 */
-		
+
 		// System.out.println("groupJoin: "+id);
 		return url;
 	}
@@ -334,51 +339,52 @@ public class BitBoxController {
 	public @ResponseBody List<GLogDTO> groupAlarm(HttpSession session) {
 		// System.out.println("alarm call");
 		// System.out.println("modal: "+gNo);
-		String s_id=(String) session.getAttribute("id");
+		String s_id = (String) session.getAttribute("id");
 		List<GLogDTO> list = service.getGLogAlarm(s_id);
 		// System.out.println("controller: "+modal);
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/qnaAlarm", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody List<ReQnaDTO> qnaAlarm(HttpSession session) {
 		// System.out.println("alarm call");
 		// System.out.println("modal: "+gNo);
-		String s_id=(String) session.getAttribute("id");
+		String s_id = (String) session.getAttribute("id");
 		List<ReQnaDTO> list = service.getReQnaAlarm(s_id);
-		//System.out.println("controller reqna list: "+list);
+		// System.out.println("controller reqna list: "+list);
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/qnaState", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody boolean qnaState(@RequestParam("q_seq") int q_seq) {
-		boolean flag=service.qnaState(q_seq);
+		boolean flag = service.qnaState(q_seq);
 		return flag;
 	}
-	
+
 	@RequestMapping(value = "/readGLog", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody boolean readGLog(HttpSession session,@RequestParam("log_seq") int log_seq) {
-		boolean flag=service.readGLog(log_seq);
+	public @ResponseBody boolean readGLog(HttpSession session, @RequestParam("log_seq") int log_seq) {
+		boolean flag = service.readGLog(log_seq);
 		return flag;
 	}
-	
+
 	@RequestMapping(value = "/uploadFile", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody boolean uploadFile(HttpSession session,@RequestParam("title") String title) {
-		String id=(String) session.getAttribute("id");
-		GroupDTO group=new GroupDTO();
+	public @ResponseBody boolean uploadFile(HttpSession session, @RequestParam("title") String title) {
+		String id = (String) session.getAttribute("id");
+		GroupDTO group = new GroupDTO();
 		group.setS_id(id);
-		group.setTitle(title);		
-		List<GinDTO> getGMemberList=service.getGroupMember(group);
-		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
-		for(int i=0;i<getGMemberList.size();i++){
-			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "file upload", id+"님이 "+group.getTitle()+"에 파일을 업로드 했습니다.");
+		group.setTitle(title);
+		List<GinDTO> getGMemberList = service.getGroupMember(group);
+		ArrayList<GLogDTO> gLogList = new ArrayList<GLogDTO>();
+		for (int i = 0; i < getGMemberList.size(); i++) {
+			GLogDTO dto = new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "file upload",
+					id + "님이 " + group.getTitle() + "에 파일을 업로드 했습니다.");
 			gLogList.add(dto);
 		}
 		System.out.println(gLogList);
-		boolean flag=service.insertGLog(gLogList);
+		boolean flag = service.insertGLog(gLogList);
 		return flag;
 	}
-	
+
 	@RequestMapping(value = "/qna", method = { RequestMethod.POST, RequestMethod.GET })
 	public String qna(HttpSession session, Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 		String url = "/bitbox/qna";
@@ -508,22 +514,26 @@ public class BitBoxController {
 
 	@RequestMapping(value = "/registMinutes", method = { RequestMethod.POST, RequestMethod.GET })
 	public String registMinutes(HttpSession session, MinutesDTO minutes, @RequestParam("member") String[] nameList,
-			@RequestParam("group_title") String group_title, @RequestParam("group_seq") int group_seq, Model model) {
+			@RequestParam("group_title") String group_title, Model model) {
 		String url = "";
-		String id=(String) session.getAttribute("id");
-		GroupDTO group=new GroupDTO();
+		String id = (String) session.getAttribute("id");
+		System.out.println(id);
+		GroupDTO group = new GroupDTO();
 		group.setS_id(id);
 		group.setTitle(group_title);
-		
-		List<GinDTO> getGMemberList=service.getGroupMember(group);
-		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
-		for(int i=0;i<getGMemberList.size();i++){
-			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting", id+"님이 "+group.getTitle()+"에 회의록을 작성했습니다.");
+		System.out.println(group);
+
+		List<GinDTO> getGMemberList = service.getGroupMember(group);
+		System.out.println(getGMemberList);
+		ArrayList<GLogDTO> gLogList = new ArrayList<GLogDTO>();
+		for (int i = 0; i < getGMemberList.size(); i++) {
+			GLogDTO dto = new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting",
+					id + "님이 " + group.getTitle() + "에 회의록을 작성했습니다.");
 			gLogList.add(dto);
 		}
-		//System.out.println(gLogList);
-		boolean flags=service.insertGLog(gLogList);
-		if(flags){
+		System.out.println(gLogList);
+		boolean flags = service.insertGLog(gLogList);
+		if (flags) {
 			StringBuffer sb = new StringBuffer();
 			sb.append(nameList[0]);
 			if (nameList.length > 1) {
@@ -534,21 +544,22 @@ public class BitBoxController {
 			minutes.setMin_attendee(sb.toString());
 			boolean flag = service.registMinutes(minutes);
 			if (flag) {
-				url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title;
+				url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title="
+						+ group_title;
 			}
 		}
 		return url;
 	}
 
 	@RequestMapping(value = "/minutesList", method = { RequestMethod.POST, RequestMethod.GET })
-	public String minutesList(HttpSession session, @RequestParam(value="group_seq",defaultValue="0") int group_seq,
+	public String minutesList(HttpSession session, @RequestParam(value = "group_seq", defaultValue = "0") int group_seq,
 			@RequestParam("group_title") String group_title, Model model,
 			@RequestParam(value = "page", defaultValue = "0") int page) {
-		String url="";
-		if(group_seq==0){
-			group_seq=service.getGroupSeq(group_title);
+		String url = "";
+		if (group_seq == 0) {
+			group_seq = service.getGroupSeq(group_title);
 		}
-		url= "/bitbox/minutesList";
+		url = "/bitbox/minutesList";
 		List<MinutesDTO> list = service.minutesList(group_seq, page);
 		ArrayList<String> mPageList = service.getMinutesPageList(group_seq, page, group_title);
 		model.addAttribute("list", list);
@@ -574,20 +585,21 @@ public class BitBoxController {
 	public String minuteUpdate(HttpSession session, MinutesDTO minutes, @RequestParam("group_title") String group_title,
 			Model model, @RequestParam("page") int page) {
 		String url = "";
-		String id=(String) session.getAttribute("id");
-		GroupDTO group=new GroupDTO();
+		String id = (String) session.getAttribute("id");
+		GroupDTO group = new GroupDTO();
 		group.setS_id(id);
 		group.setTitle(group_title);
-		
-		List<GinDTO> getGMemberList=service.getGroupMember(group);
-		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
-		for(int i=0;i<getGMemberList.size();i++){
-			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting", id+"님이 "+group.getTitle()+"에 회의록을 수정했습니다.");
+
+		List<GinDTO> getGMemberList = service.getGroupMember(group);
+		ArrayList<GLogDTO> gLogList = new ArrayList<GLogDTO>();
+		for (int i = 0; i < getGMemberList.size(); i++) {
+			GLogDTO dto = new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting",
+					id + "님이 " + group.getTitle() + "에 회의록을 수정했습니다.");
 			gLogList.add(dto);
 		}
-		//System.out.println(gLogList);
-		boolean flags=service.insertGLog(gLogList);
-		if(flags){
+		// System.out.println(gLogList);
+		boolean flags = service.insertGLog(gLogList);
+		if (flags) {
 			boolean flag = service.updateMinutes(minutes);
 			if (flag) {
 				url = "redirect:/bitbox/minutesView?seq=" + minutes.getMin_seq() + "&group=" + group_title + "&page="
@@ -601,20 +613,21 @@ public class BitBoxController {
 	public String minuteDelete(HttpSession session, MinutesDTO minutes, @RequestParam("group_title") String group_title,
 			Model model, @RequestParam("page") int page) {
 		String url = "";
-		String id=(String) session.getAttribute("id");
-		GroupDTO group=new GroupDTO();
+		String id = (String) session.getAttribute("id");
+		GroupDTO group = new GroupDTO();
 		group.setS_id(id);
 		group.setTitle(group_title);
-		
-		List<GinDTO> getGMemberList=service.getGroupMember(group);
-		ArrayList<GLogDTO> gLogList=new ArrayList<GLogDTO>();
-		for(int i=0;i<getGMemberList.size();i++){
-			GLogDTO dto=new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting", id+"님이 "+group.getTitle()+"에 회의록을 삭제했습니다.");
+
+		List<GinDTO> getGMemberList = service.getGroupMember(group);
+		ArrayList<GLogDTO> gLogList = new ArrayList<GLogDTO>();
+		for (int i = 0; i < getGMemberList.size(); i++) {
+			GLogDTO dto = new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting",
+					id + "님이 " + group.getTitle() + "에 회의록을 삭제했습니다.");
 			gLogList.add(dto);
 		}
-		//System.out.println(gLogList);
-		boolean flags=service.insertGLog(gLogList);
-		if(flags){
+		// System.out.println(gLogList);
+		boolean flags = service.insertGLog(gLogList);
+		if (flags) {
 			boolean flag = service.deleteMinutes(minutes.getMin_seq());
 			if (flag) {
 				url = "redirect:/bitbox/minutesList?group_seq=" + minutes.getGroup_seq() + "&group_title=" + group_title
@@ -650,11 +663,11 @@ public class BitBoxController {
 	@RequestMapping(value = "/myPage", method = { RequestMethod.POST, RequestMethod.GET })
 	public String myPage(HttpSession session, Model model) {
 		String url = "/bitbox/myPage";
-		StudentDTO student = service.login((String)session.getAttribute("id"));
-		model.addAttribute("student",student);
+		StudentDTO student = service.login((String) session.getAttribute("id"));
+		model.addAttribute("student", student);
 		String class_name = service.getClassName(student.getS_class_code());
-		model.addAttribute("class_name",class_name);
-		
+		model.addAttribute("class_name", class_name);
+
 		return url;
 	}
 
@@ -670,7 +683,7 @@ public class BitBoxController {
 		UUID uuidname = UUID.randomUUID();
 		try {
 			File directory = new File(path);
-			if(!directory.exists()){
+			if (!directory.exists()) {
 				directory.mkdirs();// 파일경로 없으면 생성
 			}
 			profile_img.transferTo(new File(path + uuidname.toString() + "_" + fileName));
@@ -718,7 +731,7 @@ public class BitBoxController {
 		model.addAttribute("extension", extension);
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/addTodo", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody ArrayList<String> addTodo(HttpSession session, @RequestParam("text") String text) {
 		TodoDTO dto = new TodoDTO(text, (String) session.getAttribute("id"));
@@ -753,13 +766,13 @@ public class BitBoxController {
 		}
 		return todoList;
 	}
-	
+
 	@RequestMapping(value = "/recent_Down", method = { RequestMethod.POST, RequestMethod.GET })
-	public String recentDownload(@RequestParam("group_seq") int group_seq, Model model,HttpServletResponse response) {
+	public String recentDownload(@RequestParam("group_seq") int group_seq, Model model, HttpServletResponse response) {
 		String url = "/bitbox/download";
 		// 줄바꿈처리
 		MinutesDTO minutes = service.getRecentMinutes(group_seq);
-		if(minutes==null){
+		if (minutes == null) {
 			try {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out;
@@ -771,52 +784,54 @@ public class BitBoxController {
 				e.printStackTrace();
 			}
 			url = "/bitbox/home";
-		}else{
+		} else {
 			String group_title = service.getGroupTitle(group_seq);
-			System.out.println("in : "+minutes);
+			System.out.println("in : " + minutes);
 			minutes.setMin_content(service.enter(minutes.getMin_content()));
 			minutes.setMin_opinion(service.enter(minutes.getMin_opinion()));
 			minutes.setMin_schedule(service.enter(minutes.getMin_schedule()));
 			minutes.setMin_decide(service.enter(minutes.getMin_decide()));
 			minutes.setMin_prepare(service.enter(minutes.getMin_prepare()));
-	
+
 			model.addAttribute("data", minutes);
 			model.addAttribute("title", group_title);
-			
+
 		}
 		return url;
 	}
+
 	@RequestMapping(value = "/pdfCreate", method = { RequestMethod.POST, RequestMethod.GET })
-	public String pdfCreate(HttpServletRequest req,HttpServletResponse response,MinutesDTO minutes, @RequestParam("group_title") String group_title, Model model){
+	public String pdfCreate(HttpServletRequest req, HttpServletResponse response, MinutesDTO minutes,
+			@RequestParam("group_title") String group_title, Model model) {
 		String url = "/bitbox/home";
-		
+
 		PdfService pdf = new PdfService();
 		url = pdf.makePDF(minutes, group_title);
-		
-//		try {
-//			response.setContentType("text/html; charset=UTF-8");
-//			PrintWriter out;
-//			out = response.getWriter();
-//			out.println("<script>alert('c:/dev/pdf에 저장되었습니다.');</script>");
-//			out.flush();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-	    //System.out.println(url);
-	    return "redirect:"+url;
-	    
-//	    return url;
+
+		// try {
+		// response.setContentType("text/html; charset=UTF-8");
+		// PrintWriter out;
+		// out = response.getWriter();
+		// out.println("<script>alert('c:/dev/pdf에 저장되었습니다.');</script>");
+		// out.flush();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
+		// System.out.println(url);
+		return "redirect:" + url;
+
+		// return url;
 	}
-	
+
 	@RequestMapping(value = "/recent_Pdf", method = { RequestMethod.POST, RequestMethod.GET })
-	public String recentPdf(@RequestParam("group_seq") int group_seq, Model model,HttpServletResponse response) {
+	public String recentPdf(@RequestParam("group_seq") int group_seq, Model model, HttpServletResponse response) {
 		String url = "";
 		// 줄바꿈처리
 		MinutesDTO minutes = service.getRecentMinutes(group_seq);
-		if(minutes==null){
-			//회의록이 없을경우
+		if (minutes == null) {
+			// 회의록이 없을경우
 			try {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out;
@@ -828,11 +843,11 @@ public class BitBoxController {
 				e.printStackTrace();
 			}
 			url = "/bitbox/home";
-		}else{
+		} else {
 			String group_title = service.getGroupTitle(group_seq);
 			PdfService pdf = new PdfService();
 			url = pdf.makePDF(minutes, group_title);
-			
+
 			try {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out;
@@ -843,66 +858,72 @@ public class BitBoxController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			url = "/bitbox/home";
 		}
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/getSubject", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody ArrayList<SubjectFormat> getSubject(HttpSession session) {
-		//커리큘럼 가져오는 메소드.
-		int code=(int) session.getAttribute("code");
-		ArrayList<SubjectFormat> subjectList =service.getSubject(code);
+		// 커리큘럼 가져오는 메소드.
+		int code = (int) session.getAttribute("code");
+		ArrayList<SubjectFormat> subjectList = service.getSubject(code);
 		return subjectList;
 	}
+
 	@RequestMapping(value = "/getSubSubject", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody ArrayList<SubjectFormat> getSubSubject(HttpSession session,@RequestParam("subject")String subject) {
-		//커리큘럼 과목 가져오는 메소드.
-		ArrayList<SubjectFormat> sub_subject=service.getsubSubject(subject);	
+	public @ResponseBody ArrayList<SubjectFormat> getSubSubject(HttpSession session,
+			@RequestParam("subject") String subject) {
+		// 커리큘럼 과목 가져오는 메소드.
+		ArrayList<SubjectFormat> sub_subject = service.getsubSubject(subject);
 		return sub_subject;
 	}
-	
+
 	@RequestMapping(value = "/getSubjectDate", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody ArrayList<SubjectFormat> getSubjectDate(HttpSession session,@RequestParam("subject")String subject) {
-		//커리큘럼 남은 일자 가져오는 메소드.
+	public @ResponseBody ArrayList<SubjectFormat> getSubjectDate(HttpSession session,
+			@RequestParam("subject") String subject) {
+		// 커리큘럼 남은 일자 가져오는 메소드.
 		System.out.println(subject);
-		int code=(int) session.getAttribute("code");
-		SubjectDateFormat dateFormat=new SubjectDateFormat();
+		int code = (int) session.getAttribute("code");
+		SubjectDateFormat dateFormat = new SubjectDateFormat();
 		dateFormat.setSubject(subject);
 		dateFormat.setCode(code);
-		ArrayList<SubjectFormat> date=service.getDate(dateFormat);		
+		ArrayList<SubjectFormat> date = service.getDate(dateFormat);
 		return date;
 	}
+
 	@RequestMapping(value = "/titleCheck", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody boolean titleCheck(@RequestParam("title")String title) {
-		boolean flag=false;
-		int seq=service.getGroupSeq(title);
-		if(seq>0){ //해당 title에 대한 그룹이 있으니까 seq가 0보다 크다.
-			flag=true;
+	public @ResponseBody boolean titleCheck(@RequestParam("title") String title) {
+		boolean flag = false;
+		int seq = service.getGroupSeq(title);
+		if (seq > 0) { // 해당 title에 대한 그룹이 있으니까 seq가 0보다 크다.
+			flag = true;
 		}
-		//title seq가 0과 같다면 해당 title을 가진 그룹이 없다라고 판단.
+		// title seq가 0과 같다면 해당 title을 가진 그룹이 없다라고 판단.
 		return flag;
 	}
+
 	@RequestMapping(value = "/getPBoardCnt", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody int getPBoardCnt(HttpSession session) {
 		String id = (String) session.getAttribute("id");
-		int cnt=service.getPBoardCnt(id);
+		int cnt = service.getPBoardCnt(id);
 		return cnt;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/getGinCnt", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody int getGinCnt(HttpSession session) {
 		String id = (String) session.getAttribute("id");
-		int cnt=service.getGinCnt(id);
+		int cnt = service.getGinCnt(id);
 		return cnt;
-		
+
 	}
+
 	@RequestMapping(value = "/getQnaCnt", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody int getQnaCnt(HttpSession session) {
 		String id = (String) session.getAttribute("id");
-		int cnt=service.getQnaCnt(id);
+		int cnt = service.getQnaCnt(id);
 		return cnt;
 	}
 }
