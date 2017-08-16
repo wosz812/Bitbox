@@ -491,7 +491,6 @@ var createRepos=function(){
 	  methods: {
 	    swapComponent: function(component)
 	    {
-	    	$("#new_file").hide();
 	      this.currentComponent = component;
 	      if(component=='cfile'){
 	    	  YUI().use(
@@ -506,6 +505,8 @@ var createRepos=function(){
    		    		    ).render();
    		    		  }
    		    );
+	      }else if(component==null){
+	    	  window.location.href = "/git/gitBoardView" 
 	      }else if(component=='create'){
 	    		  var filename=$("input[name=file_name]").val();
 		    	  var editor = ace.edit("new_file");
@@ -525,7 +526,6 @@ var createRepos=function(){
 		    	      console.log(response);
 		    	      window.location.href = "/git/gitBoardView"
 		    	  });
-	
 	      }
 	    },
 	    changeUrl:function(url){
