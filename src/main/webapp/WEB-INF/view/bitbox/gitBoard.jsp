@@ -128,13 +128,18 @@ margin-right:5px;
 			${status}
 			${id} --%>
 			<div id="toReplace">
+				<div v-if="currentComponent==='cfile'">
+					<div class="form-group">
+						<label>Name your file</label>
+						<input type="text" class="form-control" name="file_name" placeholder="file name">
+					</div>
+					<div class="form-group">
+						<label>Edit new file</label>
+						<div id="new_file"></div>
+					</div>
+				</div>
 				<div v-if="currentComponent==='upload files'">
 					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
-					<!-- <div class="progress">
-		                <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-		                  <span class="sr-only">40% Complete (success)</span>
-		                </div>
-		            </div> -->
 					<table id="status1"></table>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</div>
@@ -165,6 +170,8 @@ margin-right:5px;
 					
 					<div class="dropdown">
 						<div class="btn-group" style="float: right; margin-right: 20px;">
+							<button class="btn btn-primary" @click="swapComponent('cfile')"
+								id="cfile">create new file</button>
 							<button class="btn btn-primary" @click="swapComponent(component)"
 								id="upfile">{{component}}</button>
 							<button class="btn btn-primary dropdown-toggle" type="button"
@@ -461,21 +468,38 @@ var createRepos=function(){
 		    		    );
 					});
 		}  
-		 
+
+ //single page를 만들기 위한 vue 변수 생성		 
   var toReplace =  new Vue({
-	  el: '#toReplace',
+	  el: '#toReplace', //vue를 사용할 div id
 	  data: {
-	    currentComponent: null,
-	    component: 'upload files',
-	    rows: [],
-	    html_url: ''
+	    currentComponent: null, //currentComponent로 control할 div section 정함
+	    component: 'upload files', //upload file이라는 component
+	    rows: [], //github repository에서 받아온 tree값을 저장할 rows 변수
+	    html_url: '' //초대장이 발송됐을 때 초대장 url을 저장할 변수
 	  },
 	  components: {
-	    'upload files': {
+	    'upload files': { //upload file component
 	     template: ''
 	    },
-	    'invitation': {
+	    'invitation': {  //invitation component
 		     template: ''
+		 },
+		 'cfile':{
+			 template:'',
+			 created:function(){
+				 YUI().use(
+							'aui-ace-editor',
+							function(Y) {
+								new Y.AceEditor(
+								{
+									boundingBox: '#new_file',
+									mode: text,
+									value:''
+								}).render();
+							}
+						);
+			 }
 		 }
 	  },
 	  methods: {
@@ -495,7 +519,6 @@ var createRepos=function(){
 
         },
       	gitClick: function(type,path,url){
-      		
       		flag=1;
       		if(type==="blob"){
     			getblobContent(path,url);
@@ -655,7 +678,8 @@ var createRepos=function(){
 				    createCommit(cmsha);
 			});
 		} 
-		
+	
+	//Commit to repository
 	function createCommit(tree_sha){
 		var commit_data= JSON.stringify({"message":"file upload branch","tree":""+tree_sha+""});
 		$.ajax({ 
@@ -671,6 +695,7 @@ var createRepos=function(){
 		});
 	}
 
+	//Patch repository
 	function patch_repos(sha){
 		$.ajax({ 
 		   url: 'https://api.github.com/repos/${masId}/${title}/git/refs/heads/master',
@@ -685,7 +710,7 @@ var createRepos=function(){
 		});
 	}
 	
-	//Add Collaborators ===>
+	//Add Collaborators
 	var addCollaborator=function(){
 		apiUrl="https://api.github.com/repos/${masId}/${title}/collaborators/${username}";
 		$.ajax({
@@ -699,17 +724,19 @@ var createRepos=function(){
 		}).done(function(response){
 			console.log(response);
 			
-			var html_url=response["html_url"];
+			var html_url=response["html_url"]; //초대장 url 변수에 할당
 			console.log(html_url);
 			toReplace.changeUrl(html_url);
 		});
 	}
 	
+	//invitation이 발송 되었을 때 초대 승낙 페이지로 이동하는 버튼을 클릭해야만 close버튼이 활성화 됨
 	function click_func(){
-		//alert("hello");
 		$('#close_refresh').prop("disabled",false);
 		$("#invitation_btn").prop("disabled",true);
 	}
+	
+	//dropbox버튼에서 url을 copy하는 함수
 	function copyToClipboard() {
 	    var $temp = $("<input>");
 	    $("body").append($temp);
@@ -718,13 +745,15 @@ var createRepos=function(){
 	    $temp.remove();
 	    $("btn_copy").tooltip();
 	}
+	
+	// status==1 create group을 했을 때 master github id로 repository를 만든다.
 	if(${status}==1){
 		createRepos();
 		
-	} else if(${status}==2){
+	} else if(${status}==2){ //status==2일때 멤버가 그룹에 가입버튼을 눌러 repository에 가입이 된다.
 		addCollaborator();
 		
-	} else{
+	} else{ //그 이외에 sidebar에서 group title을 클릭해서 gitboard 페이지에 들어올 때
 		toReplace.fetchEventsList();
 	}
 </script>
