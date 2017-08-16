@@ -153,10 +153,6 @@ del {
 			h.replaceState('', document.title, l.href.split('#')[0]);
 	})(window);
 </script>
-<script type="text/javascript">
-	document.body.className = document.body.className.replace('no-js', '')
-			+ ' js';
-</script>
 
 <!-- ajax -->
 
