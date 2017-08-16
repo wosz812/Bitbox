@@ -26,6 +26,8 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 <script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
+
 
 <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 <style>
@@ -129,14 +131,13 @@ margin-right:5px;
 			${id} --%>
 			<div id="toReplace">
 				<div v-if="currentComponent==='cfile'">
-					<div class="form-group">
-						<label>Name your file</label>
-						<input type="text" class="form-control" name="file_name" placeholder="file name">
-					</div>
-					<div class="form-group">
-						<label>Edit new file</label>
-						<div id="new_file"></div>
-					</div>
+					<label>Name your file</label>
+					<input type="text" class="form-control" name="file_name" placeholder="file name">
+					
+					<label>Edit new file</label>
+					<div id="new_file"></div>
+					<button class="btn btn-primary" @click="swapComponent('create')">Create</button>
+					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</div>
 				<div v-if="currentComponent==='upload files'">
 					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
@@ -234,8 +235,6 @@ margin-right:5px;
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<!-- page script -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js"></script>
 	<script src="/js/bootstrap-waitingfor.js"></script>
@@ -485,28 +484,49 @@ var createRepos=function(){
 	    'invitation': {  //invitation component
 		     template: ''
 		 },
-		 'cfile':{
-			 template:'',
-			 created:function(){
-				 YUI().use(
-							'aui-ace-editor',
-							function(Y) {
-								new Y.AceEditor(
-								{
-									boundingBox: '#new_file',
-									mode: text,
-									value:''
-								}).render();
-							}
-						);
-			 }
-		 }
+		'cfile':{
+			 template:''
+		}
 	  },
 	  methods: {
 	    swapComponent: function(component)
 	    {
-	    	console.log(component);
 	      this.currentComponent = component;
+	      if(component=='cfile'){
+	    	  YUI().use(
+   		    		  'aui-ace-editor',
+   		    		  function(Y) {
+   		    		    new Y.AceEditor(
+   		    		      {
+   		    		    	  boundingBox: '#new_file',
+   		    		          mode: Text,
+   		    		          value:""
+   		    		      }
+   		    		    ).render();
+   		    		  }
+   		    );
+	      }else if(component==null){
+	    	  window.location.href = "/git/gitBoardView" 
+	      }else if(component=='create'){
+	    		  var filename=$("input[name=file_name]").val();
+		    	  var editor = ace.edit("new_file");
+		    	  var filecontent=editor.getValue();
+		    	  var filemessage = "create file";
+		    	  var basecontent = btoa(filecontent);
+		    	  var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'"}';
+		    	  $.ajax({ 
+		    	      url: 'https://api.github.com/repos/${masId}/${title}/contents/'+filename+'.txt',
+		    	      type: 'PUT',
+		    	      
+		    	       beforeSend: function(xhr) { 
+		    	          xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+		    	      }  , 
+		    	      data: filedata
+		    	  }).done(function(response) {
+		    	      console.log(response);
+		    	      window.location.href = "/git/gitBoardView"
+		    	  });
+	      }
 	    },
 	    changeUrl:function(url){
 	    	this.html_url=url; //이렇게 하고
