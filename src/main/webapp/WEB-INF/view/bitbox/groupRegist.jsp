@@ -144,6 +144,7 @@
             type : 'POST',
 	            success : function(data) {
 	              if(!data){
+	            	  alert("사용할 수 있는 그룹명입니다.");
 	            	  $('#cgroup').prop("disabled",false);
 	              }else{
 	            	  alert("그룹 이름 중복");
