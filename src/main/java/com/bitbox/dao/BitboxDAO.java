@@ -57,7 +57,7 @@ public class BitboxDAO implements IBitboxDAO {
 	@Override
 	public boolean studentRegist(StudentDTO student) {
 		boolean flag = false;
-		System.out.println("DAO: "+student);
+		System.out.println("DAO: " + student);
 		int aCnt = session.insert(login + ".regist", student);
 		if (aCnt > 0) {
 			flag = true;
@@ -275,7 +275,7 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public List<GLogDTO> getGLogAlarm(String s_id) {
-		List<GLogDTO> list = session.selectList(namespace + ".getGLogAlarm",s_id);
+		List<GLogDTO> list = session.selectList(namespace + ".getGLogAlarm", s_id);
 		return list;
 	}
 
@@ -428,7 +428,6 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public StudentDTO idCheck(String s_id) {
-		// TODO Auto-generated method stub
 		StudentDTO student = session.selectOne(login + ".idCheck", s_id);
 
 		return student;
@@ -436,7 +435,6 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public boolean myUpdate(StudentDTO dto) {
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		int aCnt = session.update(namespace + ".myUpdate", dto);
 		if (aCnt > 0) {
@@ -463,10 +461,10 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public String getClassName(int s_class_code) {
-		// TODO Auto-generated method stub
-		String className = session.selectOne(namespace+".getClassName",s_class_code);
+		String className = session.selectOne(namespace + ".getClassName", s_class_code);
 		return className;
 	}
+
 	public List<TodoDTO> todoList(TodoDTO dto) {
 		List<TodoDTO> todoList = null;
 		int aCnt = session.insert(namespace + ".addTodo", dto);
@@ -504,25 +502,22 @@ public class BitboxDAO implements IBitboxDAO {
 
 	@Override
 	public StudentDTO getMasInfo(String title) {
-		// TODO Auto-generated method stub
-		StudentDTO dto=session.selectOne(git+".getMasInfo",title);
+		StudentDTO dto = session.selectOne(git + ".getMasInfo", title);
 		return dto;
 	}
-	
+
 	@Override
 	public MinutesDTO getRecentMinutes(int group_seq) {
-		// TODO Auto-generated method stub
 		MinutesDTO minutes = session.selectOne(namespace + ".getRecentMinutes", group_seq);
 		return minutes;
 	}
 
 	@Override
 	public String getGroupTitle(int group_seq) {
-		// TODO Auto-generated method stub
-		String group_title = session.selectOne(namespace + ".getGroupTitle",group_seq);
+		String group_title = session.selectOne(namespace + ".getGroupTitle", group_seq);
 		return group_title;
 	}
-	
+
 	@Override
 	public boolean changePw(StudentDTO student) {
 		boolean flag = false;
@@ -532,103 +527,95 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return flag;
 	}
+
 	@Override
 	public List<CClassDTO> getSubject(int code) {
-		// TODO Auto-generated method stub
 		List<CClassDTO> list = session.selectList(namespace + ".getSubject", code);
 		return list;
 	}
 
 	@Override
 	public CClassDTO getDate(SubjectDateFormat dateFormat) {
-		// TODO Auto-generated method stub
 		CClassDTO dto = session.selectOne(namespace + ".getDate", dateFormat);
 		return dto;
 	}
 
 	@Override
 	public List<SubSubjectDTO> subSubject(String subject) {
-		// TODO Auto-generated method stub
 		List<SubSubjectDTO> sub = session.selectList(namespace + ".getsubSubject", subject);
 		return sub;
 	}
 
 	@Override
 	public List<ReQnaDTO> getReQnaAlarm(String s_id) {
-		// TODO Auto-generated method stub
-		List<ReQnaDTO> dto=session.selectList(namespace+".getReQnaAlarm",s_id);
+		List<ReQnaDTO> dto = session.selectList(namespace + ".getReQnaAlarm", s_id);
 		return dto;
 	}
 
 	@Override
 	public boolean qnaState(int q_seq) {
-		// TODO Auto-generated method stub
-		boolean flag=false;
-		int aCnt=session.update(namespace + ".qnaState", q_seq);
-		if(aCnt>0){
-			flag=true;
+		boolean flag = false;
+		int aCnt = session.update(namespace + ".qnaState", q_seq);
+		if (aCnt > 0) {
+			flag = true;
 		}
 		return flag;
 	}
 
 	@Override
 	public List<GinDTO> getGroupMember(GroupDTO dto) {
-		// TODO Auto-generated method stub
-		List<GinDTO> list=session.selectList(namespace+".getGroupMember",dto);
+		List<GinDTO> list = session.selectList(namespace + ".getGroupMember", dto);
 		return list;
 	}
 
 	@Override
 	public boolean insertGLog(GLogDTO dto) {
-		// TODO Auto-generated method stub
-		System.out.println("insert log dto: "+dto);
-		boolean flag=false;
-		int aCnt=session.insert(namespace + ".insertGLog", dto);
-		if(aCnt>0){
-			flag=true;
+		System.out.println("insert log dto: " + dto);
+		boolean flag = false;
+		int aCnt = session.insert(namespace + ".insertGLog", dto);
+		if (aCnt > 0) {
+			flag = true;
 		}
 		return flag;
 	}
 
 	@Override
 	public boolean readGLog(int log_seq) {
-		// TODO Auto-generated method stub
-		boolean flag=false;
-		int aCnt=session.delete(namespace + ".readGLog", log_seq);
-		if(aCnt>0){
-			flag=true;
+		boolean flag = false;
+		int aCnt = session.delete(namespace + ".readGLog", log_seq);
+		if (aCnt > 0) {
+			flag = true;
 		}
 		return flag;
 	}
 
 	@Override
 	public int getGroupSeq(String title) {
-		// TODO Auto-generated method stub
-		Integer temp=session.selectOne(namespace+".getGroupSeq",title);
+		Integer temp = session.selectOne(namespace + ".getGroupSeq", title);
 		int seq;
-		if(temp==null){
-			seq=0;
-		}else{
-			seq=temp;
+		if (temp == null) {
+			seq = 0;
+		} else {
+			seq = temp;
 		}
 		return seq;
 	}
-	
+
 	@Override
 	public int getPBoardCnt(String id) {
-		int cnt=session.selectOne(namespace+".getPBoardCnt",id);
+		int cnt = session.selectOne(namespace + ".getPBoardCnt", id);
 		return cnt;
 	}
 
 	@Override
 	public int getGinCnt(String id) {
-		int cnt=session.selectOne(namespace+".getGinCnt",id);
+		int cnt = session.selectOne(namespace + ".getGinCnt", id);
 		return cnt;
 	}
 
 	@Override
 	public int getQnaCnt(String id) {
-		int cnt=session.selectOne(namespace+".getQnaCnt",id);
+		int cnt = session.selectOne(namespace + ".getQnaCnt", id);
 		return cnt;
 	}
 }
