@@ -70,6 +70,20 @@ public class BitBoxController {
 		// session.setAttribute("groupList", session.getAttribute("groupList"));
 		return url;
 	}
+	@RequestMapping(value = "/getData", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody Object getData(HttpServletResponse response, HttpSession session) {
+		logger.info("Data 筌욊쑴�뿯");
+		List<PBoardDTO> data = service.listAll(session.getAttribute("id").toString());
+		Map<String, List<PBoardDTO>> map = new HashMap<String, List<PBoardDTO>>();
+		map.put("data", data);
+		// String json = new Gson().toJson(data);
+		logger.info(map.get("data").toString());
+		// Write JSON string.
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		return map;
+	}
+
 
 	@RequestMapping(value = "/listAll", method = { RequestMethod.POST, RequestMethod.GET })
 	public String listAll(HttpSession session, Model model) { //개인프로젝트 게시물 가져오는 메소드.
