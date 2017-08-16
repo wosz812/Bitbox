@@ -555,7 +555,7 @@ var createRepos=function(){
 	      }else if(component=='patch'){
 	    	  var self=this;
 	    	  $.ajax({
-	    			url : "https://api.github.com/repos/yujiyeon/logtest/commits",
+	    			url : "https://api.github.com/repos/${masId}/${title}/commits",
 	    			type : 'GET',
 	    			beforeSend : function(xhr) {
 	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
