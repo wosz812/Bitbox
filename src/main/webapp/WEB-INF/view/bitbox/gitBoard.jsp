@@ -133,7 +133,6 @@ margin-right:5px;
 				<div v-if="currentComponent==='cfile'">
 					<label>Name your file</label>
 					<input type="text" class="form-control" name="file_name" placeholder="file name">
-					
 					<label>Edit new file</label>
 					<div id="new_file"></div>
 					<button class="btn btn-primary" @click="swapComponent('create')">Create</button>
@@ -143,6 +142,27 @@ margin-right:5px;
 					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
 					<table id="status1"></table>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
+				</div>
+				<div v-if="currentComponent==='patch'">
+					<section class="content">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="box">
+									<div class="box-body">
+										<table class="table table-bordered">
+											<tr v-for="row in patch_rows">
+												<td>{{row.message}}</td>
+												<td>{{row.date}}</td>
+												<td>{{row.committer}}</td>
+												<td><a v-on:click="rollback(row.sha)">{{row.sha}}</a></td>
+											</tr>
+										</table>
+									</div>
+									<!-- /.box-body -->
+								</div>
+							</div>
+						</div>
+					</section>
 				</div>
 				<div v-if="currentComponent==='invitation'">
 					<div class="col-md-6">
@@ -175,6 +195,8 @@ margin-right:5px;
 								id="cfile">create new file</button>
 							<button class="btn btn-primary" @click="swapComponent(component)"
 								id="upfile">{{component}}</button>
+							<button class="btn btn-primary" @click="swapComponent('patch')"
+								id="patch">Patch</button>
 							<button class="btn btn-primary dropdown-toggle" type="button"
 								data-toggle="dropdown">
 								clone or download <span class="caret"></span>
@@ -242,11 +264,11 @@ margin-right:5px;
 var treeSha;
 var fileList=new Array();
 var blobList=new Array();
-var uploadList=new Array();
-var promises=new Array();
-var uploadDirs=new Array();
-var uploadFiles=new Array();
-var cnt=1;
+var uploadList=new Array();//
+var promises=new Array(); //promise all하기 위한 배열
+var uploadDirs=new Array();//upload 할 dirs 담을 배열
+var uploadFiles=new Array();//upload할 Files 담을 배열
+var cnt=1; //file 몇개 올렸는지 확인하려고 생성함
 var flag=0;//상위 폴더 생성하기위한 변수
 var prevUrl=new Array();
 
@@ -357,7 +379,7 @@ var createRepos=function(){
 		data: {}
 		})
 		.done(function(response) {
-		    console.log(response);
+		    console.log("initStart: "+response);
 		    var sha=response.object.sha;
 		    getCurrentTreeSHA(sha);
 		    resolve();
@@ -376,7 +398,7 @@ var createRepos=function(){
 						},
 						data : {}
 					}).done(function(response) {
-				console.log(response);
+				console.log("getCurrentTreeSHA: "+response);
 				treeSha = response.tree.sha;
 				fgetTree(treeSha);
 			});
@@ -475,7 +497,8 @@ var createRepos=function(){
 	    currentComponent: null, //currentComponent로 control할 div section 정함
 	    component: 'upload files', //upload file이라는 component
 	    rows: [], //github repository에서 받아온 tree값을 저장할 rows 변수
-	    html_url: '' //초대장이 발송됐을 때 초대장 url을 저장할 변수
+	    html_url: '', //초대장이 발송됐을 때 초대장 url을 저장할 변수
+	    patch_rows:[]//patch list
 	  },
 	  components: {
 	    'upload files': { //upload file component
@@ -485,6 +508,9 @@ var createRepos=function(){
 		     template: ''
 		 },
 		'cfile':{
+			 template:''
+		},
+		'patch':{
 			 template:''
 		}
 	  },
@@ -506,7 +532,7 @@ var createRepos=function(){
    		    		  }
    		    );
 	      }else if(component==null){
-	    	  window.location.href = "/git/gitBoardView" 
+	    	  window.location.href = "/git/gitBoardView";
 	      }else if(component=='create'){
 	    		  var filename=$("input[name=file_name]").val();
 		    	  var editor = ace.edit("new_file");
@@ -526,6 +552,25 @@ var createRepos=function(){
 		    	      console.log(response);
 		    	      window.location.href = "/git/gitBoardView"
 		    	  });
+	      }else if(component=='patch'){
+	    	  var self=this;
+	    	  $.ajax({
+	    			url : "https://api.github.com/repos/yujiyeon/logtest/commits",
+	    			type : 'GET',
+	    			beforeSend : function(xhr) {
+	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
+	    			},
+	    			data : {}
+	    		}).done(function(response) {
+	    			console.log(response);
+	    			for(var i=0;i<response.length;i++){
+	    				var sha=response[i].sha;
+	    				var message=response[i].commit.message;
+	    				var committer=response[i].commit.committer.name;
+	    				var date=response[i].commit.committer.date;
+						self.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
+	    			}
+	    		});
 	      }
 	    },
 	    changeUrl:function(url){
@@ -564,6 +609,9 @@ var createRepos=function(){
     					});
     		}
       	},
+      	rollback:function(sha){
+      		patch_repos(sha);
+      	},
       	onDrop: function(e){
       		 $("#dragandrophandler").css('border', '2px dotted #0B85A1');
 		     e.preventDefault(); 
@@ -601,6 +649,7 @@ var createRepos=function(){
 	  }
 	})
   
+ //drop box에 load된 파일의 tree 읽어오기
   var traversefileTree = function(item, path) {
 		path = path || "";
 		if (item.isFile) {
@@ -635,6 +684,7 @@ var createRepos=function(){
 		}
 	};
 	
+	//content별로 sha코드를 받아오기 위한 함수
 	var createBlob = function(content,path) {
 		var filecontent = content;
 		var filedata = JSON.stringify({"content":""+filecontent+"","encoding":"UTF-8"});
@@ -657,6 +707,7 @@ var createRepos=function(){
 		});
 	};
 
+	//upload할 List를 github가 지원하는 형식에 맞게 세팅하는 함수
 	var createFile = function(path,bsha) {
 		return new Promise(function(resolve, reject) {
 			var blob_sha;
@@ -670,6 +721,7 @@ var createRepos=function(){
 		});
 	};
 	
+	//createFile 함수를 호출하여 업로드할 갯수만큼 promise를 약속하는 함수
 	var createFileList = function() {
 			for(var fl=0;fl<fileList.length;fl++){
 				var path=fileList[fl].fpath;
@@ -682,8 +734,11 @@ var createRepos=function(){
 				}
 			}
 	};
-	function createTree(){
-		return $.ajax({ 
+	
+	//uploadList를 Tree로 만들어 sha코드를 얻어오기
+	var createTree=function(){
+		return new Promise(function(resolve, reject) {
+		 $.ajax({ 
 			   url: 'https://api.github.com/repos/${masId}/${title}/git/trees',
 			   type: 'POST',
 			   beforeSend: function(xhr) { 
@@ -696,38 +751,80 @@ var createRepos=function(){
 				    var cmsha=response.sha;
 				    console.log(cmsha);
 				    createCommit(cmsha);
+				    resolve();
 			});
+		})
 		} 
 	
+	//parent sha를 얻기위한 함수
+	var prevCommitSha=function(){
+		return new Promise(function(resolve, reject) {
+			$.ajax(
+					{
+						url : "https://api.github.com/repos/${masId}/${title}/commits",
+						type : 'GET',
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+						},
+						data : {  }
+					}).done(function(response) {
+						console.log(response);
+						resolve(response[0].sha);
+						console.log("prefCommitSha finish: "+response[0].sha);
+					});
+		})
+	}
+	
 	//Commit to repository
-	function createCommit(tree_sha){
-		var commit_data= JSON.stringify({"message":"file upload branch","tree":""+tree_sha+""});
-		$.ajax({ 
-		   url: 'https://api.github.com/repos/${masId}/${title}/git/commits',
-		   type: 'POST',
-		   beforeSend: function(xhr) { 
-			   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-		   },
-		   data: commit_data
-		}).done(function(response) {
-			    console.log(response);
-			    patch_repos(response.sha);
-		});
+	var createCommit= function (tree_sha){
+		return new Promise(function(resolve, reject) {
+			prevCommitSha()
+			.then(function (text) {
+				// 성공시
+				var parents=[];
+				parents.push(text);
+				console.log("prevCommit return: "+text);
+				var commit_data= JSON.stringify({"message":"file upload branch","tree":tree_sha,"parents":parents});
+				$.ajax({ 
+				   url: 'https://api.github.com/repos/${masId}/${title}/git/commits',
+				   type: 'POST',
+				   beforeSend: function(xhr) { 
+					   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+				   },
+				   data: commit_data
+				}).done(function(response) {
+					    console.log(response);
+					    patch_repos(response.sha);
+					    resolve();
+				});
+			});
+
+		})
 	}
 
 	//Patch repository
-	function patch_repos(sha){
-		$.ajax({ 
-		   url: 'https://api.github.com/repos/${masId}/${title}/git/refs/heads/master',
-		   type: 'PATCH',
-		   beforeSend: function(xhr) { 
-			   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-		   },
-		   data: JSON.stringify({"sha":sha,"force":true})
-		}).done(function(response) {
-			    console.log(response);
-			    waitingDialog.hide();
-		});
+	var patch_repos=function patch_repos(sha){
+		return new Promise(function(resolve, reject) {
+			$.ajax({ 
+			   url: 'https://api.github.com/repos/${masId}/${title}/git/refs/heads/master',
+			   type: 'PATCH',
+			   beforeSend: function(xhr) { 
+				   xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+			   },
+			   data: JSON.stringify({"sha":sha,"force":true})
+			}).done(function(response) {
+				    console.log(response);
+				    waitingDialog.hide();
+				    fileList=[];
+				    blobList=[];
+				    promises=[];
+				    uploadDirs=[];
+				    uploadFiles=[];
+				    uploadList=[];
+				    window.location.href = "/git/gitBoardView" 
+				    resolve();
+			});
+		})
 	}
 	
 	//Add Collaborators
