@@ -502,7 +502,8 @@ var createRepos=function(){
 	    component: 'upload files', //upload file이라는 component
 	    rows: [], //github repository에서 받아온 tree값을 저장할 rows 변수
 	    html_url: '', //초대장이 발송됐을 때 초대장 url을 저장할 변수
-	    patch_rows:[]//patch list
+	    patch_rows:[],
+	    totals:''//patch list
 	  },
 	  components: {
 	    'upload files': { //upload file component
@@ -558,6 +559,7 @@ var createRepos=function(){
 		    	  });
 	      }else if(component=='patch'){
 	    	  var self=this;
+	    	  var totals=0;
 	    	  $.ajax({
 	    			url : "https://api.github.com/repos/wosz812/Bitbox/commits",
 	    			type : 'GET',
@@ -574,6 +576,26 @@ var createRepos=function(){
 	    				var date=response[i].commit.committer.date;
 						self.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
 	    			}
+	    		});
+	    	  $.ajax({
+	    			url:'https://api.github.com/repos/wosz812/Bitbox/contributors',
+	    			type:'GET',
+	    			beforeSend: function(xhr){
+	    				  xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+	    			},
+	    			data:{}
+	    		}).done(function(response){
+	    			var total=0;
+	    			for(var i=0;i<response.length;i++){
+	    				var count=response[i].contributions;
+	    				total+=count;			
+	    			}
+	    			totals=parseInt(total/30);
+	    			console.log(totals);
+	    			if(total%30!=0){
+	    				totals+=1;
+	    			}
+	    			self.totals=totals;
 	    		});
 	      }
 	    },
@@ -877,6 +899,7 @@ var createRepos=function(){
 	} else{ //그 이외에 sidebar에서 group title을 클릭해서 gitboard 페이지에 들어올 때
 		toReplace.fetchEventsList();
 	}
+	
 </script>
 
 </body>
