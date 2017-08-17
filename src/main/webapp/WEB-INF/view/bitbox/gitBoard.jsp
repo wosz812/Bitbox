@@ -150,11 +150,15 @@ margin-right:5px;
 								<div class="box">
 									<div class="box-body">
 										<table class="table table-bordered">
+										<tr>
+											<td>Commit Message</td>
+											<td>Upload Date</td>
+											<td>Committer</td>
+										</tr>
 											<tr v-for="row in patch_rows">
-												<td>{{row.message}}</td>
+												<a><td>{{row.message}}</td></a>
 												<td>{{row.date}}</td>
 												<td>{{row.committer}}</td>
-												<td><a v-on:click="rollback(row.sha)">{{row.sha}}</a></td>
 											</tr>
 										</table>
 									</div>
@@ -555,7 +559,7 @@ var createRepos=function(){
 	      }else if(component=='patch'){
 	    	  var self=this;
 	    	  $.ajax({
-	    			url : "https://api.github.com/repos/${masId}/${title}/commits",
+	    			url : "https://api.github.com/repos/wosz812/Bitbox/commits",
 	    			type : 'GET',
 	    			beforeSend : function(xhr) {
 	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
@@ -609,9 +613,9 @@ var createRepos=function(){
     					});
     		}
       	},
-      	rollback:function(sha){
+      	/* rollback:function(sha){ // modal을 통해서 rollback할수있도록 만들어야함. rollback하는 함수
       		patch_repos(sha);
-      	},
+      	}, */
       	onDrop: function(e){
       		 $("#dragandrophandler").css('border', '2px dotted #0B85A1');
 		     e.preventDefault(); 
