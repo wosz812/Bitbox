@@ -80,7 +80,7 @@
 										</div>
 										<div class="col-md-3" style="margin-bottom: 20px">
 											<h5><label>작성자</label></h5>
-											<input type="text" class="form-control" name="s_id" value="${qnaList.s_id}">
+											<input type="text" class="form-control" name="s_id" value="${qnaList.s_id}" readonly="readonly">
 										</div>
 									</div>
 									<div class="form-group">
@@ -115,7 +115,7 @@
 								</div>
 							</form>
 							<c:forEach var="re" items="${replyList}">
-								<div class="form-group" style="padding: 20px; border: 1px solid green;">
+								<div class="form-group" style="padding: 20px; border: 1px solid yellowgreen;">
 									<label>작성자</label>
 									<input type="text" class="form-control" name="re_writer" value="${re.re_writer}" readonly="readonly">
 									<label>댓글 내용</label>
