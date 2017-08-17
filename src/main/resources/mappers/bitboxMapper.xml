@@ -314,7 +314,7 @@
 	</update>
 	
 	<select id="getGroupMember" parameterType="com.bitbox.dto.GroupDTO" resultType="com.bitbox.dto.GinDTO">
-		select * from groupin where group_seq in (select group_seq from cgroup where title=#{title}) and s_id=#{s_id}
+		select * from groupin where group_seq in (select group_seq from cgroup where title=#{title}) and s_id!=#{s_id}
 	</select>
 	
 	<insert id="insertGLog" parameterType="com.bitbox.dto.GLogDTO">
