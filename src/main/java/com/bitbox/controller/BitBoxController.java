@@ -406,10 +406,15 @@ public class BitBoxController {
 		QnaDTO qnaList = service.detailQna(q_seq);
 		List<ReQnaDTO> replyList = service.getReplyList(q_seq);
 		String replyUser = service.getReplyUser((String) session.getAttribute("id"));
+		int user = 0;
+		if(qnaList.getS_id().equals((String) session.getAttribute("id"))){
+			user = 1;
+		}
 		model.addAttribute("replyList", replyList);
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("replyUser", replyUser);
 		model.addAttribute("page", page);
+		model.addAttribute("user", user);
 		return url;
 	}
 

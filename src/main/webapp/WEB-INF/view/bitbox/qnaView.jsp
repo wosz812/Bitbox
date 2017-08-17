@@ -74,9 +74,13 @@
 								<input type="hidden" name="q_seq" value="${qnaList.q_seq}">
 								<div class="box-body" style="padding: 20px">
 									<div class="form-group">
-										<div class="col-md-12" style="margin-bottom: 20px">
+										<div class="col-md-9" style="margin-bottom: 20px">
 											<h5><label>제목</label></h5>
 											<input type="text" class="form-control" name="q_title" value="${qnaList.q_title}">
+										</div>
+										<div class="col-md-3" style="margin-bottom: 20px">
+											<h5><label>작성자</label></h5>
+											<input type="text" class="form-control" name="s_id" value="${qnaList.s_id}">
 										</div>
 									</div>
 									<div class="form-group">
@@ -98,7 +102,7 @@
 									</div>
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer" align="right">
+								<div class="box-footer" align="right" id="con" style="display:none;">
 									<button type="button" class="btn btn-primary"
 										onclick="gourl(1)">확인</button>
 									<button type="button" class="btn btn-primary"
@@ -161,6 +165,14 @@
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var user = ${user};
+			if( user == 1 ){
+				document.getElementById("con").style.display = "";
+			}
+		});
+	</script>
 	<script type="text/javascript">
 	 function gourl(type) {
 		var ds = document.getElementById("dataset");
