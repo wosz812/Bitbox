@@ -403,13 +403,18 @@ public class BitBoxController {
 	public String readQna(HttpSession session, Model model, @RequestParam("page") int page,
 			@RequestParam("q_seq") int q_seq) {
 		String url = "/bitbox/qnaView";
-		QnaDTO qnaList = service.detailQna(q_seq);
+		QnaDTO qna = service.detailQna(q_seq);
 		List<ReQnaDTO> replyList = service.getReplyList(q_seq);
 		String replyUser = service.getReplyUser((String) session.getAttribute("id"));
+		int user = 0;
+		if(qna.getS_id().equals((String) session.getAttribute("id"))){
+			user = 1;
+		}
 		model.addAttribute("replyList", replyList);
-		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("qna", qna);
 		model.addAttribute("replyUser", replyUser);
 		model.addAttribute("page", page);
+		model.addAttribute("user", user);
 		return url;
 	}
 

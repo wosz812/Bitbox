@@ -71,34 +71,38 @@
 						<div class="box">
 							<form role="form" action="" method="post"
 								enctype="multipart/form-data" id="dataset">
-								<input type="hidden" name="q_seq" value="${qnaList.q_seq}">
+								<input type="hidden" name="q_seq" value="${qna.q_seq}">
 								<div class="box-body" style="padding: 20px">
 									<div class="form-group">
-										<div class="col-md-12" style="margin-bottom: 20px">
+										<div class="col-md-9" style="margin-bottom: 20px">
 											<h5><label>제목</label></h5>
-											<input type="text" class="form-control" name="q_title" value="${qnaList.q_title}">
+											<input type="text" class="form-control" name="q_title" value="${qna.q_title}">
+										</div>
+										<div class="col-md-3" style="margin-bottom: 20px">
+											<h5><label>작성자</label></h5>
+											<input type="text" class="form-control" name="s_id" value="${qna.s_id}" readonly="readonly">
 										</div>
 									</div>
 									<div class="form-group">
 										<label></label> 
 										<div class="col-md-6">
-											<h5><label>카테고리&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qnaList.q_category}</label></h5>
+											<h5><label>카테고리&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${qna.q_category}</label></h5>
 										</div>
 										<div class="col-md-6" align="right">
-											<h5><label><i class="fa fa-eye"></i>${qnaList.q_readCount}</label></h5>
+											<h5><label><i class="fa fa-eye"></i>${qna.q_readCount}</label></h5>
 										</div>
 									</div>
 									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
 										<h5><label>내용</label></h5>
-										<textarea class="form-control" rows="10" name="q_content" id="summernote" style="resize:none;">${qnaList.q_content}</textarea>
+										<textarea class="form-control" rows="10" name="q_content" id="summernote" style="resize:none;">${qna.q_content}</textarea>
 									</div>
 									<div class="form-group" style="padding: 15px">
 										<h5><label for="exampleInputFile">File Name:</label></h5>
-										<a href="/bitbox/download?filename=${qnaList.q_upload}"><label>${qnaList.q_upload}</label></a>
+										<a href="/bitbox/download?filename=${qna.q_upload}"><label>${qna.q_upload}</label></a>
 									</div>
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer" align="right">
+								<div class="box-footer" align="right" id="con" style="display: none;">
 									<button type="button" class="btn btn-primary"
 										onclick="gourl(1)">확인</button>
 									<button type="button" class="btn btn-primary"
@@ -161,6 +165,14 @@
 	<script src="/dist/js/app.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var user = ${user};
+			if( user == 1 ){
+				document.getElementById("con").style.display = "";
+			}		
+		});
+	</script>
 	<script type="text/javascript">
 	 function gourl(type) {
 		var ds = document.getElementById("dataset");
