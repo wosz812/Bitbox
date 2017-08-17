@@ -89,7 +89,7 @@
 								</table>
 								<div align="center">
 									<c:forEach var="mList" items="${mPageList}">
-										<h4>${mList.toString()}</h4>
+										${mList.toString()}
 									</c:forEach>
                   				</div>
 							</div>
