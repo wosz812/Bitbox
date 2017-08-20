@@ -25,11 +25,9 @@
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
-<script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
 
-
-<link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 <style>
 #dragandrophandler
 {
@@ -60,54 +58,20 @@ font-size:200%;
     width: 0;
     background-color: #0ba1b5; border-radius: 3px; 
 }
-.statusbar
-{
-    border-top:1px solid #A9CCD1;
-    min-height:25px;
-    width:700px;
-    padding:10px 10px 0px 10px;
-    vertical-align:top;
-}
-.statusbar:nth-child(odd){
-    background:#EBEFF0;
-}
-.filename
-{
-display:inline-block;
-vertical-align:top;
-width:250px;
-}
-.filesize
-{
-display:inline-block;
-vertical-align:top;
-color:#30693D;
-width:100px;
-margin-left:10px;
-margin-right:5px;
-}
-.abort{
-    background-color:#A8352F;
-    -moz-border-radius:4px;
-    -webkit-border-radius:4px;
-    border-radius:4px;display:inline-block;
-    color:#fff;
-    font-family:arial;font-size:13px;font-weight:normal;
-    padding:4px 15px;
-    cursor:pointer;
-    vertical-align:top
-    }
-    #group_a{
-    text-overflow:ellipsis;
-    width: 250px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
 #group_a:hover{
     text-overflow:clip;
     width:auto;
     white-space: normal;
+}
+.modal-dialog {
+    /* new custom width */
+    width: 1000px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    
+}
+.editor {
+  width:900px;
+  height:300px;
 }
 </style>
 
@@ -125,6 +89,10 @@ margin-right:5px;
 			<section class="content-header">
 		      <a href="/git/gitBoardView" class="aaf"><h2 id="title"></h2></a>
 		    </section>
+		    <div class="progress progress-xxs">
+		    	<div class="percent progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+		        </div>
+		    </div>
 			<%-- ${token}
 			${username}
 			${status}
@@ -156,7 +124,7 @@ margin-right:5px;
 											<td>Committer</td>
 										</tr>
 											<tr v-for="row in patch_rows">
-												<a><td>{{row.message}}</td></a>
+												<td style="text-align:left" data-toggle="modal" data-target="#myModal" class="modal_parent" data-sha="{{row.sha}}"><a v-on:click="detail_commit(row.sha)">{{row.message}}</a></td>
 												<td>{{row.date}}</td>
 												<td>{{row.committer}}</td>
 											</tr>
@@ -167,6 +135,44 @@ margin-right:5px;
 							</div>
 						</div>
 					</section>
+					<div id="myModal" class="modal fade" role="dialog" ng-app="editorApp">
+					  <div class="modal-dialog">
+					
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">Detail Commit</h4>
+					      </div>
+					      <div class="modal-body">
+					        <section class="content"  v-for="(index,row) in detailCommit_rows">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="box">
+											<div class="box-body">
+												<table class="table table-bordered">
+												<tr>
+													<td>{{row.filename}}</td>
+												</tr>
+												<tr style="overflow: scroll; width: 510px; text-align:left;">
+													<td><div class="editor"></div></td>
+												</tr>
+												</table>
+											</div>
+											<!-- /.box-body -->
+										</div>
+									</div>
+								</div>
+							</section>
+					      </div>
+					      <div class="modal-footer">
+					      <button type="button" class="btn btn-danger rollback_btn" data-dismiss="modal" @click="rollback">Rollback</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					
+					  </div>
+					</div>
 				</div>
 				<div v-if="currentComponent==='invitation'">
 					<div class="col-md-6">
@@ -188,11 +194,6 @@ margin-right:5px;
 					</div>
 				</div>
 				<div v-show="!currentComponent">
-					<div class="progress progress-xxs">
-		                <div class="percent progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-		                </div>
-		            </div>
-					
 					<div class="dropdown">
 						<div class="btn-group" style="float: right; margin-right: 20px;">
 							<button class="btn btn-primary" @click="swapComponent('cfile')"
@@ -275,7 +276,6 @@ var uploadFiles=new Array();//upload할 Files 담을 배열
 var cnt=1; //file 몇개 올렸는지 확인하려고 생성함
 var flag=0;//상위 폴더 생성하기위한 변수
 var prevUrl=new Array();
-
 //create repository
 var createRepos=function(){
 	var reposdata='{"name": "${title}","description":"repo create from ajax test","homepage": "https://sample.com","auto_init":true}';
@@ -292,6 +292,11 @@ var createRepos=function(){
 	    toReplace.fetchEventsList();
 	});
 }
+
+$(document).on("click", ".modal_parent", function () {
+    var sha = $(this).attr('data-sha');
+    $(".rollback_btn").attr("data-sha",sha);
+});
 
  $(document).ready(function()
 		{
@@ -502,7 +507,8 @@ var createRepos=function(){
 	    component: 'upload files', //upload file이라는 component
 	    rows: [], //github repository에서 받아온 tree값을 저장할 rows 변수
 	    html_url: '', //초대장이 발송됐을 때 초대장 url을 저장할 변수
-	    patch_rows:[]//patch list
+	    patch_rows:[],//patch list
+	    detailCommit_rows:[]
 	  },
 	  components: {
 	    'upload files': { //upload file component
@@ -557,24 +563,30 @@ var createRepos=function(){
 		    	      window.location.href = "/git/gitBoardView"
 		    	  });
 	      }else if(component=='patch'){
+	    	  $('.percent').width("10%").attr("aria-valuenow",10); //loading progress bar 10%정도 시작될때 보여주기
 	    	  var self=this;
-	    	  $.ajax({
-	    			url : "https://api.github.com/repos/wosz812/Bitbox/commits",
-	    			type : 'GET',
-	    			beforeSend : function(xhr) {
-	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
-	    			},
-	    			data : {}
-	    		}).done(function(response) {
-	    			console.log(response);
-	    			for(var i=0;i<response.length;i++){
-	    				var sha=response[i].sha;
-	    				var message=response[i].commit.message;
-	    				var committer=response[i].commit.committer.name;
-	    				var date=response[i].commit.committer.date;
-						self.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
-	    			}
-	    		});
+	    	  var promise1 = new Promise(function (resolve, reject) {
+	    		  $.ajax({
+		    			url : "https://api.github.com/repos/wosz812/Bitbox/commits", //Default 박아놈
+		    			type : 'GET',
+		    			beforeSend : function(xhr) {
+		    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
+		    			},
+		    			data : {}
+		    		}).done(function(response) {
+		    			console.log(response);
+		    			for(var i=0;i<response.length;i++){
+		    				var sha=response[i].sha;
+		    				var message=response[i].commit.message;
+		    				var committer=response[i].commit.committer.name;
+		    				var date=response[i].commit.committer.date;
+							self.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
+		    			}
+		    			$('.percent').width("100%").attr("aria-valuenow",100); //github repository table 져오기 완료 휴 loading progress bar 100%
+		    			setTimeout(function(){ $('.percent').width("0%").attr("aria-valuenow",0); }, 800);
+		    			resolve();
+		    		});
+	    		})
 	      }
 	    },
 	    changeUrl:function(url){
@@ -613,9 +625,46 @@ var createRepos=function(){
     					});
     		}
       	},
-      	/* rollback:function(sha){ // modal을 통해서 rollback할수있도록 만들어야함. rollback하는 함수
+      	rollback:function(event){ // modal을 통해서 rollback할수있도록 만들어야함. rollback하는 함수
+      		//var sha=event.dataset.sha;
+      		alert("해당 시점으로 rollback 합니다.");
+      		var sha=event.target.getAttribute('data-sha');
       		patch_repos(sha);
-      	}, */
+      	},
+      	detail_commit:function(sha){
+      		var self=this;
+      		self.detailCommit_rows=[];
+      		var promise1 = new Promise(function (resolve, reject) {
+      			$.ajax({
+    				url : 'https://api.github.com/repos/wosz812/Bitbox/commits/'+sha, //Default 박아놈
+    				type : 'GET',
+    				beforeSend : function(xhr) {
+    					xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+    				},
+    				data : {}
+    			}).done(function(response) {
+    				console.log(response);
+    				for(var i=0;i<response.files.length;i++){
+    					var filename=response.files[i].filename;
+    					var patch=response.files[i].patch;
+    					var strArray=filename.split(".");
+    					 var mtemp=strArray[strArray.length-1];
+    					self.detailCommit_rows.push({"filename":filename,"patch":patch});
+    				}
+    				resolve();
+    			});
+      		}).then(function(){  //여기 editor 수정부분
+      			var editor;
+      			$('.editor').each(function( index ) {
+      			  editor = ace.edit(this);
+      			  editor.setTheme("ace/theme/monokai");
+      			  editor.getSession().setMode("ace/mode/jsp");
+      			  editor.getSession().setValue(self.detailCommit_rows[index].patch);
+      			  editor.getSession().setUndoManager(new ace.UndoManager());
+      			});
+      		});
+      		
+      	},
       	onDrop: function(e){
       		 $("#dragandrophandler").css('border', '2px dotted #0B85A1');
 		     e.preventDefault(); 
@@ -652,7 +701,21 @@ var createRepos=function(){
       	}
 	  }
 	})
-  
+  function dump(obj) {
+	    var out = '';
+	    for (var i in obj) {
+	        out += i + ": " + obj[i] + "\n";
+	    }
+
+	    alert(out);
+
+	    // or, if you wanted to avoid alerts...
+
+	    var pre = document.createElement('pre');
+	    pre.innerHTML = out;
+	    document.body.appendChild(pre)
+	} 
+ 
  //drop box에 load된 파일의 tree 읽어오기
   var traversefileTree = function(item, path) {
 		path = path || "";
