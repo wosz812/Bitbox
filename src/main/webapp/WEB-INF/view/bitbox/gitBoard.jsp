@@ -558,19 +558,17 @@ var cfile = Vue.extend({
 	      if(component==null){
 	    	  window.location.href = "/git/gitBoardView";
 	      }else if(component=='create'){
+	    	  waitingDialog.show('Please wait for upload to complete');
 	    		  var filename=$("input[name=file_name]").val();
 		    	  var editor = ace.edit("new_file");
 		    	  var content=editor.getSession().getValue();
-		    	  
-		    	  console.log("filename",filename);
-		    	  console.log("content",content);
 		    	  
 		    	  var filecontent=content;
 		    	  var filemessage = "create file";
 		    	  var basecontent = btoa(filecontent);
 		    	  var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'"}';
 		    	  $.ajax({ 
-		    	      url: 'https://api.github.com/repos/${masId}/${title}/contents/'+filename+'.txt',
+		    	      url: 'https://api.github.com/repos/${masId}/${title}/contents/'+filename,
 		    	      type: 'PUT',
 		    	      
 		    	       beforeSend: function(xhr) { 
@@ -579,6 +577,7 @@ var cfile = Vue.extend({
 		    	      data: filedata
 		    	  }).done(function(response) {
 		    	      console.log(response);
+		    	      waitingDialog.hide();
 		    	      window.location.href = "/git/gitBoardView"
 		    	  });
 	      }else if(component=='patch'){
