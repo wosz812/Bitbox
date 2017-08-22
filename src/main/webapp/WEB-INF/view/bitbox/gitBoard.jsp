@@ -119,15 +119,15 @@ font-size:200%;
 					<input type="text" class="form-control" name="file_name" placeholder="file name">
 					<label>Edit new file</label>
 					<div id="new_file"></div>
-					<button class="btn btn-primary" @click="swapComponent('create')">Create</button>
+					<button class="btn btn-primary" id="create_file">Create</button>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 				</cfile>
-				<div v-if="currentComponent==='upload files'">
-					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
+				<uploadfile v-if="currentComponent==='uploadfile'">
+					<div id="dragandrophandler">Drag & Drop Files Here</div>
 					<table id="status1"></table>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
-				</div>
-				<div v-if="currentComponent==='patch'">
+				</uploadfile>
+				<patch v-if="currentComponent==='patch'">
 					<section class="content">
 						<div class="row">
 							<div class="col-xs-12">
@@ -190,7 +190,7 @@ font-size:200%;
 					
 					  </div>
 					</div>
-				</div>
+				</patch>
 				<div v-if="currentComponent==='invitation'">
 					<div class="col-md-6">
 				          <div class="box box-default">
@@ -215,7 +215,7 @@ font-size:200%;
 						<div class="btn-group" style="float: right; margin-right: 20px;">
 							<button class="btn btn-primary" @click="swapComponent('cfile')"
 								id="cfile">create new file</button>
-							<button class="btn btn-primary" @click="swapComponent(component)"
+							<button class="btn btn-primary" @click="swapComponent('uploadfile')"
 								id="upfile">{{component}}</button>
 							<button class="btn btn-primary" @click="swapComponent('patch')"
 								id="patch">Patch</button>
@@ -318,19 +318,7 @@ $(document).on("click", ".modal_parent", function () {
 
  $(document).ready(function()
 		{
-		var obj = $("#dragandrophandler");
 		
-		obj.on('dragover', function (e) 
-		{
-		     e.stopPropagation();
-		     e.preventDefault();
-		});
-		$(document).on('dragover', function (e) 
-		{
-		  e.stopPropagation();
-		  e.preventDefault();
-		  obj.css('border', '2px dotted #0B85A1');
-		});
 		$(document).on('click','.rid',function() {
 			var value=$(this).attr("data-val");
 			 $(this).parent().remove();
@@ -515,8 +503,6 @@ $(document).on("click", ".modal_parent", function () {
 
 var cfile = Vue.extend({
 	template: '',
-	data: function() {
-	},
 	created:function(){
 		console.log("created cfile");		
 	},
@@ -526,69 +512,123 @@ var cfile = Vue.extend({
 		editor.getSession().setMode("ace/mode/text");
 		editor.getSession().setValue("",1);
 		editor.focus();
+		
+		$(document).on("click", "#create_file", function () {
+		    var sha = $(this).attr('data-sha');
+		    $(".rollback_btn").attr("data-sha",sha);
+		    
+		    waitingDialog.show('Please wait for upload to complete');
+  		 	var filename=$("input[name=file_name]").val();
+	    	var editor = ace.edit("new_file");
+	    	var content=editor.getSession().getValue();
+	    	  
+	    	var filecontent=content;
+	    	var filemessage = "create file";
+	    	var basecontent = btoa(filecontent);
+	    	var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'"}';
+	    	$.ajax({ 
+	    		url: 'https://api.github.com/repos/${masId}/${title}/contents/'+filename,
+	    	    type: 'PUT',  
+	    	    beforeSend: function(xhr) { 
+	    	    	xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+	    	   	}, 
+	    		data: filedata
+	    	}).done(function(response) {
+	    		console.log(response);
+	    	    waitingDialog.hide();
+	    	    window.location.href = "/git/gitBoardView"
+	    	});
+		});
 	}
 });
- //single page를 만들기 위한 vue 변수 생성		 
-  var toReplace =  new Vue({
-	  el: '#toReplace', //vue를 사용할 div id
-	  data: {
-	    currentComponent: null, //currentComponent로 control할 div section 정함
-	    component: 'upload files', //upload file이라는 component
-	    rows: [], //github repository에서 받아온 tree값을 저장할 rows 변수
-	    html_url: '', //초대장이 발송됐을 때 초대장 url을 저장할 변수
-	    patch_rows:[],
-	    totals:'',//patch list
-	    patch_rows:[],//patch list
-	    detailCommit_rows:[]
-	  },
-	  components: {
-	    'upload files': { //upload file component
-	     template: ''
-	    },
-	    'invitation': {  //invitation component
-		     template: ''
-		 },
-		'cfile' : cfile,
 
-		'patch':{
-			 template:''
-		}
-	  },
-	  methods: {
-	    swapComponent: function(component)
-	    {
-	      this.currentComponent = component;
-	      if(component==null){
-	    	  window.location.href = "/git/gitBoardView";
-	      }else if(component=='create'){
-	    	  waitingDialog.show('Please wait for upload to complete');
-	    		  var filename=$("input[name=file_name]").val();
-		    	  var editor = ace.edit("new_file");
-		    	  var content=editor.getSession().getValue();
-		    	  
-		    	  var filecontent=content;
-		    	  var filemessage = "create file";
-		    	  var basecontent = btoa(filecontent);
-		    	  var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'"}';
-		    	  $.ajax({ 
-		    	      url: 'https://api.github.com/repos/${masId}/${title}/contents/'+filename,
-		    	      type: 'PUT',
-		    	      
-		    	       beforeSend: function(xhr) { 
-		    	          xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-		    	      }  , 
-		    	      data: filedata
-		    	  }).done(function(response) {
-		    	      console.log(response);
-		    	      waitingDialog.hide();
-		    	      window.location.href = "/git/gitBoardView"
-		    	  });
-	      }else if(component=='patch'){
-	    	  $('.percent').width("10%").attr("aria-valuenow",10); //loading progress bar 10%정도 시작될때 보여주기
-	    	  var self=this;
-	    	  var totals=0;
-	    	  $.ajax({
-	    			url : "https://api.github.com/repos/wosz812/Bitbox/commits",
+var uploadfile = Vue.extend({
+	template: '',
+	created:function(){
+		console.log("created uploadfile");		
+	},
+	ready:function(){		
+		var holder = document.getElementById('dragandrophandler');
+
+        holder.ondragover = () => {
+            return false;
+        };
+
+        holder.ondragleave = () => {
+            return false;
+        };
+
+        holder.ondragend = () => {
+            return false;
+        };
+
+        holder.ondrop = (e) => {
+            e.preventDefault();
+            var items=e.dataTransfer.items;
+		    
+		     var p = Promise.resolve().then(function() {
+		    	for(var i=0;i<items.length;i++){
+			    	 var item=items[i].webkitGetAsEntry();
+			    	 if(item){
+			    		 promises.push(item);
+			    	 }
+			     }
+		    }).then(function() {
+				for(var pro=0;pro<promises.length;pro++){
+		    		traversefileTree(promises[pro]);
+		    		if(pro==promises.length-1){
+						if(uploadFiles.length==0){
+							$('#status1').text("");
+							for(var d=0;d<uploadDirs.length;d++){
+								$('#status1').append('<tr><td>' + uploadDirs[d]+ '</a></td><td class="rDid" data-val="'+uploadDirs[d]+'"><span class="fa fa-remove"></td></tr>');
+							}
+						}
+						else{
+							$('#status1').text("");
+							for(var d=0;d<uploadFiles.length;d++){
+								$('#status1').append('<tr><td>' + uploadFiles[d]+ '</a></td><td class="rid" data-val="'+uploadFiles[d]+'"><span class="fa fa-remove"></td></tr>');
+							}
+						}
+						$('#status1').append('<input type="button" id="appendbtn" class="btn btn-primary" value="Commit" />');
+		    		}
+				}
+		    });   
+        };
+	}
+});
+
+var patch = Vue.extend({
+	template: '',
+	created:function(){
+		console.log("created patch");		
+	},
+	ready:function(){
+		$('.percent').width("10%").attr("aria-valuenow",10); //loading progress bar 10%정도 시작될때 보여주기
+  	  	var self=this;
+  	  	var totals=0;
+  	  	$.ajax({
+  			url:'https://api.github.com/repos/wosz812/Bitbox/contributors',
+  			type:'GET',
+  			beforeSend: function(xhr){
+  				  xhr.setRequestHeader('Authorization', 'Bearer ${token}');
+  			},
+  			data:{}
+  		}).done(function(response){
+  			var total=0;
+  			for(var i=0;i<response.length;i++){
+  				var count=response[i].contributions;
+  				total+=count;			
+  			}
+  			totals=parseInt(total/30);
+  			console.log(totals);
+  			if(total%30!=0){
+  				totals+=1;
+  			}
+  			self.$parent.totals=totals;
+  		});
+  	  var promise1 = new Promise(function (resolve, reject) {
+  		  $.ajax({
+	    			url : "https://api.github.com/repos/wosz812/Bitbox/commits", //Default 박아놈
 	    			type : 'GET',
 	    			beforeSend : function(xhr) {
 	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
@@ -601,51 +641,42 @@ var cfile = Vue.extend({
 	    				var message=response[i].commit.message;
 	    				var committer=response[i].commit.committer.name;
 	    				var date=response[i].commit.committer.date;
-						self.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
+						self.$parent.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
 	    			}
+	    			$('.percent').width("100%").attr("aria-valuenow",100); //github repository table 져오기 완료 휴 loading progress bar 100%
+	    			setTimeout(function(){ $('.percent').width("0%").attr("aria-valuenow",0); }, 800);
+	    			resolve();
 	    		});
-	    	  $.ajax({
-	    			url:'https://api.github.com/repos/wosz812/Bitbox/contributors',
-	    			type:'GET',
-	    			beforeSend: function(xhr){
-	    				  xhr.setRequestHeader('Authorization', 'Bearer ${token}');
-	    			},
-	    			data:{}
-	    		}).done(function(response){
-	    			var total=0;
-	    			for(var i=0;i<response.length;i++){
-	    				var count=response[i].contributions;
-	    				total+=count;			
-	    			}
-	    			totals=parseInt(total/30);
-	    			console.log(totals);
-	    			if(total%30!=0){
-	    				totals+=1;
-	    			}
-	    			self.totals=totals;
-	    		});
-	    	  var promise1 = new Promise(function (resolve, reject) {
-	    		  $.ajax({
-		    			url : "https://api.github.com/repos/wosz812/Bitbox/commits", //Default 박아놈
-		    			type : 'GET',
-		    			beforeSend : function(xhr) {
-		    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
-		    			},
-		    			data : {}
-		    		}).done(function(response) {
-		    			console.log(response);
-		    			for(var i=0;i<response.length;i++){
-		    				var sha=response[i].sha;
-		    				var message=response[i].commit.message;
-		    				var committer=response[i].commit.committer.name;
-		    				var date=response[i].commit.committer.date;
-							self.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
-		    			}
-		    			$('.percent').width("100%").attr("aria-valuenow",100); //github repository table 져오기 완료 휴 loading progress bar 100%
-		    			setTimeout(function(){ $('.percent').width("0%").attr("aria-valuenow",0); }, 800);
-		    			resolve();
-		    		});
-	    		})
+  		})
+	}
+});
+
+ //single page를 만들기 위한 vue 변수 생성		 
+  var toReplace =  new Vue({
+	  el: '#toReplace', //vue를 사용할 div id
+	  data: {
+	    currentComponent: null, //currentComponent로 control할 div section 정함
+	    component: 'upload files', //upload file이라는 component
+	    rows: [], //github repository에서 받아온 tree값을 저장할 rows 변수
+	    html_url: '', //초대장이 발송됐을 때 초대장 url을 저장할 변수
+	    detailCommit_rows:[],
+	    patch_rows:[],
+		totals:''
+	  },
+	  components: {
+	    'uploadfile': uploadfile,
+	    'invitation': {  //invitation component
+		     template: ''
+		 },
+		'cfile' : cfile,
+		'patch':patch
+	  },
+	  methods: {
+	    swapComponent: function(component)
+	    {
+	      this.currentComponent = component;
+	      if(component==null){
+	    	  window.location.href = "/git/gitBoardView";
 	      }
 	    },
 	    changeUrl:function(url){
@@ -740,40 +771,6 @@ var cfile = Vue.extend({
       			});
       		});
       		
-      	},
-      	onDrop: function(e){
-      		 $("#dragandrophandler").css('border', '2px dotted #0B85A1');
-		     e.preventDefault(); 
-		     
-		    var items=e.dataTransfer.items;
-		    
-		     var p = Promise.resolve().then(function() {
-		    	for(var i=0;i<items.length;i++){
-			    	 var item=items[i].webkitGetAsEntry();
-			    	 if(item){
-			    		 promises.push(item);
-			    	 }
-			     }
-		    }).then(function() {
-				for(var pro=0;pro<promises.length;pro++){
-		    		traversefileTree(promises[pro]);
-		    		if(pro==promises.length-1){
-						if(uploadFiles.length==0){
-							$('#status1').text("");
-							for(var d=0;d<uploadDirs.length;d++){
-								$('#status1').append('<tr><td>' + uploadDirs[d]+ '</a></td><td class="rDid" data-val="'+uploadDirs[d]+'"><span class="fa fa-remove"></td></tr>');
-							}
-						}
-						else{
-							$('#status1').text("");
-							for(var d=0;d<uploadFiles.length;d++){
-								$('#status1').append('<tr><td>' + uploadFiles[d]+ '</a></td><td class="rid" data-val="'+uploadFiles[d]+'"><span class="fa fa-remove"></td></tr>');
-							}
-						}
-						$('#status1').append('<input type="button" id="appendbtn" class="btn btn-primary" value="Commit" />');
-		    		}
-				}
-		    }); 
       	}
 	  }
 	});
