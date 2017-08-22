@@ -145,6 +145,9 @@ font-size:200%;
 												<td>{{row.committer}}</td>
 											</tr>
 										</table>
+										<div align="center">
+			                               <p id="pagination-here"></p>
+			                           </div>
 									</div>
 									<!-- /.box-body -->
 								</div>
@@ -282,6 +285,7 @@ font-size:200%;
 	<!-- page script -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js"></script>
 	<script src="/js/bootstrap-waitingfor.js"></script>
+	<script src="https://cdn.rawgit.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 	<script type="text/javascript">
 var treeSha;
 var fileList=new Array();
@@ -607,7 +611,7 @@ var patch = Vue.extend({
   	  	var self=this;
   	  	var totals=0;
   	  	$.ajax({
-  			url:'https://api.github.com/repos/wosz812/Bitbox/contributors',
+  			url:'https://api.github.com/repos/${masId}/${title}/contributors',
   			type:'GET',
   			beforeSend: function(xhr){
   				  xhr.setRequestHeader('Authorization', 'Bearer ${token}');
@@ -624,11 +628,42 @@ var patch = Vue.extend({
   			if(total%30!=0){
   				totals+=1;
   			}
-  			self.$parent.totals=totals;
+  			$('#pagination-here').bootpag({
+                total: totals,          
+                page: 1,            
+                maxVisible: 5,     
+                leaps: true,                    
+            });
   		});
   	  var promise1 = new Promise(function (resolve, reject) {
+  			self.$parent.patch_rows=[];
   		  $.ajax({
-	    			url : "https://api.github.com/repos/wosz812/Bitbox/commits", //Default 박아놈
+	    			url : "https://api.github.com/repos/${masId}/${title}/commits",
+	    			type : 'GET',
+	    			beforeSend : function(xhr) {
+	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
+	    			},
+	    			data : {}
+	    		}).done(function(response) {
+	    			console.log(response);
+	    			for(var i=0;i<response.length;i++){
+	    				var sha=response[i].sha;
+	    				var message=response[i].commit.message;
+	    				var committer=response[i].commit.committer.name;
+	    				var date=response[i].commit.committer.date;
+						self.$parent.patch_rows.push({"sha":sha,"message":message,"committer":committer,"date":date});
+	    			}
+	    			$('.percent').width("100%").attr("aria-valuenow",100); //github repository table 져오기 완료 휴 loading progress bar 100%
+	    			setTimeout(function(){ $('.percent').width("0%").attr("aria-valuenow",0); }, 800);
+	    			resolve();
+	    		});
+  	  });
+  	  
+  	 var promise = new Promise(function (resolve, reject) {
+  		$('#pagination-here').on("page", function(event, num){
+			self.$parent.patch_rows=[];
+		  $.ajax({
+	    			url : "https://api.github.com/repos/${masId}/${title}/commits?page="+num,
 	    			type : 'GET',
 	    			beforeSend : function(xhr) {
 	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
@@ -648,6 +683,7 @@ var patch = Vue.extend({
 	    			resolve();
 	    		});
   		})
+	  });
 	}
 });
 
@@ -661,7 +697,6 @@ var patch = Vue.extend({
 	    html_url: '', //초대장이 발송됐을 때 초대장 url을 저장할 변수
 	    detailCommit_rows:[],
 	    patch_rows:[],
-		totals:''
 	  },
 	  components: {
 	    'uploadfile': uploadfile,
@@ -726,7 +761,7 @@ var patch = Vue.extend({
       		self.detailCommit_rows=[];
       		var promise1 = new Promise(function (resolve, reject) {
       			$.ajax({
-    				url : 'https://api.github.com/repos/wosz812/Bitbox/commits/'+sha, //Default 박아놈
+    				url : 'https://api.github.com/repos/${masId}/${title}/commits/'+sha, //Default 박아놈
     				type : 'GET',
     				beforeSend : function(xhr) {
     					xhr.setRequestHeader('Authorization', 'Bearer ${token}');
