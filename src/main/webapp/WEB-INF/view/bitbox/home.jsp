@@ -263,8 +263,8 @@
 									                    <span class="sr-only">Toggle Dropdown</span>
 								                    </button>
 								               		<ul class="dropdown-menu" role="menu">
-									                    <li><a href="/bitbox/recent_Down?group_seq=${group.group_seq }">Hwp</a></li>
-									                    <li><a href="/bitbox/recent_Pdf?group_seq=${group.group_seq }">PDF</a></li>
+									                    <li><a href="/bitbox/recent_Down?group_seq=${group.group_seq }" style="background-color: darkcyan; width: 130px;">Hwp 로 다운</a></li>
+									                    <li><a href="/bitbox/recent_Pdf?group_seq=${group.group_seq }" style="background-color: cadetblue; width: 130px;">PDF 로 다운</a></li>
 								                  	</ul>
 								                </div>
 											</td>

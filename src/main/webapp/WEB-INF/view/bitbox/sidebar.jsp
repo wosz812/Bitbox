@@ -5,7 +5,7 @@
 		<div class="user-panel">
 			<div class="pull-left image">
 				<a href="/bitbox/myPage" style="width: 50px; height: 50px;"><img id="profile" src="/pngFiles/${img}" class="img-circle" alt="User Image"
-				style="width:36px; height: 50px;"></a>
+				style="width:36px; height: 48px;"></a>
 			</div>
 			<div class="pull-left info">
 				<p>${id}</p>
