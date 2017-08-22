@@ -9,6 +9,7 @@ public class QnaDTO {
 	private String q_image;
 	private String q_category;
 	private String s_id;
+	private int ordernum;
 
 	public int getQ_readCount() {
 		return q_readCount;
@@ -74,11 +75,19 @@ public class QnaDTO {
 		this.s_id = s_id;
 	}
 
+	public int getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(int ordernum) {
+		this.ordernum = ordernum;
+	}
+
 	@Override
 	public String toString() {
-		return "q_seq=" + q_seq + ", q_title=" + q_title + ", q_content=" + q_content + ", q_readCount="
+		return "QnaDTO [q_seq=" + q_seq + ", q_title=" + q_title + ", q_content=" + q_content + ", q_readCount="
 				+ q_readCount + ", q_upload=" + q_upload + ", q_image=" + q_image + ", q_category=" + q_category
-				+ ", s_id=" + s_id;
+				+ ", s_id=" + s_id + ", ordernum=" + ordernum + "]";
 	}
 
 
