@@ -81,6 +81,14 @@ font-size:200%;
   position:absolute;
   background:rgba(200,100,100,0.5);
 }
+#myEditor{
+	width:1050px;
+  height:800px;
+}
+#new_file{
+	width:800px;
+	height:800px;
+}
 </style>
 
 <link href="/dist/css/bootstrap.min.css" rel="stylesheet"></link>
@@ -106,14 +114,14 @@ font-size:200%;
 			${status}
 			${id} --%>
 			<div id="toReplace">
-				<div v-if="currentComponent==='cfile'">
+				<cfile v-if="currentComponent==='cfile'">
 					<label>Name your file</label>
 					<input type="text" class="form-control" name="file_name" placeholder="file name">
 					<label>Edit new file</label>
 					<div id="new_file"></div>
 					<button class="btn btn-primary" @click="swapComponent('create')">Create</button>
 					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
-				</div>
+				</cfile>
 				<div v-if="currentComponent==='upload files'">
 					<div id="dragandrophandler" @drop="onDrop">Drag & Drop Files Here</div>
 					<table id="status1"></table>
@@ -285,6 +293,7 @@ var cnt=1; //file 몇개 올렸는지 확인하려고 생성함
 var flag=0;//상위 폴더 생성하기위한 변수
 var prevUrl=new Array();
 //create repository
+
 var createRepos=function(){
 	var reposdata='{"name": "${title}","description":"repo create from ajax test","homepage": "https://sample.com","auto_init":true}';
 	console.log(reposdata);
@@ -477,8 +486,10 @@ $(document).on("click", ".modal_parent", function () {
 		} 
 		 var getblobContent= function(path,url){
 			 $('.percent').width("10%").attr("aria-valuenow",10);
-			 var strArray=path.split(".");
-			 var mtemp=strArray[strArray.length-1];
+			 
+			 var modelist = ace.require("ace/ext/modelist");
+			 var mode = modelist.getModeForPath(path).mode;
+			 
 			$.ajax(
 					{
 						url : url,
@@ -492,21 +503,30 @@ $(document).on("click", ".modal_parent", function () {
 						$('.percent').width("100%").attr("aria-valuenow",100);
 						setTimeout(function(){ $('.percent').width("0%").attr("aria-valuenow",0); }, 800);
 						var temp=atob(response['content']);
-						YUI().use(
-		    		    		  'aui-ace-editor',
-		    		    		  function(Y) {
-		    		    		    new Y.AceEditor(
-		    		    		      {
-		    		    		    	  boundingBox: '#myEditor',
-		    		    		          mode: mtemp,
-		    		    		          value:temp
-		    		    		      }
-		    		    		    ).render();
-		    		    		  }
-		    		    );
+						var editor = ace.edit("myEditor");
+
+						editor.setTheme("ace/theme/monokai");
+						editor.getSession().setMode(mode);
+						editor.getSession().setValue(temp,1);
 					});
 		}  
+		 
 
+var cfile = Vue.extend({
+	template: '',
+	data: function() {
+	},
+	created:function(){
+		console.log("created cfile");		
+	},
+	ready:function(){
+		var editor = ace.edit("new_file");
+		//editor.setTheme("ace/theme/monokai");
+		editor.getSession().setMode("ace/mode/text");
+		editor.getSession().setValue("",1);
+		editor.focus();
+	}
+});
  //single page를 만들기 위한 vue 변수 생성		 
   var toReplace =  new Vue({
 	  el: '#toReplace', //vue를 사용할 div id
@@ -527,9 +547,8 @@ $(document).on("click", ".modal_parent", function () {
 	    'invitation': {  //invitation component
 		     template: ''
 		 },
-		'cfile':{
-			 template:''
-		},
+		'cfile' : cfile,
+
 		'patch':{
 			 template:''
 		}
@@ -538,25 +557,17 @@ $(document).on("click", ".modal_parent", function () {
 	    swapComponent: function(component)
 	    {
 	      this.currentComponent = component;
-	      if(component=='cfile'){
-	    	  YUI().use(
-   		    		  'aui-ace-editor',
-   		    		  function(Y) {
-   		    		    new Y.AceEditor(
-   		    		      {
-   		    		    	  boundingBox: '#new_file',
-   		    		          mode: Text,
-   		    		          value:""
-   		    		      }
-   		    		    ).render();
-   		    		  }
-   		    );
-	      }else if(component==null){
+	      if(component==null){
 	    	  window.location.href = "/git/gitBoardView";
 	      }else if(component=='create'){
 	    		  var filename=$("input[name=file_name]").val();
 		    	  var editor = ace.edit("new_file");
-		    	  var filecontent=editor.getValue();
+		    	  var content=editor.getSession().getValue();
+		    	  
+		    	  console.log("filename",filename);
+		    	  console.log("content",content);
+		    	  
+		    	  var filecontent=content;
 		    	  var filemessage = "create file";
 		    	  var basecontent = btoa(filecontent);
 		    	  var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'"}';
@@ -765,7 +776,21 @@ $(document).on("click", ".modal_parent", function () {
 		    }); 
       	}
 	  }
-	})
+	});
+ 
+ /* Vue.component('cfile', {
+	 	created:function(){
+	 		cosnole.log("created cfile");
+	 	},
+   		  mounted: function() {
+   		    console.log("Hello from child");
+   		    var editor = ace.edit("new_file");
+
+   			editor.setTheme("ace/theme/monokai");
+   			editor.getSession().setMode("ace/mode/javascript");
+   			editor.getSession().setValue("",1);
+ 		}
+ }); */
   function dump(obj) {
 	    var out = '';
 	    for (var i in obj) {
