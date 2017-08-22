@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ext-modelist.js"></script>
 <style>
 #dragandrophandler
 {
@@ -72,6 +72,14 @@ font-size:200%;
 .editor {
   width:900px;
   height:300px;
+}
+.plusMarker { 
+  position:absolute;
+  background:rgba(100,200,100,0.5);
+}
+.minusMarker { 
+  position:absolute;
+  background:rgba(200,100,100,0.5);
 }
 </style>
 
@@ -696,11 +704,28 @@ $(document).on("click", ".modal_parent", function () {
       		}).then(function(){  //여기 editor 수정부분
       			var editor;
       			$('.editor').each(function( index ) {
-      			  editor = ace.edit(this);
+      				editor = ace.edit(this);
+      				var Range = ace.require('ace/range').Range;
+      				var modelist=ace.require("ace/ext/modelist");
+      				var mode=modelist.getModeForPath(self.detailCommit_rows[index].filename).mode;
       			  editor.setTheme("ace/theme/monokai");
-      			  editor.getSession().setMode("ace/mode/jsp");
-      			  editor.getSession().setValue(self.detailCommit_rows[index].patch);
-      			  editor.getSession().setUndoManager(new ace.UndoManager());
+      			  editor.getSession().setMode(mode);
+      			  editor.getSession().setValue(self.detailCommit_rows[index].patch+"\n");
+      			  
+      			var content=editor.getSession().getValue();
+	      		  var fin=content.split("\n");
+	      		  for(var i=0;i<fin.length;i++){
+	      			  if(fin[i].indexOf("-")==0){
+	      				  editor.getSession().addMarker(new Range(i, 0, i, 1), "minusMarker", "fullLine");
+	      			  }else if(fin[i].indexOf("+")==0){
+	      				  editor.getSession().addMarker(new Range(i, 0, i, 1), "plusMarker", "fullLine");
+	      			  }
+	      		  }
+	      		  editor.gotoLine(fin.length+1); //마지막 line에 focus맞추기
+		      		editor.commands.on("exec",function(e){
+		      		     e.preventDefault();
+		      		     e.stopPropagation();
+		      		  }) //editor readonly로 만드는 부분
       			});
       		});
       		
