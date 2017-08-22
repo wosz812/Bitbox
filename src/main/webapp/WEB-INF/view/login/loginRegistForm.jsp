@@ -84,13 +84,6 @@
         </div>
       </div>
     </form>
-    <!-- <div class="social-auth-links text-center">
-      <p>- OR -</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
-        Facebook</a>
-      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
-        Google+</a>
-    </div> -->
   </div>
 </div>
 
@@ -113,7 +106,7 @@
 	  var git_id=$("#git_id").val();
 	  var git_pw=$("#git_pw").val();
 	  $.ajax({ 
-		    url: 'https://api.github.com/authorizations',
+		    url: 'https://api.github.com/user',
 		    type: 'GET',
 		    beforeSend: function(xhr) { 
 		        xhr.setRequestHeader("Authorization", "Basic " + btoa(git_id+":"+git_pw)); 
@@ -123,9 +116,11 @@
 		        $("h6").css("color", "red");
 		        $("h6").text("입력정보가 올바르지 않습니다.");
 		    }
-		    //data: '{"scopes":["repo"],"note":"create repo with ajax"}'
 		}).done(function(response) {
 		    console.log(response);
+		    var username=response.login;
+		    //console.log(username);
+		    $("#git_id").val(username);
 		    $("h6").css("color", "blue");
 	        $("h6").text("입력정보 확인.");
 	        $('#regist').removeClass(' btn btn-primary btn-block btn-flat disabled');
