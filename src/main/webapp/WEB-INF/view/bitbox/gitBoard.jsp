@@ -536,7 +536,7 @@ var cfile = Vue.extend({
 	    rows: [], //github repository에서 받아온 tree값을 저장할 rows 변수
 	    html_url: '', //초대장이 발송됐을 때 초대장 url을 저장할 변수
 	    patch_rows:[],
-	    totals:''//patch list
+	    totals:'',//patch list
 	    patch_rows:[],//patch list
 	    detailCommit_rows:[]
 	  },
