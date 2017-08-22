@@ -695,7 +695,6 @@ public class BitBoxController {
 			dto.setS_img(fileName);
 			dto.setS_uuid_img(uuidname.toString() + "_" + fileName);
 		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		boolean flag = service.myUpdate(dto);
@@ -785,7 +784,6 @@ public class BitBoxController {
 				out.println("<script>alert('error : 회의록이 존재하지 않습니다');</script>");
 				out.flush();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			url = "/bitbox/home";
@@ -820,7 +818,6 @@ public class BitBoxController {
 		// out.println("<script>alert('c:/dev/pdf에 저장되었습니다.');</script>");
 		// out.flush();
 		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 
@@ -844,7 +841,6 @@ public class BitBoxController {
 				out.println("<script>alert('error : 회의록이 존재하지 않습니다');</script>");
 				out.flush();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			url = "/bitbox/home";
@@ -860,7 +856,6 @@ public class BitBoxController {
 				out.println("<script>alert('회의록은 C:/dev/pdf 에 저장되었습니다.');</script>");
 				out.flush();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

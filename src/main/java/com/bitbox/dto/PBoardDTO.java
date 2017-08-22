@@ -11,6 +11,7 @@ public class PBoardDTO {
 	private Date p_date;
 	private String p_category;
 	private String s_id;
+	private int ordernum;
 
 	public PBoardDTO() {
 	}
@@ -47,8 +48,6 @@ public class PBoardDTO {
 		this.p_filename = p_filename;
 	}
 
-	
-
 	public String getP_uuidname() {
 		return p_uuidname;
 	}
@@ -81,6 +80,19 @@ public class PBoardDTO {
 		this.s_id = s_id;
 	}
 	
-	
-	
+	public int getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(int ordernum) {
+		this.ordernum = ordernum;
+	}
+
+	@Override
+	public String toString() {
+		return "PBoardDTO [p_boardseq=" + p_boardseq + ", p_title=" + p_title + ", p_content=" + p_content
+				+ ", p_filename=" + p_filename + ", p_uuidname=" + p_uuidname + ", p_date=" + p_date + ", p_category="
+				+ p_category + ", s_id=" + s_id + ", ordernum=" + ordernum + "]";
+	}
+
 }
