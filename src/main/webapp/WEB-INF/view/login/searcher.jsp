@@ -30,12 +30,35 @@
 <!-- Select2 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
+<link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="/resources/css/dist/css/skins/_all-skins.min.css">
+<style type="text/css">
+.bg_img {
+	background-image: url("/img/image.jpg");
+	background-repeat: no-repeat;
+	z-index: 1;
+	background-size: 100%;
+}
+
+.blur:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: inherit;
+	z-index: -1;
+	filter: blur(6px);
+	-webkit-filter: blur(6px);
+	-moz-filter: blur(6px);
+	-o-filter: blur(6px);
+	filter: url(#blur);
+}
+</style>
 </head>
-<body class="hold-transition register-page">
+<body class="hold-transition register-page blur bg_img">
 <script type="text/javascript">
 	function div_OnOff(v){
 		if(v=="0"){
