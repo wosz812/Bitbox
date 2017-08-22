@@ -151,6 +151,7 @@ font-size:200%;
 							</div>
 						</div>
 					</section>
+					<button class="btn btn-primary" @click="swapComponent(null)">Close</button>
 					<div id="myModal" class="modal fade" role="dialog" ng-app="editorApp">
 					  <div class="modal-dialog">
 					
@@ -760,13 +761,13 @@ var cfile = Vue.extend({
 						if(uploadFiles.length==0){
 							$('#status1').text("");
 							for(var d=0;d<uploadDirs.length;d++){
-								$('#status1').append('<tr><td>' + uploadDirs[d]+ '</a></td><td class="rDid" data-val="'+uploadDirs[d]+'"><span class="glyphicon glyphicon-remove"></td></tr>');
+								$('#status1').append('<tr><td>' + uploadDirs[d]+ '</a></td><td class="rDid" data-val="'+uploadDirs[d]+'"><span class="fa fa-remove"></td></tr>');
 							}
 						}
 						else{
 							$('#status1').text("");
 							for(var d=0;d<uploadFiles.length;d++){
-								$('#status1').append('<tr><td>' + uploadFiles[d]+ '</a></td><td class="rid" data-val="'+uploadFiles[d]+'"><span class="glyphicon glyphicon-remove"></td></tr>');
+								$('#status1').append('<tr><td>' + uploadFiles[d]+ '</a></td><td class="rid" data-val="'+uploadFiles[d]+'"><span class="fa fa-remove"></td></tr>');
 							}
 						}
 						$('#status1').append('<input type="button" id="appendbtn" class="btn btn-primary" value="Commit" />');
@@ -776,34 +777,6 @@ var cfile = Vue.extend({
       	}
 	  }
 	});
- 
- /* Vue.component('cfile', {
-	 	created:function(){
-	 		cosnole.log("created cfile");
-	 	},
-   		  mounted: function() {
-   		    console.log("Hello from child");
-   		    var editor = ace.edit("new_file");
-
-   			editor.setTheme("ace/theme/monokai");
-   			editor.getSession().setMode("ace/mode/javascript");
-   			editor.getSession().setValue("",1);
- 		}
- }); */
-  function dump(obj) {
-	    var out = '';
-	    for (var i in obj) {
-	        out += i + ": " + obj[i] + "\n";
-	    }
-
-	    alert(out);
-
-	    // or, if you wanted to avoid alerts...
-
-	    var pre = document.createElement('pre');
-	    pre.innerHTML = out;
-	    document.body.appendChild(pre)
-	} 
  
  //drop box에 load된 파일의 tree 읽어오기
   var traversefileTree = function(item, path) {
