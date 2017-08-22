@@ -4,44 +4,75 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>BITBOX Login</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>BITBOX Login</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.6 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+<style type="text/css">
+.bg_img {
+	background-image: url("/img/image.jpg");
+	background-repeat: no-repeat;
+	z-index: 1;
+	background-size: 100%;
+}
+
+.blur:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: inherit;
+	z-index: -1;
+	filter: blur(6px);
+	-webkit-filter: blur(6px);
+	-moz-filter: blur(6px);
+	-o-filter: blur(6px);
+	filter: url(#blur);
+}
+</style>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page blur bg_img">
 	<div class="login-box">
 		<div class="login-logo">
 			<a href="/login/"><b>BIT</b>BOX</a>
 		</div>
 		<!-- /.login-logo -->
-				<div class="login-box-body">
+		<div class="login-box-body">
 			<p class="login-box-msg">Sign in to start your session</p>
 			<form action="/login/login" method="post">
 				<div class="form-group has-feedback">
-					<input type="text" class="form-control" placeholder="Id" name="s_id" value="${logID }">
-					<span class="glyphicon glyphicon-check form-control-feedback"></span>
+					<input type="text" class="form-control" placeholder="Id"
+						name="s_id" value="${logID }"> <span
+						class="glyphicon glyphicon-check form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input type="password" class="form-control" placeholder="Password" name="s_pw"> 
-					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					<input type="password" class="form-control" placeholder="Password"
+						name="s_pw"> <span
+						class="glyphicon glyphicon-lock form-control-feedback"></span>
 					<h6 style="color: red;">${different}</h6>
 				</div>
 				<div class="row">
 					<div class="col-xs-8">
-						<a href="/login/searchView">I forgot my information</a><br>
-						<a href="/login/registView">Register a new membership</a>
+						<a href="/login/searchView">I forgot my information</a><br> <a
+							href="/login/registView">Register a new membership</a>
 					</div>
 					<div class="col-xs-4">
-						<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+						<button type="submit" class="btn btn-primary btn-block btn-flat">Sign
+							In</button>
 					</div>
 				</div>
 			</form>
@@ -51,16 +82,19 @@
         Facebook(구현x)</a>
       <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
         Google+(구현x)</a>
-    </div> -->			
+    </div> -->
 		</div>
 	</div>
 
 	<!-- jQuery 2.2.3 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- iCheck -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
 	<script>
 		$(function() {
 			$('input').iCheck({
@@ -70,5 +104,8 @@
 			});
 		});
 	</script>
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg"> <filter
+		id="blur"> <feGaussianBlur stdDeviation="6" /> </filter> </svg>
+
 </body>
 </html>
