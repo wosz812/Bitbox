@@ -4,8 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitbox.bitboxMapper">
 	<select id="listAll" resultType="com.bitbox.dto.PBoardDTO">
-		select * from pboard where
-		s_id=#{id}
+		select B.* from (select rownum as ordernum, A.* from (select * from pboard where s_id=#{id} order by p_boardseq asc)A order by ordernum desc)B
 	</select>
 
 	<insert id="regist" parameterType="com.bitbox.dto.PBoardDTO">
@@ -150,11 +149,11 @@
 	
 	<select id="getQnaList" resultType="com.bitbox.dto.QnaDTO">
 		select A.* from(
-			select rownum as num,temp.* from(
+			select rownum as ordernum,temp.* from(
 				select * from qna order by q_seq desc
 				) temp
 			) A 
-		where A.num between #{start} and #{start}+9
+		where ordernum between #{start} and #{start}+9
 	</select>
 	
 	<insert id="registQna" parameterType="com.bitbox.dto.QnaDTO">

@@ -15,9 +15,32 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+<style type="text/css">
+.bg_img {
+	background-image: url("/img/image.jpg");
+	background-repeat: no-repeat;
+	z-index: 1;
+	background-size: 100%;
+}
+
+.blur:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: inherit;
+	z-index: -1;
+	filter: blur(6px);
+	-webkit-filter: blur(6px);
+	-moz-filter: blur(6px);
+	-o-filter: blur(6px);
+	filter: url(#blur);
+}
+</style>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page blur bg_img">
 	<script type="text/javascript">
 		function winClose(){
 			window.close();

@@ -72,7 +72,7 @@
 									</tr>
 									<c:forEach var="qList" items="${qnaList}">
 										<tr align="center">
-											<td>${qList.q_seq}</td>
+											<td>${qList.ordernum}</td>
 											<td>${qList.q_category}</td>
 											<td><a href="/bitbox/readQna?q_seq=${qList.q_seq}&page=${page}">${qList.q_title}</a></td>
 											<td>${qList.s_id}</td>
