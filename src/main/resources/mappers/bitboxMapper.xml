@@ -37,7 +37,7 @@
 	</delete>
 
 	<select id="getGroupList" resultType="com.bitbox.dto.GroupDTO">
-		select * from cgroup
+		select rownum as ordernum, A.* from (select * from cgroup order by group_seq asc)A order by ordernum desc
 	</select>
 	<!-- 확인해야됨 -->
 	<select id="getGroupModal" parameterType="String" resultType="com.bitbox.dto.GroupDTO">

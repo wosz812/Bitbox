@@ -84,14 +84,14 @@
 									</tr>
 									<c:forEach var="gList" items="${list}">
 										<tr align="center">
-											<td class='gno'>${gList.group_seq}</td>
+											<td class='gno'>${gList.ordernum}</td>
 											<td>${gList.s_id}</td>
-											<td class="left"><a class="gTitle"
-												data-id="${gList.group_seq}">${gList.title}</a></td>
-											<td height=20 style="padding-left: 5"><div
-													style="overflow: hidden; text-overflow: ellipsis; width: 180">
+											<td class="left"><a class="gTitle" data-id="${gList.group_seq}">${gList.title}</a></td>
+											<td height=20 style="padding-left: 5">
+												<div style="overflow: hidden; text-overflow: ellipsis; width: 180">
 													<nobr>${gList.info}</nobr>
-												</div></td>
+												</div>
+											</td>
 										</tr>
 									</c:forEach>
 								</table>

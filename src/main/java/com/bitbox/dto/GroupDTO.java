@@ -6,8 +6,7 @@ public class GroupDTO {
 	private String title;
 	private String info;
 	private String s_id;
-	
-	
+	private int ordernum;
 
 	public int getGroup_seq() {
 		return group_seq;
@@ -47,6 +46,14 @@ public class GroupDTO {
 
 	public void setS_id(String s_id) {
 		this.s_id = s_id;
+	}
+
+	public int getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(int ordernum) {
+		this.ordernum = ordernum;
 	}
 
 	@Override

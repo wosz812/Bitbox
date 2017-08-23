@@ -101,7 +101,7 @@
 								<button type="button" class="btn btn-primary" onclick="gourl(1)">수정하기</button>
 								<button type="button" class="btn btn-primary" onclick="gourl(2)">삭제하기</button>
 								<button type="button" class="btn btn-primary" onclick="gourl(3)">돌아가기</button>
-								<button type="button" class="btn btn-primary btn-default dropdown toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">다운받기
+								<button type="button" class="btn btn-primary dropdown toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">다운받기
 								<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
