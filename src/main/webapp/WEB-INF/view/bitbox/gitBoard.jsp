@@ -501,6 +501,11 @@ $(document).on("click", ".modal_parent", function () {
 						editor.setTheme("ace/theme/monokai");
 						editor.getSession().setMode(mode);
 						editor.getSession().setValue(temp,1);
+						
+						editor.commands.on("exec",function(e){
+			      		     e.preventDefault();
+			      		     e.stopPropagation();
+			      		  }) //editor readonly로 만드는 부분
 					});
 		}  
 		 
