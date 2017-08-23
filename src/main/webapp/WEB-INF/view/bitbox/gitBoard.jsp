@@ -203,7 +203,7 @@ font-size:200%;
 				            </div>
 				            <div class="box-body">
 				              <div class="alert alert-warning alert-dismissible">
-						      	<h4><i class="icon fa fa-warning"></i> Github Rpository 초대를 수락해주세요</h4>
+						      	<h4><i class="icon fa fa-warning"></i> Github Repository 초대를 수락해주세요</h4>
 						        <div class="btn-group-horizontal">
 					            	<a href="{{html_url}}" target="_blank" id="invitation_url"><button type="button" class="btn btn-primary" onclick="click_func()" id="invitation_btn">Accept</button></a>
 					                <a href="/git/gitBoard?title=${title}"><button type="button" class="btn btn-default" id="close_refresh" disabled>Close</button></a>
@@ -641,11 +641,11 @@ var patch = Vue.extend({
 	    			url : "https://api.github.com/repos/${masId}/${title}/commits",
 	    			type : 'GET',
 	    			beforeSend : function(xhr) {
-	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
+	    			xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 	    			},
 	    			data : {}
 	    		}).done(function(response) {
-	    			console.log(response);
+	    			console.log("commits",response);
 	    			for(var i=0;i<response.length;i++){
 	    				var sha=response[i].sha;
 	    				var message=response[i].commit.message;
@@ -666,7 +666,7 @@ var patch = Vue.extend({
 	    			url : "https://api.github.com/repos/${masId}/${title}/commits?page="+num,
 	    			type : 'GET',
 	    			beforeSend : function(xhr) {
-	    			xhr.setRequestHeader('Authorization', "Basic " + btoa("yujiyeon:dbwldus26"));
+	    			xhr.setRequestHeader('Authorization', 'Bearer ${token}');
 	    			},
 	    			data : {}
 	    		}).done(function(response) {
