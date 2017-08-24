@@ -80,13 +80,13 @@
 										</tr>
 									</c:forEach>
 								</table>
-								<div align="center">
-									<c:forEach var="page" items="${pageList}">
-										${page.toString()}
-									</c:forEach>
-                  				</div>
 							</div>
 							<!-- /.box-body -->
+							<div align="center" class="box-footer" style="padding: 15px;">
+								<c:forEach var="page" items="${pageList}">
+									${page.toString()}
+								</c:forEach>
+                  			</div>
 						</div>
 						<!-- /.box -->
 					</div>
