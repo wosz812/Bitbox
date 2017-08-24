@@ -168,8 +168,11 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			var user = ${user};
+			var ds = document.getElementById("dataset");
 			if( user == 1 ){
-				document.getElementById("con").style.display = "";
+				document.getElementById("con1").style.display = "";
+				document.getElementById("con2").style.display = "";
+				ds.q_title.readOnly = false;
 			}
 		});
 	</script>
