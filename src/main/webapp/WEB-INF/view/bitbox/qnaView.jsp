@@ -76,7 +76,7 @@
 									<div class="form-group">
 										<div class="col-md-9" style="margin-bottom: 20px">
 											<h5><label>제목</label></h5>
-											<input type="text" class="form-control" name="q_title" value="${qnaList.q_title}">
+											<input type="text" class="form-control" name="q_title" value="${qnaList.q_title}" readonly="readonly">
 										</div>
 										<div class="col-md-3" style="margin-bottom: 20px">
 											<h5><label>작성자</label></h5>
@@ -94,22 +94,22 @@
 									</div>
 									<div class="form-group" style="padding-left: 15px; padding-right: 15px;">
 										<h5><label>내용</label></h5>
-										<textarea class="form-control" rows="10" name="q_content" id="summernote" style="resize:none;">${qnaList.q_content}</textarea>
+										<textarea class="form-control" rows="10" name="q_content" id="summernote">${qnaList.q_content}</textarea>
 									</div>
 									<div class="form-group" style="padding: 15px">
 										<h5><label for="exampleInputFile">File Name:</label></h5>
 										<a href="/bitbox/download?filename=${qnaList.q_upload}"><label>${qnaList.q_upload}</label></a>
 									</div>
+									<div class="form-group" style="padding-left: 15px; padding-right: 15px;" align="right">
+										<button type="button" class="btn btn-primary"
+											onclick="gourl(1)" align="right">확인</button>
+										<button type="button" id="con1" style="display:none;" class="btn btn-primary"
+											onclick="gourl(2)" align="right">수정</button>
+										<button type="button" id="con2" style="display:none;" class="btn btn-primary"
+											onclick="gourl(3)" >삭제</button>
+									</div>
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer" align="right" id="con" style="display:none;">
-									<button type="button" class="btn btn-primary"
-										onclick="gourl(1)">확인</button>
-									<button type="button" class="btn btn-primary"
-										onclick="gourl(2)">수정</button>
-									<button type="button" class="btn btn-primary"
-										onclick="gourl(3)">삭제</button>
-								</div>
 								<div align="center">
 									<h4><label>Comment</label></h4>
 								</div>
