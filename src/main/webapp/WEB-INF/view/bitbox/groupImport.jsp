@@ -78,8 +78,7 @@
 
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/bitbox/groupImport"
-								enctype="multipart/form-data">
+							<form id="dataset" role="form" action="" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
 										<label for="exampleInputEmail1">Repository Information</label>
@@ -101,7 +100,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer" align="right">
-									<button type="submit" class="btn btn-primary" id="import_btn" disabled>Import Group</button>
+									<button type="button" class="btn btn-primary" id="import_btn" onclick="cgroup_check()" disabled>Import Group</button>
 								</div>
 							</form>
 						</div>
@@ -168,6 +167,24 @@
 	        $("h6").text("정보 확인 완료");
 	        $('#import_btn').prop("disabled",false);
 		});
+	}
+	function cgroup_check(){
+		var title=$("input[name=title]").val();
+		var url="/bitbox/titleCheck?title="+title;
+		$.ajax({
+            url : url,
+            type : 'POST',
+	            success : function(data) {
+	              if(!data){
+	            	  alert("그룹 불러오기 완료");
+	            	  var ds=document.getElementById("dataset");
+	            	  ds.action="/bitbox/groupImport";
+	            	  ds.submit();
+	              }else{
+	            	  alert("이미 그룹이 등록되어 있습니다.");
+	              }
+	            }
+	    });
 	}
 	</script>
 </body>
