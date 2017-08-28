@@ -90,7 +90,7 @@
 									<div class="form-group">
 										<label>Member</label> 
 										
-										<select class="form-control select2" name="member" multiple="multiple" data-placeholder="회의 참가자를 선택해주세요." style="width: 100%;">
+										<select class="form-control select2" name="member" multiple="multiple" data-placeholder="그룹 멤버를 입력해주세요." style="width: 100%;">
 											<c:forEach var="member" items="${memberList}">
 												<option>${member.s_id}</option>
 											</c:forEach>
