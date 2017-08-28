@@ -549,6 +549,12 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<TodoDTO> getTodoListAlarm(String id) {
+		List<TodoDTO> todoList = dao.getTodoList(id);
+		return todoList;
+	}
 
 	@Override
 	public ArrayList<String> todoList(TodoDTO dto) {

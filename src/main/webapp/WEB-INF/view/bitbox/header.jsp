@@ -72,9 +72,51 @@
             <li class="dropdown tasks-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-flag-o"></i>
-                <span class="label label-danger">9</span>
+                <span class="label label-danger">{{ todoList.length }}</span>
               </a>
+  			  <ul class="dropdown-menu">
+              <li class="header">You have {{ todoList.length }} todo List</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li v-for="row in todoList">
+                  <div class="pull-right"><button type="button" class="btn btn-box-tool" @click="deleteTodo(row.todo_seq)"><i class="fa fa-times"></i></button></div>
+                    <a href="/bitbox/home">
+                      <i class="fa fa-user-plus text-aqua"></i>
+                      {{row.todo}}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>
+            </ul>
             </li>
+            <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="/pngFiles/${img}" class="user-image" alt="User Image">
+              <span class="hidden-xs">${id}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="/pngFiles/${img}" class="img-circle" alt="User Image">
+
+                <p>
+                  ${id}
+                  <small>${className}</small>
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="/bitbox/myPage" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="/bitbox/logout" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
           </ul><!-- 여기 -->
         </div>
         </div>
@@ -91,15 +133,18 @@
   	    groupRows:[],
   	    qnaAlarm: "",
   	    qnaRows: [],
+  	    todoList:[],
   	    click_url:"/bitbox/gitBoard"
   	  },
   	  created: function() {
   		this.getQnaAlarm();
   		this.getGroupAlarm();
+  		this.gettodoList();
   		var self=this;
   		var testInterval=setInterval(function() {
   			self.getQnaAlarm();
   	  		self.getGroupAlarm();
+  	  		self.gettodoList();
   		},60000);
   	  },
   	  methods: {
@@ -129,6 +174,18 @@
 	            }
 	          });
           },
+          gettodoList: function(){
+            	var url="/bitbox/getTodoListAlarm";
+                var self=this;
+                $.ajax({
+                  url : url,
+                  type : 'POST',
+  	            success : function(data) {
+  	            	console.log(data);
+  	            	self.todoList=data;
+  	            }
+  	          });
+            },
           cancelAutoUpdate: function() { clearInterval(this.timer) },
           atagclick:function(seq){
         	  var url="/bitbox/qnaState?q_seq="+seq;
@@ -151,7 +208,6 @@
     	            success : function(data) {
     	              if(data){
     	            	  console.log(data);
-    	            	  self.getQnaAlarm();
     	            	  self.getGroupAlarm();
     	              }
     	            }
@@ -166,6 +222,20 @@
         		  return "/bitbox/minutesList?group_title="+title;
         	  }
         	  
+          },
+          deleteTodo:function(seq){
+        	  //console.log("delete todo seq",seq);deleteTodo
+        	  var url="/bitbox/deleteTodo?seq="+seq;
+        	  var self=this;
+        	  $.ajax({
+                  url : url,
+                  type : 'POST',
+    	            success : function(data) {
+    	              if(data){
+    	            	  self.gettodoList();
+    	              }
+    	            }
+    	       });
           }
   	  }
   	})

@@ -69,9 +69,12 @@ public class LoginController {
 				// login 성공
 				// session / groupList
 				StudentDTO sdto = service.login(s_id);
+				String className=service.getClassName(sdto.getS_class_code());
+				System.out.println("get Class Name in logincontroller"+className);
 				groupList = service.getGroupList(sdto.getS_id());
 				// session담기
 				session.setAttribute("groupList", groupList);
+				session.setAttribute("className", className);
 				session.setAttribute("id", sdto.getS_id());
 				session.setAttribute("code", sdto.getS_class_code());
 				session.setAttribute("img", sdto.getS_uuid_img());
