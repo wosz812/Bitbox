@@ -748,6 +748,12 @@ public class BitBoxController {
 		ArrayList<String> todoList = service.getTodoList((String) session.getAttribute("id"));
 		return todoList;
 	}
+	
+	@RequestMapping(value = "/getTodoListAlarm", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody List<TodoDTO> getTodoListAlarm(HttpSession session) {
+		List<TodoDTO> todoList = service.getTodoListAlarm((String) session.getAttribute("id"));
+		return todoList;
+	}
 
 	@RequestMapping(value = "/deleteAll", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody String deleteAll(HttpSession session) {
@@ -769,6 +775,12 @@ public class BitBoxController {
 			todoList = service.getTodoList((String) session.getAttribute("id"));
 		}
 		return todoList;
+	}
+	
+	@RequestMapping(value = "/deleteTodo", method = { RequestMethod.POST, RequestMethod.GET })
+	public @ResponseBody boolean deleteTodo(HttpSession session, @RequestParam("seq") int seq) {
+		boolean flag = service.deleteLine(seq);
+		return flag;
 	}
 
 	@RequestMapping(value = "/recent_Down", method = { RequestMethod.POST, RequestMethod.GET })
