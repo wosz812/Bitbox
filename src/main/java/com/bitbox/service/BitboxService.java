@@ -626,19 +626,30 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		ArrayList<SubjectFormat> formats = new ArrayList<SubjectFormat>();
 		SubjectFormat format1 = new SubjectFormat();
 		SubjectFormat format2 = new SubjectFormat();
+		long statsDate=0;
 		try {
 
 			long endDate = diffOfDate(formatter.format(new Date()), formatter.format(dto.getEnd_date()));
+			statsDate=diffOfDate(formatter.format(dto.getStart_date()), formatter.format(new Date()));
+			if(statsDate<=0){
+				endDate=diffOfDate(formatter.format(dto.getStart_date()), formatter.format(dto.getEnd_date()));
+			}
 			if (endDate < 0) {
 				endDate = 0;
 			}
+			
 			format1.setLabel("남은 일수");
 			format1.setValue(String.valueOf(endDate));
 			System.out.println("남은 일수 :" + String.valueOf(endDate));
 			long startDate = diffOfDate(formatter.format(dto.getStart_date()), formatter.format(new Date()));
 			long totalDate = diffOfDate(formatter.format(dto.getStart_date()), formatter.format(dto.getEnd_date()));
+			
 			if (startDate > totalDate) {
-				startDate = totalDate;
+				startDate = totalDate;		
+				
+			}
+			if(startDate<0){
+				startDate=0;
 			}
 			format2.setLabel("현재 일수");
 			format2.setValue(String.valueOf(startDate));
