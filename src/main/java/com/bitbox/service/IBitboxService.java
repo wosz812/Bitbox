@@ -166,4 +166,6 @@ public interface IBitboxService {
 	public int getPBoardCnt(String id);
 	public int getGinCnt(String id);
 	public int getQnaCnt(String id);
+
+	String enter2(String str);
 }

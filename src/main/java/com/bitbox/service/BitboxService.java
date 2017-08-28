@@ -491,6 +491,12 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 		String str2 = str.replace("\r\n", "<br>");
 		return str2;
 	}
+	
+	@Override
+	public String enter2(String str) {
+		String str2 = str.replace("<br>", "\r\n");
+		return str2;
+	}
 
 	@Override
 	public String passwordCheck(String s_id) {

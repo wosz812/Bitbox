@@ -33,6 +33,7 @@ public class MemoController {
 			url = "redirect:/memo/pMemo?group_seq=" + group_seq;
 			// System.out.println(dto.toString());
 			pdto.setS_id((String) session.getAttribute("id"));
+			pdto.setM_content(service.enter(pdto.getM_content()));
 			boolean flag = service.registPMemo(pdto);
 			session.setAttribute("id", session.getAttribute("id"));
 			session.setAttribute("code", session.getAttribute("code"));
@@ -40,6 +41,7 @@ public class MemoController {
 			url = "redirect:/memo/gMemo?group_seq=" + group_seq;
 			// System.out.println(dto.toString());
 			gdto.setGroup_seq(group_seq);
+			gdto.setM_content(service.enter(gdto.getM_content()));
 			boolean flag = service.registGMemo(gdto);
 			session.setAttribute("id", session.getAttribute("id"));
 			session.setAttribute("code", session.getAttribute("code"));
@@ -110,6 +112,7 @@ public class MemoController {
 		if (group_seq == 0) {
 			pmemo.setS_id((String) session.getAttribute("id"));
 			pmemo.setM_seq(seq);
+			pmemo.setM_content(service.enter(pmemo.getM_content()));
 			boolean flag = service.updatePMemo(pmemo);
 			if (flag) {
 				url = "redirect:/memo/pMemo?page=" + page + "&group_seq=" + group_seq;
@@ -117,6 +120,7 @@ public class MemoController {
 		} else {
 			gmemo.setGm_seq(seq);
 			gmemo.setGroup_seq(group_seq);
+			gmemo.setM_content(service.enter(gmemo.getM_content()));
 			boolean flag = service.updateGMemo(gmemo);
 			if (flag) {
 				url = "redirect:/memo/gMemo?page=" + page + "&group_seq=" + group_seq;
@@ -129,6 +133,7 @@ public class MemoController {
 	public @ResponseBody PMemoDTO modalp(@RequestParam("seq") int seq, Model model) {
 		String url = "";
 		PMemoDTO pmemo = service.getPMemoModal(seq);
+		pmemo.setM_content(service.enter2(pmemo.getM_content()));
 		return pmemo;
 	}
 
@@ -136,6 +141,7 @@ public class MemoController {
 	public @ResponseBody GMemoDTO modalg(@RequestParam("seq") int seq, Model model) {
 		String url = "";
 		GMemoDTO gmemo = service.getGMemoModal(seq);
+		gmemo.setM_content(service.enter2(gmemo.getM_content()));
 		return gmemo;
 	}
 }
