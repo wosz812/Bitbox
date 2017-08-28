@@ -71,7 +71,7 @@
             <!-- Tasks: style can be found in dropdown.less -->
             <li class="dropdown tasks-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-flag-o"></i>
+                <i class="fa fa-user"></i>
                 <span class="label label-danger">{{ todoList.length }}</span>
               </a>
   			  <ul class="dropdown-menu">
@@ -82,7 +82,7 @@
                   <li v-for="row in todoList">
                   <div class="pull-right"><button type="button" class="btn btn-box-tool" @click="deleteTodo(row.todo_seq)"><i class="fa fa-times"></i></button></div>
                     <a href="/bitbox/home">
-                      <i class="fa fa-user-plus text-aqua"></i>
+                      <i class="fa fa-edit text-aqua"></i>
                       {{row.todo}}
                     </a>
                   </li>
