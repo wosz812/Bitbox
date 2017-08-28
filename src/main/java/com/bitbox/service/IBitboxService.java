@@ -166,4 +166,8 @@ public interface IBitboxService {
 	public int getPBoardCnt(String id);
 	public int getGinCnt(String id);
 	public int getQnaCnt(String id);
+	
+	public List<StudentDTO> getMemberListClass(StudentDTO dto);
+	public boolean groupImport(GroupDTO dto,ArrayList<String> memberList);
+	public StudentDTO getStudentId(String git_id);
 }

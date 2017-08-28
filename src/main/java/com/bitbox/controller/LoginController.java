@@ -70,7 +70,6 @@ public class LoginController {
 				// session / groupList
 				StudentDTO sdto = service.login(s_id);
 				String className=service.getClassName(sdto.getS_class_code());
-				System.out.println("get Class Name in logincontroller"+className);
 				groupList = service.getGroupList(sdto.getS_id());
 				// session담기
 				session.setAttribute("groupList", groupList);
