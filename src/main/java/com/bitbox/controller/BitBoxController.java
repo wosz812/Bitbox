@@ -258,7 +258,19 @@ public class BitBoxController {
 		String url = "/bitbox/groupRegist";
 		return url;
 	}
-
+	
+	@RequestMapping(value = "/groupImportForm", method = { RequestMethod.POST, RequestMethod.GET })
+	public String groupImportForm(HttpSession session,Model model) {
+		String url = "/bitbox/groupImport";
+		int code=(int) session.getAttribute("code");
+		StudentDTO dto=new StudentDTO();
+		dto.setS_class_code(code);
+		dto.setS_id(session.getAttribute("id").toString());
+		List<StudentDTO> memberList=service.getMemberListClass(dto);
+		model.addAttribute("memberList",memberList);
+		return url;
+	}
+	
 	@RequestMapping(value = "/groupRegist", method = { RequestMethod.POST, RequestMethod.GET })
 	public String groupRegist(HttpSession session, GroupDTO dto) {
 		// 그룹 등록 메소드.
@@ -272,6 +284,29 @@ public class BitBoxController {
 			url = "redirect:/bitbox/group";
 			String title = dto.getTitle();
 			url = "redirect:/git/gitBoard?title=" + title + "&status=1";
+		}
+		return url;
+	}
+	
+	@RequestMapping(value = "/groupImport", method = { RequestMethod.POST, RequestMethod.GET })
+	public String groupImport(HttpSession session, GroupDTO dto,@RequestParam("member") String[] nameList) {
+		// 그룹 등록 메소드.
+		String url = "";
+		StudentDTO sdto=service.getStudentId(dto.getS_id());
+		dto.setS_id(sdto.getS_id());
+		ArrayList<String> memberList=new ArrayList<String>();
+		for(int i=0;i<nameList.length;i++){
+			if(!nameList[i].equals("")){
+				memberList.add(nameList[i]);
+			}
+		}
+		System.out.println("memberList: "+memberList);
+		boolean flag=service.groupImport(dto, memberList);
+		if(flag){
+			session.removeAttribute("groupList");
+			List<GroupDTO> groupList = service.getGroupList(session.getAttribute("id").toString());
+			session.setAttribute("groupList", groupList);
+			url="redirect:/git/gitBoard?title=" + dto.getTitle();
 		}
 		return url;
 	}
@@ -531,7 +566,7 @@ public class BitBoxController {
 		List<GinDTO> getGMemberList = service.getGroupMember(group);
 		System.out.println(getGMemberList);
 		ArrayList<GLogDTO> gLogList = new ArrayList<GLogDTO>();
-		for (int i = 0; i < getGMemberList.size(); i++) {
+		for (int i = 0; i < getGMemberList.size(); i++) { //회의록 작성에 대한 log table에 추가
 			GLogDTO dto = new GLogDTO(getGMemberList.get(i).getS_id(), group.getTitle(), id, "write meeting",
 					id + "님이 " + group.getTitle() + "에 회의록을 작성했습니다.");
 			gLogList.add(dto);

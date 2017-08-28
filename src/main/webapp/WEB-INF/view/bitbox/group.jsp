@@ -66,12 +66,19 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
+								<!-- <div style="float: right;">
+									
+								</div>
 								<div style="float: right;">
 									<a href="/bitbox/groupRegistForm"><button type="button"
 											class="btn btn-primary" onclick="" >Create Group</button></a>
 								</div>
-								<br>
+								<br> -->
 								
+								<div class="btn-group" style="float: right;">
+									<button class="btn btn-primary btn-flat" id="importG" onclick="convertLocation('importG')">Import Group</button>
+									<button class="btn btn-primary btn-flat" id="createG" onclick="convertLocation('createG')">Create Group</button>
+								</div>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
@@ -151,9 +158,7 @@
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js"></script>
 	<script type="text/javascript">
-		var state =
-	<%=request.getParameter("state")%>
-		;
+		var state =<%=request.getParameter("state")%>;
 		//alert(s);
 		if (state == 2) {
 			alert("비밀번호 오류입니다.");
@@ -188,6 +193,13 @@
 				}
 			});
 		}
+		function convertLocation(cmd){
+			if(cmd=='importG'){
+				window.location.href = "/bitbox/groupImportForm"
+			}else if(cmd=='createG'){
+				window.location.href = "/bitbox/groupRegistForm"
+			}
+		} 
 	</script>
 </body>
 </html>

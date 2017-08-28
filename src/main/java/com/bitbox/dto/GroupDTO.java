@@ -59,7 +59,8 @@ public class GroupDTO {
 	@Override
 	public String toString() {
 		return "GroupDTO [group_seq=" + group_seq + ", pw=" + pw + ", title=" + title + ", info=" + info + ", s_id="
-				+ s_id + ", master_id=" + "]";
+				+ s_id + ", ordernum=" + ordernum + "]";
 	}
+	
 
 }

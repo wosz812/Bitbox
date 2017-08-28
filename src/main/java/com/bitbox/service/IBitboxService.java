@@ -168,4 +168,8 @@ public interface IBitboxService {
 	public int getQnaCnt(String id);
 
 	String enter2(String str);
+	
+	public List<StudentDTO> getMemberListClass(StudentDTO dto);
+	public boolean groupImport(GroupDTO dto,ArrayList<String> memberList);
+	public StudentDTO getStudentId(String git_id);
 }

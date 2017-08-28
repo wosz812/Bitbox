@@ -216,13 +216,13 @@ font-size:200%;
 				<div v-show="!currentComponent">
 					<div class="dropdown">
 						<div class="btn-group" style="float: right; margin-right: 20px;">
-							<button class="btn btn-primary" @click="swapComponent('cfile')"
+							<button class="btn btn-primary btn-flat" @click="swapComponent('cfile')"
 								id="cfile">create new file</button>
-							<button class="btn btn-primary" @click="swapComponent('uploadfile')"
+							<button class="btn btn-primary btn-flat" @click="swapComponent('uploadfile')"
 								id="upfile">{{component}}</button>
-							<button class="btn btn-primary" @click="swapComponent('patch')"
+							<button class="btn btn-primary btn-flat" @click="swapComponent('patch')"
 								id="patch">Patch</button>
-							<button class="btn btn-primary dropdown-toggle" type="button"
+							<button class="btn btn-primary btn-flat dropdown-toggle" type="button"
 								data-toggle="dropdown">
 								clone or download <span class="caret"></span>
 							</button>
@@ -245,7 +245,7 @@ font-size:200%;
 							<div class="col-xs-12">
 								<div class="box">
 									<div class="box-header with-border">
-										<h3 class="box-title">${title}repository</h3>
+										<h3 class="box-title">${title} repository</h3>
 									</div>
 									<!-- /.box-header -->
 									<div class="box-body">

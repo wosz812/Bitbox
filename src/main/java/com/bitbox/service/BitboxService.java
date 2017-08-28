@@ -146,10 +146,49 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 
 	@Override
 	public boolean groupRegist(GroupDTO dto) {
+		System.out.println("groupRegist service before"+dto);
 		boolean flag = dao.groupRegist(dto);
+		System.out.println("groupRegist service after"+dto);
 		if (flag) {
 			GinDTO group = new GinDTO(dto.getGroup_seq(), dto.getS_id());
 			flag = dao.groupIn(group);
+		}
+		return flag;
+	}
+	
+	@Override
+	public boolean groupImport(GroupDTO dto,ArrayList<String> memberList) {
+		boolean[] flags=new boolean[3];
+		boolean flag=false;
+		flags[0]=dao.groupImport(dto);
+		System.out.println("gimport cgroup success");
+		if(flags[0]){
+			boolean[] mflags=new boolean[memberList.size()];
+			int seq=dao.getGroupSeq(dto.getTitle());
+			for(int i=0;i<memberList.size();i++){
+				GinDTO mgroup = new GinDTO(seq, memberList.get(i));
+				mflags[i]=dao.groupIn(mgroup);
+			}
+			System.out.println("gimport gin success");
+			for(int j=0;j<mflags.length;j++){
+				if(mflags[j]){
+					if(j==mflags.length-1){
+						flags[1]=true;
+					}
+				}else{
+					System.out.println("groupin insert fail!!");
+				}
+			}
+			flags[2]=dao.ganttRegist(seq);
+		}
+		for(int i=0;i<flags.length;i++){
+			if(flags[i]){
+				if(i==flags.length-1){
+					flag=true;
+				}
+			}else{
+				System.out.println("group Import fail!!");
+			}
 		}
 		return flag;
 	}
@@ -766,5 +805,18 @@ public class BitboxService implements IBitboxService, UserDetailsService {
 	public int getQnaCnt(String id) {
 		int cnt=dao.getQnaCnt(id);
 		return cnt;
+	}
+
+	@Override
+	public List<StudentDTO> getMemberListClass(StudentDTO dto) {
+		// TODO Auto-generated method stub
+		List<StudentDTO> list=dao.getMemberListClass(dto);
+		return list;
+	}
+
+	@Override
+	public StudentDTO getStudentId(String git_id) {
+		StudentDTO dto=dao.getStudentId(git_id);
+		return dto;
 	}
 }

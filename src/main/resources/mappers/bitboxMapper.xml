@@ -69,6 +69,14 @@
 		values(#{group_seq}, #{pw}, #{title}, #{s_id}, #{info})
 	</insert>
 	
+	<insert id="groupImport" parameterType="com.bitbox.dto.GroupDTO">
+		<selectKey keyProperty="group_seq" order="BEFORE" resultType="Integer">
+			select group_seq.nextval from dual
+		</selectKey>
+		insert into cgroup(group_seq, title, s_id)
+		values(#{group_seq}, #{title}, #{s_id})
+	</insert>
+	
 	<insert id="registPMemo" parameterType="com.bitbox.dto.PMemoDTO">
 		<selectKey keyProperty="m_seq" order="BEFORE" resultType="Integer">
 			select m_seq.nextval from dual
@@ -241,7 +249,7 @@
 		select * from ggantt where group_seq = #{group_seq}
 	</select>
 	
-	<insert id="ganttRegist" parameterType="com.bitbox.dto.GroupDTO">
+	<insert id="ganttRegist" parameterType="com.bitbox.dto.GanttDTO">
 		<selectKey keyProperty="gan_seq" order="BEFORE" resultType="Integer">
 			select gan_seq.nextval from dual
 		</selectKey>
@@ -348,6 +356,14 @@
 	
 	<select id="getQnaCnt" parameterType="String" resultType="Integer">
 		select count(*) as count from qna where s_id=#{id}
+	</select>
+	
+	<select id="getMemberListClass" parameterType="com.bitbox.dto.StudentDTO" resultType="com.bitbox.dto.StudentDTO">
+		select * from student where s_class_code=#{s_class_code}
+	</select>
+	
+	<select id="getStudentId" parameterType="String" resultType="com.bitbox.dto.StudentDTO">
+		select * from student where git_id=#{git_id}
 	</select>
 	
 </mapper>

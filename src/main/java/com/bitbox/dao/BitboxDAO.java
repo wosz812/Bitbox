@@ -158,6 +158,26 @@ public class BitboxDAO implements IBitboxDAO {
 		}
 		return flag;
 	}
+	
+	@Override
+	public boolean ganttRegist(int seq) {
+		boolean flag = false;
+		int bCnt = session.insert(namespace + ".ganttRegist", new GanttDTO(seq));
+		if (bCnt > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+	
+	@Override
+	public boolean groupImport(GroupDTO dto) {
+		boolean flag = false;
+		int aCnt = session.insert(namespace + ".groupImport", dto);
+		if (aCnt > 0) {
+			flag=true;
+		}
+		return flag;
+	}
 
 	@Override
 	public boolean registPMemo(PMemoDTO dto) {
@@ -618,4 +638,18 @@ public class BitboxDAO implements IBitboxDAO {
 		int cnt = session.selectOne(namespace + ".getQnaCnt", id);
 		return cnt;
 	}
+
+	@Override
+	public List<StudentDTO> getMemberListClass(StudentDTO dto) {
+		// TODO Auto-generated method stub
+		List<StudentDTO> list=session.selectList(namespace + ".getMemberListClass", dto);
+		return list;
+	}
+	
+	@Override
+	public StudentDTO getStudentId(String git_id) {
+		StudentDTO a = session.selectOne(namespace + ".getStudentId", git_id);
+		return a;
+	}
+	
 }
