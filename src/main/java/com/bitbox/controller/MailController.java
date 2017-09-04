@@ -63,7 +63,7 @@ public class MailController {
 	}
 
 	@RequestMapping(value = "/changePwForm", method = { RequestMethod.GET, RequestMethod.POST })
-	public String changePwForm(@RequestParam("id") int id, Model model) {
+	public String changePwForm(@RequestParam("id") String id, Model model) {
 		String url = "/login/changePwForm";
 		model.addAttribute("id", id);
 		return url;
