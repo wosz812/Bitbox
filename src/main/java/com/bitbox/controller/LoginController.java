@@ -35,7 +35,7 @@ public class LoginController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(method = { RequestMethod.GET })
 	public String loginView(@RequestParam(value = "logID", defaultValue = "") String logID,
 			@RequestParam(value = "check", defaultValue = "0") int check, Model model) {
 		String url = "/login/loginForm";
@@ -47,49 +47,6 @@ public class LoginController {
 			String different_id = "존재하지 않는 아이디입니다.";
 			model.addAttribute("different", different_id);
 		}
-		return url;
-	}
-
-	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String login(HttpSession session, @RequestParam("s_id") String s_id, @RequestParam("s_pw") String s_pw,
-			Model model) {
-		String url = "";
-		// StudentDTO student = new StudentDTO();
-		List<GroupDTO> groupList = null;
-		// id 조회
-		boolean check_id = service.idCheck(s_id);
-		if (check_id) {
-			// id로 encodedPw 조회
-			String encodedPw = service.passwordCheck(s_id);
-			// s_pw 가 받아온 값 --입력값 비교
-			boolean flag = bitboxSecurity.matches(s_pw, encodedPw);
-			if (flag) {
-				// StudentDTO ss = (StudentDTO)
-				// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-				// login 성공
-				// session / groupList
-				StudentDTO sdto = service.login(s_id);
-				String className=service.getClassName(sdto.getS_class_code());
-				groupList = service.getGroupList(sdto.getS_id());
-				// session담기
-				session.setAttribute("groupList", groupList);
-				session.setAttribute("className", className);
-				session.setAttribute("id", sdto.getS_id());
-				session.setAttribute("code", sdto.getS_class_code());
-				session.setAttribute("img", sdto.getS_uuid_img());
-				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(s_id, "",
-						AuthorityUtils.NO_AUTHORITIES);
-				SecurityContextHolder.getContext().setAuthentication(token);
-				url = "redirect:/bitbox/home";
-			} else {
-				// login 실패(pw 오류)
-				url = "redirect:/login/?check=1&logID=" + s_id;
-			}
-		} else {
-			// login 실패(id 오류)
-			url = "redirect:/login/?check=2";
-		}
-
 		return url;
 	}
 

@@ -53,7 +53,7 @@
 		<!-- /.login-logo -->
 		<div class="login-box-body">
 			<p class="login-box-msg">Sign in to start your session</p>
-			<form action="/login/login" method="post">
+			<form action="/login" method="post">
 				<div class="form-group has-feedback">
 					<input type="text" class="form-control" placeholder="Id"
 						name="s_id" value="${logID }"> <span

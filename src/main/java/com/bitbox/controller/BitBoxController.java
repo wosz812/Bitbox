@@ -247,7 +247,7 @@ public class BitBoxController {
 	@RequestMapping(value = "/logout", method = { RequestMethod.POST, RequestMethod.GET })
 	public String logout(HttpSession session) {
 		// 로그아웃 메소드.
-		String url = "redirect:/login/";
+		String url = "redirect:/login";
 		session.invalidate();
 		return url;
 	}

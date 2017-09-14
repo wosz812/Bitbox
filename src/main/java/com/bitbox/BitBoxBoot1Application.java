@@ -1,9 +1,13 @@
 package com.bitbox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -29,12 +34,17 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.CompositeFilter;
+import org.springframework.web.util.WebUtils;
 
+import com.bitbox.dto.GroupDTO;
+import com.bitbox.dto.StudentDTO;
+import com.bitbox.service.IBitboxService;
 import com.bitbox.service.SecurityService;
 
 @SpringBootApplication
@@ -48,23 +58,48 @@ public class BitBoxBoot1Application extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	@Autowired
 	private SecurityService securityService;
-	// @Override
-	// protected void configure(AuthenticationManagerBuilder auth) throws
-	// Exception {
-	// auth.userDetailsService(userDetailsService).passwordEncoder(securityService);
-	// }
+	@Autowired
+	private IBitboxService service;
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		// new LoginUrlAuthenticationEntryPoint("/login/").
+		// new SecurityContextHolderAwareRequestFilter().set
+		// UsernamePasswordAuthenticationFilter.
+		auth.userDetailsService(userDetailsService).passwordEncoder(securityService);
+	}
+
+	private AuthenticationSuccessHandler authenticationSuccessHandler() {
+		return new SavedRequestAwareAuthenticationSuccessHandler() {
+			@Override
+			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+					Authentication authentication) throws ServletException, IOException {
+				Object object = authentication.getPrincipal();
+				if (object instanceof StudentDTO) {
+					StudentDTO sdto = (StudentDTO) object;
+					String className = service.getClassName(sdto.getS_class_code());
+					// session담기
+					WebUtils.setSessionAttribute(request, "groupList", sdto.getGroup());
+					WebUtils.setSessionAttribute(request, "className", className);
+					WebUtils.setSessionAttribute(request, "id", sdto.getS_id());
+					WebUtils.setSessionAttribute(request, "code", sdto.getS_class_code());
+					WebUtils.setSessionAttribute(request, "img", sdto.getS_uuid_img());
+				}
+				super.onAuthenticationSuccess(request, response, authentication);
+			}
+		};
+	}
 
 	@Override
 	// configure(HttpSecurity http) =인터셉터 요청을 안전하게 보호하는 방법설정.
 	protected void configure(HttpSecurity http) throws Exception {
-		// @formatter:off
-		// http.formLogin().usernameParameter("").passwordParameter("s_pw").loginPage("/login");
-		// http.requestMatchers().antMatchers("/","/login/**","/bitbox/**","/git/**","/memo/**","/mail/**");
-		http.authorizeRequests().antMatchers("/", "/login/**", "/mail/**").permitAll() // login,mail 인증없이 허용하는 부분
-				.antMatchers("/bitbox/**", "/git/**", "/memo/**").authenticated().anyRequest().authenticated().and() //인증후 허용하는 부분
-				.exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login/")).and() //인증이안될시 리턴시키는 부분
+		http.formLogin().loginPage("/login").usernameParameter("s_id").passwordParameter("s_pw")
+				.successHandler(authenticationSuccessHandler()).failureUrl("/login?check=1").permitAll();
+		http.authorizeRequests().antMatchers( "/login/**", "/mail/**").permitAll()
+				.antMatchers("/bitbox/**", "/git/**", "/memo/**").authenticated().anyRequest().authenticated().and()
 				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).disable()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+
 		// @formatter:on
 	}
 
